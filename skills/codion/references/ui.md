@@ -129,18 +129,30 @@ public final class PetclinicAppPanel extends EntityApplicationPanel<PetclinicApp
     }
 
     public static void main(String[] args) {
+        // FlatLaf validation indication on input components (invalid = tinted)
+        ValidIndicator.INDICATOR_CLASS.set("is.codion.plugin.flatlaf.indicator.FlatLafValidIndicator");
         ReferentialIntegrityErrorHandling.REFERENTIAL_INTEGRITY_ERROR_HANDLING
                 .set(ReferentialIntegrityErrorHandling.DISPLAY_DEPENDENCIES);
         EntityApplication.builder(PetclinicAppModel.class, PetclinicAppPanel.class)
                 .domain(Petclinic.DOMAIN)
-                .version(PetclinicAppModel.VERSION)
                 .startupDialog(false)               // see note below
-                .defaultLookAndFeel(Arc.class)      // any FlatLaf theme class
+                .defaultLookAndFeel(LightOwl.class)
                 .defaultUser(User.parse("scott:tiger"))
                 .start();
     }
 }
 ```
+
+**Always set a FlatLaf look and feel.** Without `.defaultLookAndFeel(...)`
+the application starts in Swing's default Metal — dull and dated. Include
+both theme plugin dependencies, as all the demos do
+(`codion-plugin-flatlaf-themes` + `codion-plugin-flatlaf-intellij-themes`,
+see `references/project.md`) — users can then switch themes via the View
+menu. `LightOwl` (`is.codion.plugin.flatlaf.intellij.themes.material.LightOwl`)
+is a reasonable default; any theme class works. The FlatLaf
+`ValidIndicator` line above is also worth its one line: invalid inputs get
+visual indication for free (`ValidIndicator` is
+`is.codion.swing.common.ui.component.indicator.ValidIndicator`).
 User handling: `.defaultUser(user)` pre-fills the login dialog;
 `.user(User.parse("scott:tiger"))` sets the user outright — no login dialog,
 so the application starts with no interaction at all: what you want for dev
