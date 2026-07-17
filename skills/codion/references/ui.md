@@ -134,7 +134,7 @@ public final class PetclinicAppPanel extends EntityApplicationPanel<PetclinicApp
         EntityApplication.builder(PetclinicAppModel.class, PetclinicAppPanel.class)
                 .domain(Petclinic.DOMAIN)
                 .version(PetclinicAppModel.VERSION)
-                .startupDialog(false)               // skip the startup/splash dialog
+                .startupDialog(false)               // see note below
                 .defaultLookAndFeel(Arc.class)      // any FlatLaf theme class
                 .defaultUser(User.parse("scott:tiger"))
                 .start();
@@ -142,10 +142,16 @@ public final class PetclinicAppPanel extends EntityApplicationPanel<PetclinicApp
 }
 ```
 User handling: `.defaultUser(user)` pre-fills the login dialog;
-`.user(User.parse("scott:tiger"))` sets the user outright — combined with
-`.startupDialog(false)` the application starts with no interaction at all,
-which is what you want for dev iteration and automated/scripted launches
-(e.g. driving the app for testing).
+`.user(User.parse("scott:tiger"))` sets the user outright — no login dialog,
+so the application starts with no interaction at all: what you want for dev
+iteration and automated/scripted launches (e.g. driving the app for
+testing).
+
+The startup dialog is unrelated to login: it is just an indeterminate
+progress bar shown while the application loads, requiring no interaction —
+it never blocks anything (including programmatic control). For applications
+that start quickly, `.startupDialog(false)` simply spares the user a dialog
+that flickers and is gone.
 
 The connection type is decided by system properties, not code:
 `codion.client.connectionType=local|remote|http` plus the matching provider
