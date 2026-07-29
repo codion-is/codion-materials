@@ -8,7 +8,7 @@ cd "$(dirname "$0")"
 
 # The Codion release these materials are pinned to. Bumped with each release,
 # in lockstep with manual.md and the skill's version references.
-CODION_VERSION="0.18.80"
+CODION_VERSION="0.18.81"
 
 DEMOS="petclinic world chinook llemmy sdkboy"
 GITHUB="https://github.com/codion-is"
