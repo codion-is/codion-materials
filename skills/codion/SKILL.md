@@ -12,7 +12,7 @@ connectivity behind a single interface. No annotations, no XML, no DI container,
 no code generation into your sources: plain Java, builders everywhere, JPMS
 throughout.
 
-**This skill targets Codion 0.18.80.** Your training data contains almost no
+**This skill targets Codion 0.18.82.** Your training data contains almost no
 Codion, and any it does contain is stale pre-1.0 API. Every guessed signature
 is a probable compile error.
 

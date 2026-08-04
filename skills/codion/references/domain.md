@@ -1,6 +1,6 @@
 # Domain Modeling Recipes
 
-Verified against Codion 0.18.80. Canonical examples: `petclinic/` (minimal),
+Verified against Codion 0.18.82. Canonical examples: `petclinic/` (minimal),
 `world/` (advanced), `chinook/` (production, api/impl split). When a builder
 method is in doubt, grep `codion/framework/domain/`.
 
@@ -321,15 +321,15 @@ The domain implementation is discovered via `ServiceLoader`:
 - Classpath: `META-INF/services/is.codion.framework.domain.Domain` containing
   the implementation class name
 
-Without this, connection providers and the server cannot find the domain by
+Without this, connection builders and the server cannot find the domain by
 its `DomainType`. See `references/project.md`.
 
 ServiceLoader is not the only way in: for quick-and-dirty or local-JDBC-only
 apps you can instantiate the domain and inject it directly:
 
 ```java
-LocalEntityConnectionProvider connectionProvider =
-        LocalEntityConnectionProvider.builder()
+LocalEntityConnection connection =
+        LocalEntityConnection.builder()
                 .domain(new Petclinic())
                 .user(User.parse("scott:tiger"))
                 .build();

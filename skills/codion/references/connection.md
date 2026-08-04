@@ -1,12 +1,27 @@
 # EntityConnection Recipes
 
-Verified against Codion 0.18.80. Source of truth:
+Verified against Codion 0.18.82. Source of truth:
 `codion/framework/db-core/src/main/java/is/codion/framework/db/EntityConnection.java`.
 The same interface serves local JDBC, RMI and HTTP connections.
 
-Getting a connection: you almost never construct one — models hand it to you
-(`tableModel().connection()`, `editModel().connection()`), or take it from an
-`EntityConnectionProvider` (`connectionProvider.connection()`).
+Getting a connection: models hand it to you (`tableModel().connection()`,
+`editModel().connection()`) — one self-managing instance shared by the whole
+application, safe to hold on to and use for its lifetime: it validates the
+underlying connection before each operation and re-establishes it when it
+has gone bad. Standalone (tests, scripts, headless):
+
+```java
+EntityConnection connection = EntityConnection.builder()  // type via codion.client.connectionType
+        .domain(Petclinic.DOMAIN)
+        .user(User.parse("scott:tiger"))
+        .build();                                         // connects eagerly - fails fast
+```
+
+or a transport-specific builder: `LocalEntityConnection.builder()` (takes
+`.domain(new PetclinicImpl())` directly, no ServiceLoader needed),
+`RemoteEntityConnection.builder()`, `HttpEntityConnection.builder()`.
+`close()` is terminal — subsequent operations throw. It is a connection
+*going bad* that heals, not one you closed.
 
 ## Conditions
 

@@ -1,6 +1,6 @@
 # Project Setup Recipes
 
-Verified against Codion 0.18.80. Canonical skeletons: `petclinic/` (single
+Verified against Codion 0.18.82. Canonical skeletons: `petclinic/` (single
 module — copy this for small apps) and `world/` (multi-module: domain-api /
 domain / client / client-local / client-remote / server — copy this when
 splitting layers into modules). `chinook/` adds the kitchen sink on the same
@@ -12,7 +12,7 @@ as a starting skeleton.
 `gradle/libs.versions.toml`:
 ```toml
 [versions]
-codion = "0.18.80"
+codion = "0.18.82"
 h2 = "2.3.232"
 
 [libraries]
@@ -120,7 +120,7 @@ Non-modular (classpath) apps register the domain via
 implementation class name). **Forgetting registration is the classic "domain
 model not found" failure.** For quick-and-dirty or local-only apps you can
 skip ServiceLoader entirely and inject an instance:
-`LocalEntityConnectionProvider.builder().domain(new MyDomain())...` — see the
+`LocalEntityConnection.builder().domain(new MyDomain())...` — see the
 registration section in `references/domain.md`.
 
 ## The domain generator — when a schema exists

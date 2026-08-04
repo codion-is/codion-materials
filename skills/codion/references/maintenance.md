@@ -1,6 +1,6 @@
 # Working in an Existing Codion Codebase
 
-Verified against Codion 0.18.80. For maintenance work — adding columns,
+Verified against Codion 0.18.82. For maintenance work — adding columns,
 tables, panels, charts or reports to an app you did not write — the recipes
 in the other references apply unchanged; THIS file covers what is different:
 orienting, changing in complete vertical slices, and schema evolution.

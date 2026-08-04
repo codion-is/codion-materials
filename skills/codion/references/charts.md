@@ -1,6 +1,6 @@
 # Charts (JFreeChart)
 
-Verified against Codion 0.18.80. Charts are plain JFreeChart
+Verified against Codion 0.18.82. Charts are plain JFreeChart
 (`org.jfree:jfreechart`, 1.5.x — see world's version catalog); Codion adds no
 chart API of its own. What the demos establish is the *architecture*: where
 datasets live, how they stay current, and how chart panels respect the look
@@ -32,8 +32,8 @@ public final class CityTableModel extends SwingEntityTableModel {
 
     private final DefaultPieDataset<String> chartDataset = new DefaultPieDataset<>();
 
-    CityTableModel(EntityConnectionProvider connectionProvider) {
-        super(new CityEditModel(connectionProvider));
+    CityTableModel(EntityConnection connection) {
+        super(new CityEditModel(connection));
         items().included().addConsumer(this::refreshChartDataset);   // visible rows
     }
 
@@ -58,13 +58,13 @@ doesn't carry:
 ```java
 public final class AnalyticsModel {
 
-    private final EntityConnectionProvider connectionProvider;
+    private final EntityConnection connection;
 
     public final class SalesComparison {
         private final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         private void refresh() {
-            List<Entity> invoices = connectionProvider.connection().select(all(Invoice.TYPE));
+            List<Entity> invoices = connection.select(all(Invoice.TYPE));
             // aggregate into dataset ...
         }
     }

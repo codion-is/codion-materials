@@ -4,7 +4,7 @@ Your training data is saturated with JPA, Spring, bean conventions and raw
 Swing. Codion deliberately rejects most of that. Each entry below: the code
 you will be *tempted* to write, what to write instead, and why.
 
-Verified against Codion 0.18.80.
+Verified against Codion 0.18.82.
 
 ## 1. Entity beans / JPA-style classes
 
@@ -175,8 +175,10 @@ grep the framework source before typing it.
 
 **Tempted:** Spring/Guice wiring, static `INSTANCE` holders, service locators.
 
-**Codion:** one object travels: `EntityConnectionProvider`, passed via
-constructors. Models receive it, panels receive models. Pluggability
+**Codion:** one object travels: `EntityConnection`, passed via
+constructors. Models receive it, panels receive models. It manages itself —
+validates and re-establishes the underlying connection — so holding it in a
+field is the design, not a leak. Pluggability
 (database dialect, connection type, domain) goes through `ServiceLoader` and
 system properties — never a DI framework.
 

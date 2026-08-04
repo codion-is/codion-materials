@@ -1,6 +1,6 @@
 # Value / State / Event — the Reactive Core
 
-Verified against Codion 0.18.80 (examples lifted from the compiled manual).
+Verified against Codion 0.18.82 (examples lifted from the compiled manual).
 Source: `codion/common/reactive/`. This substrate is everywhere — models
 expose it, UI builders bind to it. It is synchronous: listeners run on the
 thread that mutates; anything linked to a Swing component must be mutated on

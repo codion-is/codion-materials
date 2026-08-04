@@ -1,6 +1,6 @@
 # UI Layer Recipes
 
-Verified against Codion 0.18.80. Source of truth: `codion/swing/framework-ui/`
+Verified against Codion 0.18.82. Source of truth: `codion/swing/framework-ui/`
 (entity panels) and `codion/swing/common-ui/` (component builders, controls,
 dialogs). Canonical examples: petclinic (minimal), chinook (custom everything).
 
@@ -33,7 +33,7 @@ public final class PetEditPanel extends EntityEditPanel {
 
     private PetTypeEditPanel createPetTypeEditPanel() {
         return new PetTypeEditPanel(new SwingEntityEditModel(PetType.TYPE,
-                editModel().connectionProvider()));
+                editModel().connection()));
     }
 }
 ```
@@ -116,7 +116,7 @@ Support/lookup panels (opened on demand from the View menu, not tabs):
 ```java
 EntityPanel.Builder petTypePanelBuilder = EntityPanel.builder()
         .entityType(PetType.TYPE)
-        .panel(MyAppPanel::createPetTypePanel);   // Function<EntityConnectionProvider, EntityPanel>
+        .panel(MyAppPanel::createPetTypePanel);   // Function<EntityConnection, EntityPanel>
 ```
 
 ## Application panel and startup
@@ -166,7 +166,7 @@ that start quickly, `.startupDialog(false)` simply spares the user a dialog
 that flickers and is gone.
 
 The connection type is decided by system properties, not code:
-`codion.client.connectionType=local|remote|http` plus the matching provider
+`codion.client.connectionType=local|remote|http` plus the matching connection
 module on the runtime path (see `references/project.md`).
 
 ## Controls, key events, dialogs

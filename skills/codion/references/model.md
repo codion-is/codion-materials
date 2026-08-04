@@ -1,6 +1,6 @@
 # Model Layer Recipes
 
-Verified against Codion 0.18.80. Source of truth:
+Verified against Codion 0.18.82. Source of truth:
 `codion/swing/framework-model/` (and `codion/framework/model/` for the
 UI-agnostic base). Canonical examples: petclinic (wiring), llemmy and
 chinook (application logic in models).
@@ -12,7 +12,7 @@ chinook (application logic in models).
 - `SwingEntityEditModel` — the entity being edited: values, validation,
   insert/update/delete
 - `SwingEntityTableModel` — rows, selection, filtering, the query
-- `SwingEntityApplicationModel` — the root: connection provider + top-level
+- `SwingEntityApplicationModel` — the root: the connection + top-level
   models
 
 Models are UI-free — fully testable without a display.
@@ -25,13 +25,13 @@ public final class PetclinicAppModel extends SwingEntityApplicationModel {
     public static final Version VERSION =
             Version.parse(PetclinicAppModel.class, "/version.properties");
 
-    public PetclinicAppModel(EntityConnectionProvider connectionProvider) {
-        super(connectionProvider, List.of(createOwnersModel(connectionProvider)));
+    public PetclinicAppModel(EntityConnection connection) {
+        super(connection, List.of(createOwnersModel(connection)));
     }
 
-    private static SwingEntityModel createOwnersModel(EntityConnectionProvider connectionProvider) {
-        SwingEntityModel ownersModel = new SwingEntityModel(Owner.TYPE, connectionProvider);
-        SwingEntityModel petsModel = new SwingEntityModel(Pet.TYPE, connectionProvider);
+    private static SwingEntityModel createOwnersModel(EntityConnection connection) {
+        SwingEntityModel ownersModel = new SwingEntityModel(Owner.TYPE, connection);
+        SwingEntityModel petsModel = new SwingEntityModel(Pet.TYPE, connection);
         // pre-populate FK combo box models used by the edit UI:
         petsModel.editor().comboBoxModels().initialize(Pet.OWNER_FK, Pet.PET_TYPE_FK);
 
@@ -73,8 +73,8 @@ database-uniqueness validation — from petclinic):
 ```java
 public final class VetSpecialtyEditModel extends SwingEntityEditModel {
 
-    public VetSpecialtyEditModel(EntityConnectionProvider connectionProvider) {
-        super(VetSpecialty.TYPE, connectionProvider);
+    public VetSpecialtyEditModel(EntityConnection connection) {
+        super(VetSpecialty.TYPE, connection);
         editor().validator().set(new VetSpecialtyValidator());
         editor().comboBoxModels().initialize(VetSpecialty.VET_FK, VetSpecialty.SPECIALTY_FK);
         editor().value(VetSpecialty.VET_FK).persist().set(false);
@@ -145,8 +145,18 @@ Editing directly through the table model is possible when enabled
 ## Testing
 
 Models are UI-free: plain JUnit — instantiate with a local
-`EntityConnectionProvider`, drive and assert (see
-`petclinic/src/test/.../VetSpecialtyEditModelTest.java`). Required system
+`EntityConnection` in try-with-resources (close is terminal), drive and
+assert (see `petclinic/src/test/.../VetSpecialtyEditModelTest.java`):
+
+```java
+try (EntityConnection connection = LocalEntityConnection.builder()
+        .domain(new PetclinicImpl())
+        .user(User.parse("scott:tiger"))
+        .build()) {
+    VetSpecialtyEditModel model = new VetSpecialtyEditModel(connection);
+    // drive and assert
+}
+``` Required system
 properties for tests (set in gradle): `codion.db.url`,
 `codion.db.initScripts`, `codion.test.user`.
 
