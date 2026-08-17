@@ -152,7 +152,7 @@ for the exact working code.)
 When the same column configuration recurs across many entities (audit
 columns, standard name columns), chinook defines reusable `ColumnTemplate`s
 (`REQUIRED_SEARCHABLE`, `INSERT_TIME`, `INSERT_USER` — `ChinookImpl.java`
-top) applied via `.column(template)` — one definition, applied everywhere,
+top) applied via `Column.as(template)` — one definition, applied everywhere,
 instead of pasting the chain per entity.
 
 ## Columns with a fixed set of valid values
