@@ -1,6 +1,6 @@
 # EntityConnection Recipes
 
-Verified against Codion 0.18.82. Source of truth:
+Source of truth:
 `codion/framework/db-core/src/main/java/is/codion/framework/db/EntityConnection.java`.
 The same interface serves local JDBC, RMI and HTTP connections.
 

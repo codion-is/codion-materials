@@ -1,10 +1,9 @@
 # Value / State / Event — the Reactive Core
 
-Verified against Codion 0.18.82 (examples lifted from the compiled manual).
-Source: `codion/common/reactive/`. This substrate is everywhere — models
-expose it, UI builders bind to it. It is synchronous: listeners run on the
-thread that mutates; anything linked to a Swing component must be mutated on
-the EDT.
+Examples lifted from the compiled manual. Source: `codion/common/reactive/`.
+This substrate is everywhere — models expose it, UI builders bind to it. It is
+synchronous: listeners run on the thread that mutates; anything linked to a
+Swing component must be mutated on the EDT.
 
 ## Event
 
@@ -62,7 +61,7 @@ value.when(v -> v > 10).addConsumer(...);
 
 ## State
 
-An observable boolean; implements `Value<Boolean>`, never null (null → false).
+An observable boolean; wraps a `Value<Boolean>`, never null (null → false).
 
 ```java
 State state = State.state();          // false initially; State.state(true) also

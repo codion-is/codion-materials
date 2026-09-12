@@ -1,6 +1,6 @@
 # UI Layer Recipes
 
-Verified against Codion 0.18.82. Source of truth: `codion/swing/framework-ui/`
+Source of truth: `codion/swing/framework-ui/`
 (entity panels) and `codion/swing/common-ui/` (component builders, controls,
 dialogs). Canonical examples: petclinic (minimal), chinook (custom everything).
 

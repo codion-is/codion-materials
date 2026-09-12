@@ -1,19 +1,20 @@
 # Project Setup Recipes
 
-Verified against Codion 0.18.82. Canonical skeletons: `petclinic/` (single
-module — copy this for small apps) and `world/` (multi-module: domain-api /
-domain / client / client-local / client-remote / server — copy this when
-splitting layers into modules). `chinook/` adds the kitchen sink on the same
-structure (REST service, reports, load tests) — reference it per feature, not
-as a starting skeleton.
+Canonical skeletons: `petclinic/` (single module — copy this for small apps)
+and `world/` (multi-module: domain-api / domain / client / client-local /
+client-remote / server — copy this when splitting layers into modules).
+`chinook/` adds the kitchen sink on the same structure (REST service, reports,
+load tests) — reference it per feature, not as a starting skeleton.
 
 ## Gradle — the petclinic skeleton
 
-`gradle/libs.versions.toml`:
+`gradle/libs.versions.toml` — the Codion version is the release these materials
+are pinned to; every demo carries it in its own catalog, copy it from there
+rather than inventing one:
 ```toml
 [versions]
-codion = "0.18.82"
-h2 = "2.3.232"
+codion = "<copy from petclinic/gradle/libs.versions.toml>"
+h2 = "2.5.250"
 
 [libraries]
 codion-framework-bom = { module = "is.codion:codion-framework-bom", version.ref = "codion" }
@@ -49,7 +50,7 @@ dependencies {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(26))   // 17+ works
+        languageVersion.set(JavaLanguageVersion.of(26))   // 21+ works
     }
 }
 

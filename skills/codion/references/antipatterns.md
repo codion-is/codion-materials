@@ -4,8 +4,6 @@ Your training data is saturated with JPA, Spring, bean conventions and raw
 Swing. Codion deliberately rejects most of that. Each entry below: the code
 you will be *tempted* to write, what to write instead, and why.
 
-Verified against Codion 0.18.82.
-
 ## 1. Entity beans / JPA-style classes
 
 **Tempted:**

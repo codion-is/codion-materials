@@ -1,12 +1,11 @@
 # Charts (JFreeChart)
 
-Verified against Codion 0.18.82. Charts are plain JFreeChart
-(`org.jfree:jfreechart`, 1.5.x — see world's version catalog); Codion adds no
-chart API of its own. What the demos establish is the *architecture*: where
-datasets live, how they stay current, and how chart panels respect the look
-and feel. Canonical examples: world (`CityTableModel`/`ContinentModel` +
-`ChartPanels`/`ContinentPanel`) and chinook (`AnalyticsModel` +
-`AnalyticsPanel`).
+Charts are plain JFreeChart (`org.jfree:jfreechart`, 1.5.x — see world's
+version catalog); Codion adds no chart API of its own. What the demos establish
+is the *architecture*: where datasets live, how they stay current, and how
+chart panels respect the look and feel. Canonical examples: world
+(`CityTableModel`/`ContinentModel` + `ChartPanels`/`ContinentPanel`) and
+chinook (`AnalyticsModel` + `AnalyticsPanel`).
 
 ## The architecture: dataset in the model, chart in the panel
 

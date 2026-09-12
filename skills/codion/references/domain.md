@@ -1,8 +1,8 @@
 # Domain Modeling Recipes
 
-Verified against Codion 0.18.82. Canonical examples: `petclinic/` (minimal),
-`world/` (advanced), `chinook/` (production, api/impl split). When a builder
-method is in doubt, grep `codion/framework/domain/`.
+Canonical examples: `petclinic/` (minimal), `world/` (advanced), `chinook/`
+(production, api/impl split). When a builder method is in doubt, grep
+`codion/framework/domain/`.
 
 ## The shape
 

@@ -1,6 +1,6 @@
 # Model Layer Recipes
 
-Verified against Codion 0.18.82. Source of truth:
+Source of truth:
 `codion/swing/framework-model/` (and `codion/framework/model/` for the
 UI-agnostic base). Canonical examples: petclinic (wiring), llemmy and
 chinook (application logic in models).

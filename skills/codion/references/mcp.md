@@ -1,12 +1,10 @@
 # Verifying a Running Application over MCP
 
-Verified against Codion 0.18.86. The rest of this skill gets you to "it compiles
-and the DomainTest is green". This file is how you get to "I started it, used it
-and watched it work": the `codion-tools-swing-mcp` module exposes a running Swing
-application over MCP, so you can type into fields, press keys and read the model
-state behind the focused component yourself, instead of asking the user what
-happened. Connecting before an application runs, and `focus_state`, need 0.18.86
-or later.
+The rest of this skill gets you to "it compiles and the DomainTest is green".
+This file is how you get to "I started it, used it and watched it work": the
+`codion-tools-swing-mcp` module exposes a running Swing application over MCP,
+so you can type into fields, press keys and read the model state behind the
+focused component yourself, instead of asking the user what happened.
 
 Use it when the tools are in your tool list: `type_text`, `key`, `interactions`,
 `clear_field`, `model_state`, `focus_state`, `app_screenshot`,
@@ -42,9 +40,13 @@ The server is opt-in per application, off by default, and belongs in
 development builds only — it is an unauthenticated HTTP server on port 8080
 that can drive the whole UI. Never leave it enabled in something you ship.
 
+```toml
+# gradle/libs.versions.toml - no version, the framework BOM supplies it
+codion-tools-swing-mcp = { module = "is.codion:codion-tools-swing-mcp" }
+```
 ```kotlin
 // build.gradle.kts, alongside the other Codion dependencies
-implementation("is.codion:codion-tools-swing-mcp:0.18.86")
+implementation(libs.codion.tools.swing.mcp)
 ```
 ```java
 // module-info.java

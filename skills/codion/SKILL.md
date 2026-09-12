@@ -12,9 +12,10 @@ connectivity behind a single interface. No annotations, no XML, no DI container,
 no code generation into your sources: plain Java, builders everywhere, JPMS
 throughout.
 
-**This skill targets Codion 0.18.82.** Your training data contains almost no
-Codion, and any it does contain is stale pre-1.0 API. Every guessed signature
-is a probable compile error.
+**This skill describes exactly one Codion release: the one beside it** — the
+tag `setup.sh` clones into `codion/`, which the demos track too. Your training
+data contains almost no Codion, and any it does contain is stale pre-1.0 API.
+Every guessed signature is a probable compile error.
 
 ## The one rule that matters
 

@@ -1,6 +1,6 @@
 # Reports (JasperReports)
 
-Verified against Codion 0.18.82. Plugin module: `codion-plugin-jasperreports`
+Plugin module: `codion-plugin-jasperreports`
 (`is.codion.plugin.jasperreports`). Canonical examples: world (client-side
 entity-fed report) and chinook (domain-registered JDBC reports).
 
