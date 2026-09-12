@@ -96,6 +96,10 @@ greenfield.
    `EntityApplication.builder(...)`. `references/ui.md`.
 6. **Run it** — local H2 in-memory with an init script is the zero-setup dev
    database (`codion.db.url=jdbc:h2:mem:h2db`, `codion.db.initScripts=...`).
+7. **Verify it** — if your MCP client has the `codion` server, start the
+   application and use it yourself: type into fields, press keys and read the
+   model state behind them, instead of asking the user whether it works.
+   `references/mcp.md`.
 
 ## Demo index — open the smallest one that answers the question
 
@@ -135,6 +139,9 @@ greenfield.
   JRViewer wiring
 - `references/charts.md` — JFreeChart: datasets as model state (reactive
   from table events, or query-driven), the look-and-feel ChartPanel helper
+- `references/mcp.md` — driving a running application over MCP: enabling the
+  server, starting it without a login dialog, and the act / read-the-verdict /
+  assert-with-model_state loop
 - `references/maintenance.md` — existing codebases: orientation, vertical-
   slice checklists (add column/table/FK/detail), schema evolution
   (dev vs migrations), regression discipline

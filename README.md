@@ -42,7 +42,7 @@ No bash? The setup is just git: clone `codion-is/codion` at the release tag
 
 | Path | What | Use it for |
 |------|------|-----------|
-| `skills/codion/` | The skill: orientation (SKILL.md) + 10 reference files (domain, connection, model, ui, common, project, reports, charts, maintenance, antipatterns) | The agent's entry point — everything else is indexed from here. |
+| `skills/codion/` | The skill: orientation (SKILL.md) + 11 reference files (domain, connection, model, ui, common, project, reports, charts, mcp, maintenance, antipatterns) | The agent's entry point — everything else is indexed from here. |
 | `manual.md` | The full Codion manual, single markdown file, all code examples compiled against the pinned release | The tour: concepts, layering, idiomatic usage. Read sections, don't ingest whole (~100K tokens). |
 | `codion/` * | Framework source at the release tag | **Ground truth.** When unsure of any API — a builder method, a signature, a default — grep the source. Never guess. |
 | `petclinic/` * | Demo: veterinary clinic (~1.2K LOC, one module) | **The minimal shape.** Basic entities, FKs, decimals, audit columns, edit panels, DomainTest. Start here. |
