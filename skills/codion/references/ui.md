@@ -19,9 +19,9 @@ public final class PetEditPanel extends EntityEditPanel {
 
         create().comboBox(Pet.OWNER_FK);            // created AND bound
         create().textField(Pet.NAME);
-        create().comboBoxPanel(Pet.PET_TYPE_FK, this::createPetTypeEditPanel)
+        create().comboBoxInput(Pet.PET_TYPE_FK, this::createPetTypeEditPanel)
                 .includeAddButton(true);            // combo + add-new button
-        create().temporalFieldPanel(Pet.BIRTH_DATE);
+        create().temporalFieldInput(Pet.BIRTH_DATE);
 
         setLayout(gridLayout(2, 2));                // Layouts.gridLayout
 
@@ -73,7 +73,7 @@ public final class CustomerTablePanel extends EntityTablePanel {
                 .command(this::viewCustomerReport)
                 .caption("Customer report")
                 .icon(FrameworkIcons.instance().print())
-                .enabled(tableModel().selection().empty().not())
+                .enabled(tableModel().selection().present())
                 .build());
     }
     ...
@@ -130,8 +130,8 @@ public final class PetclinicAppPanel extends EntityApplicationPanel<PetclinicApp
 
     public static void main(String[] args) {
         // FlatLaf validation indication on input components (invalid = tinted)
-        ValidIndicator.INDICATOR_CLASS.set("is.codion.plugin.flatlaf.indicator.FlatLafValidIndicator");
-        ReferentialIntegrityErrorHandling.REFERENTIAL_INTEGRITY_ERROR_HANDLING
+        ValidIndicator.INDICATOR_CLASS.set("FlatValidIndicator.class.getName()");
+        ReferentialIntegrityErrorHandling.HANDLING
                 .set(ReferentialIntegrityErrorHandling.DISPLAY_DEPENDENCIES);
         EntityApplication.builder(PetclinicAppModel.class, PetclinicAppPanel.class)
                 .domain(Petclinic.DOMAIN)
@@ -150,9 +150,9 @@ both theme plugin dependencies, as all the demos do
 see `references/project.md`) — users can then switch themes via the View
 menu. `LightOwl` (`is.codion.plugin.flatlaf.intellij.themes.material.LightOwl`)
 is a reasonable default; any theme class works. The FlatLaf
-`ValidIndicator` line above is also worth its one line: invalid inputs get
-visual indication for free (`ValidIndicator` is
-`is.codion.swing.common.ui.component.indicator.ValidIndicator`).
+`ValidationIndicator` line above is also worth its one line: invalid inputs get
+visual indication for free (`ValidationIndicator` is
+`is.codion.swing.common.ui.component.indicator.ValidationIndicator`).
 User handling: `.defaultUser(user)` pre-fills the login dialog;
 `.user(User.parse("scott:tiger"))` sets the user outright — no login dialog,
 so the application starts with no interaction at all: what you want for dev

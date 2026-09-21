@@ -116,7 +116,7 @@ tableModel().items().refresh();                       // async in Swing land
 tableModel().items().get();                           // visible items
 tableModel().selection().items().get();               // selected entities
 tableModel().selection().item().get();                // single selection
-tableModel().selection().empty();                     // ObservableState
+tableModel().selection().present();                     // ObservableState
 tableModel().selection().items().addConsumer(this::selectionChanged);
 ```
 
