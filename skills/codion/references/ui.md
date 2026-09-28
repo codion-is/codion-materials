@@ -130,7 +130,7 @@ public final class PetclinicAppPanel extends EntityApplicationPanel<PetclinicApp
 
     public static void main(String[] args) {
         // FlatLaf validation indication on input components (invalid = tinted)
-        ValidIndicator.INDICATOR_CLASS.set("FlatValidIndicator.class.getName()");
+        ValidIndicator.IMPLEMENTATION.set("FlatValidIndicator.class.getName()");
         ReferentialIntegrityErrorHandling.HANDLING
                 .set(ReferentialIntegrityErrorHandling.DISPLAY_DEPENDENCIES);
         EntityApplication.builder(PetclinicAppModel.class, PetclinicAppPanel.class)

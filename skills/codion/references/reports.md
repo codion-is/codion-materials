@@ -80,7 +80,7 @@ for display strings use `entity.toString()` (the domain formatter) or
 Domain API — a `ReportType<P, R>` constant (P = parameters, R = result):
 
 ```java
-// import static is.codion.common.db.report.ReportType.reportType;
+// import static is.codion.framework.domain.report.ReportType.reportType;
 interface Customer {
     ReportType<Map<String, Object>, byte[]> REPORT = reportType("customer_report");
 }
