@@ -131,7 +131,7 @@ optionally, DTOs, i18n properties and a domain test). Honest cost/benefit:
 generation gives you the mechanical layer (types, columns, FKs, PKs), but
 much of a good domain is *refinement* the generator can't know — item lists
 for CHECK constraints, fractionDigits/range mirroring DECIMAL(p,s),
-readOnly audit columns, formatters, orderings, smallDataset hints. Up to
+formatters, orderings, smallDataset hints. Up to
 roughly 15 tables, hand-writing with refinement inline is a perfectly
 rational choice; beyond that — or when you want the DTO/i18n/test
 scaffolding — generate first, then refine. Either way the refinement
@@ -160,6 +160,14 @@ on stderr) — read it, refine it, place it in your project. For writing files:
 api/impl files), `--dtos`, `--i18n --resource-dir ...`,
 `--test --test-dir ...`, `--overwrite`. Run `--help` for the full list.
 Exit codes: 0 success, 1 failure, 2 usage error.
+
+If the schema has audit columns, name them: `--audit-columns
+insert_time,insert_user` (case-insensitive, plus `--hide-audit-columns` to
+hide them) generates them read-only, last in each entity. Identity keys and
+audit columns recurring across tables come out as shared `ColumnTemplate`s
+(`IDENTITY_KEY`, `INSERT_TIME`, ...) applied via `Column.as(template)` — keep
+to that pattern when refining, defining a template for any other column
+configuration that recurs (see `references/domain.md`).
 
 **UI** (for humans; a Swing app — per-table selection, live preview): see
 `chinook/chinook-domain-generator/build.gradle.kts` for the runnable-module

@@ -1,7 +1,7 @@
 
 # Manual
 
-<span id="revnumber">version 0.18.88</span>
+<span id="revnumber">version 0.18.89</span>
 
 Table of Contents
 
@@ -207,21 +207,23 @@ Table of Contents
       - [A complete application](#_a_complete_application)
     - [2.6.2. Table UI](#_table_ui)
       - [FilterTable](#_filtertable)
-    - [2.6.3. Input Controls](#_input_controls_2)
+    - [2.6.3. Tree UI](#_tree_ui)
+      - [FilterTree](#_filtertree)
+    - [2.6.4. Input Controls](#_input_controls_2)
       - [Control](#_control)
       - [ToggleControl](#_togglecontrol)
       - [Controls](#_controls)
-    - [2.6.4. Input Components](#_input_components)
+    - [2.6.5. Input Components](#_input_components)
       - [Text](#_text_2)
       - [Numbers](#_numbers)
       - [Date & Time](#_date_time)
       - [Boolean](#_boolean_3)
-      - [Selection](#_selection_3)
+      - [Selection](#_selection_4)
       - [Custom](#_custom_2)
       - [Examples](#_examples_10)
-    - [2.6.5. Dialogs](#_dialogs)
+    - [2.6.6. Dialogs](#_dialogs)
       - [Component](#_component)
-      - [Selection](#_selection_4)
+      - [Selection](#_selection_5)
       - [Action Dialogs](#_action_dialogs)
       - [Input](#_input)
       - [Exception](#_exception)
@@ -267,53 +269,53 @@ Note
 
 - Avoiding runtime introspection/config injection
 
-Codion’s domain model layer is a declarative, type-safe representation of the underlying database schema, designed to provide expressive CRUD functionality without annotation overhead. At its heart is the [Entity](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/Entity.html) interface — representing a single row of data and its modifiable state, providing access to attribute values via its **get()** and **set()** methods.
+Codion’s domain model layer is a declarative, type-safe representation of the underlying database schema, designed to provide expressive CRUD functionality without annotation overhead. At its heart is the [Entity](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/Entity.html) interface — representing a single row of data and its modifiable state, providing access to attribute values via its **get()** and **set()** methods.
 
 ##### <a href="#_core_framework_classes" class="anchor"></a>Core classes
 
-**[Domain](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/Domain.html)**  
-Specifies a domain model, containing entity definitions, procedures, functions and reports. A Codion domain model is implemented by extending the **[DomainModel](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/DomainModel.html)** class and populating it with entity definitions.
+**[Domain](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/Domain.html)**  
+Specifies a domain model, containing entity definitions, procedures, functions and reports. A Codion domain model is implemented by extending the **[DomainModel](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/DomainModel.html)** class and populating it with entity definitions.
 
-**[DomainType](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/DomainType.html)**  
+**[DomainType](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/DomainType.html)**  
 A unique identifier for a domain model and a factory for **EntityType** instances associated with that domain model.
 
-**[EntityType](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityType.html)**  
+**[EntityType](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityType.html)**  
 A unique identifier for an entity type and a factory for **Attribute** instances associated with that entity type.
 
-**[Attribute](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Attribute.html)**  
+**[Attribute](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Attribute.html)**  
 A typed identifier for a column, foreign key or transient attribute, usually a **Column** or **ForeignKey**, allowing for type safe access to the associated value. Attributes are usually wrapped in an interface, serving as a convenient namespace.
 
-<img src="https://codion.is/doc/0.18.88/manual/attribute-diagram.svg" width="254" height="189" alt="attribute diagram" />
+<img src="https://codion.is/doc/0.18.89/manual/attribute-diagram.svg" width="254" height="189" alt="attribute diagram" />
 
-**[Column](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Column.html)**  
+**[Column](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Column.html)**  
 An Attribute subclass representing a table column.
 
-**[ForeignKey](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/ForeignKey.html)**  
+**[ForeignKey](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/ForeignKey.html)**  
 An attribute subclass representing a foreign key relationship.
 
-**[EntityDefinition](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityDefinition.html)**  
+**[EntityDefinition](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityDefinition.html)**  
 Encapsulates the meta-data required for presenting and persisting an entity.
 
-**[AttributeDefinition](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/AttributeDefinition.html)**  
+**[AttributeDefinition](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/AttributeDefinition.html)**  
 Each **Attribute** has an associated **AttributeDefinition** (or one of its subclasses) which encapsulates the meta-data required for presenting and persisting the associated value.
 
-**[Entity](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/Entity.html)**  
+**[Entity](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/Entity.html)**  
 Represents a row in a table (or query) and maps **Attributes** to their associated values while keeping track of values which have been modified since they were initially set.
 
-<img src="https://codion.is/doc/0.18.88/manual/entity-diagram.svg" width="318" height="145" alt="entity diagram" />
+<img src="https://codion.is/doc/0.18.89/manual/entity-diagram.svg" width="318" height="145" alt="entity diagram" />
 
-**[Entity.Key](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/Entity.Key.html)**  
+**[Entity.Key](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/Entity.Key.html)**  
 Represents a unique key for a given entity.
 
 ##### <a href="#_domain_api" class="anchor"></a>Domain API
 
 To define a domain model API we:
 
-- Create a [DomainType](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/DomainType.html) constant representing the domain.
+- Create a [DomainType](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/DomainType.html) constant representing the domain.
 
-- Use the **DomainType** to create [EntityType](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityType.html) constants for each table, wrapped in a namespace interface.
+- Use the **DomainType** to create [EntityType](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityType.html) constants for each table, wrapped in a namespace interface.
 
-- Use the **EntityTypes** to create [Column](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Column.html) constants for each column and a [ForeignKey](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/ForeignKey.html) constant for each foreign key.
+- Use the **EntityTypes** to create [Column](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Column.html) constants for each column and a [ForeignKey](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/ForeignKey.html) constant for each foreign key.
 
 These constants represent the domain API and are used when referring to tables, columns or foreign keys.
 
@@ -366,7 +368,7 @@ The underlying column name is typically used as the **Column** name, but as with
 
 ##### <a href="#_domain_implementation" class="anchor"></a>Domain implementation
 
-The domain model is implemented by extending the [DomainModel](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/DomainModel.html) class and populating it with **EntityDefinitions** based on the domain tables. An **EntityDefinition** consists of **AttributeDefinitions** based on the **Attributes** associated with the entity and the information required to persist and present the entity.
+The domain model is implemented by extending the [DomainModel](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/DomainModel.html) class and populating it with **EntityDefinitions** based on the domain tables. An **EntityDefinition** consists of **AttributeDefinitions** based on the **Attributes** associated with the entity and the information required to persist and present the entity.
 
 The **EntityType** and **Attribute** constants provide **as()** methods returning builders which allow for further configuration (such as nullability and maximum length for values and the caption and primary key generator for the entity definition).
 
@@ -430,7 +432,7 @@ public static class StoreImpl extends DomainModel {
 
 1.  The **DomainType** constant is a required constructor parameter.
 
-[Domain](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/Domain.html) is a [Service Provider Interface (SPI)](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html), and it is recommended to configure the domain implementation class for the [Service Loader](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ServiceLoader.html). Without the Service Loader you are restricted to a local JDBC connection, since you must manually provide a domain instance when establishing a connection, instead of just referring to the **DomainType** constant.
+[Domain](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/Domain.html) is a [Service Provider Interface (SPI)](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html), and it is recommended to configure the domain implementation class for the [Service Loader](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ServiceLoader.html). Without the Service Loader you are restricted to a local JDBC connection, since you must manually provide a domain instance when establishing a connection, instead of just referring to the **DomainType** constant.
 
 *src/main/java/module-info.java*
 
@@ -462,7 +464,7 @@ Note
 </tbody>
 </table>
 
-The domain model provides an [Entities](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/Entities.html) instance via [entities()](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/Domain.html#entities()), which contains the entity definitions and serves as a factory for **Entity** and **Entity.Key** instances.
+The domain model provides an [Entities](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/Entities.html) instance via [entities()](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/Domain.html#entities()), which contains the entity definitions and serves as a factory for **Entity** and **Entity.Key** instances.
 
 ``` java
 Domain store = new StoreImpl();
@@ -546,7 +548,7 @@ interface Child {
 
 ##### <a href="#_attributes" class="anchor"></a>Attributes
 
-For the framework to know how to present and persist values, **Attributes** need further configuration. Each attribute is represented by the [AttributeDefinition](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/AttributeDefinition.html) class or one of its subclasses, which encapsulates the required metadata.
+For the framework to know how to present and persist values, **Attributes** need further configuration. Each attribute is represented by the [AttributeDefinition](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/AttributeDefinition.html) class or one of its subclasses, which encapsulates the required metadata.
 
 The **Attribute**, **Column** and **ForeignKey** classes provide methods for creating **AttributeDefinition.Builder** instances, which can be used to configure the attributes.
 
@@ -575,7 +577,7 @@ Country.CAPITAL_POPULATION.as()
 
 ###### <a href="#_derived" class="anchor"></a>Derived
 
-A derived attribute is used to represent a value which is derived from one or more attributes in the same entity. The value of a derived attribute is provided via a [DerivedValue](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/DerivedValue.html) implementation as shown below.
+A derived attribute is used to represent a value which is derived from one or more attributes in the same entity. The value of a derived attribute is provided via a [DerivedValue](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/DerivedValue.html) implementation as shown below.
 
 A derived attribute can serve as a source attribute for another derived attribute, but an exception is thrown during enitity definition if a cycle is detected.
 
@@ -854,7 +856,7 @@ connection.select(Select.where(Continent.NAME.equalTo("Europe")).build());
 connection.select(Select.having(Continent.POPULATION.greaterThan(100_000_000L)).build());
 ```
 
-**In the model layer ([EntityConditionModel](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityConditionModel.html)):**
+**In the model layer ([EntityConditions](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityConditions.html)):**
 
 The framework model layer automatically handles aggregate columns - conditions on aggregate columns are automatically placed in the HAVING clause without explicit configuration:
 
@@ -862,10 +864,10 @@ The framework model layer automatically handles aggregate columns - conditions o
 SwingEntityTableModel continentModel = new SwingEntityTableModel(Continent.TYPE, connection);
 
 // Condition on regular column (NAME) - automatically goes in WHERE
-continentModel.query().condition().get(Continent.NAME).set().equalTo("Asia");
+continentModel.query().conditions().get(Continent.NAME).set().equalTo("Asia");
 
 // Condition on aggregate column (POPULATION) - automatically goes in HAVING
-continentModel.query().condition().get(Continent.POPULATION).set().greaterThan(1_000_000_000L);
+continentModel.query().conditions().get(Continent.POPULATION).set().greaterThan(1_000_000_000L);
 
 // Both conditions work together correctly
 continentModel.items().refresh();
@@ -885,7 +887,7 @@ This automatic HAVING clause handling makes grouped entities seamless to use in 
 
 - Type-safe access to aggregate columns is important
 
-**Use custom queries ([EntitySelectQuery](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/query/EntitySelectQuery.html)) when:**
+**Use custom queries ([EntitySelectQuery](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/query/EntitySelectQuery.html)) when:**
 
 - Aggregating across complex joins of multiple tables
 
@@ -907,7 +909,7 @@ This automatic HAVING clause handling makes grouped entities seamless to use in 
 
 Column templates provide a way to define reusable column configurations that can be applied across multiple entities. This eliminates repetition and ensures consistency for common patterns like audit columns, required searchable fields, or domain-specific column types.
 
-Templates are defined using the [ColumnTemplate](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/ColumnTemplate.html) functional interface.
+Templates are defined using the [ColumnTemplate](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/ColumnTemplate.html) functional interface.
 
 ``` java
 private static final ColumnTemplate<Long> IDENTITY_KEY =
@@ -937,7 +939,7 @@ The templates above demonstrate common patterns:
 
 - `INSERT_TIME` and `INSERT_USER` - Audit columns that track when and by whom records were created, using shared resource bundle keys for consistent captions across entities
 
-Templates are applied using the [Column.as(ColumnTemplate)](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Column.html#as(is.codion.framework.domain.entity.attribute.ColumnTemplate)) method:
+Templates are applied using the [Column.as(ColumnTemplate)](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Column.html#as(is.codion.framework.domain.entity.attribute.ColumnTemplate)) method:
 
 ``` java
 Album.TITLE.as(REQUIRED_SEARCHABLE)
@@ -1083,7 +1085,7 @@ These templates demonstrate how column templates can:
 
 <a href="#_attribute_templates" class="anchor"></a>Attribute templates
 
-Attributes that are not columns, transient, derived and denormalized ones, are templated the same way through the [AttributeTemplate](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/AttributeTemplate.html) functional interface, applied via [Attribute.as(AttributeTemplate)](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Attribute.html#as(is.codion.framework.domain.entity.attribute.AttributeTemplate)). The same production domain derives the latitude and longitude of a point column, the template taking the column it derives from:
+Attributes that are not columns, transient, derived and denormalized ones, are templated the same way through the [AttributeTemplate](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/AttributeTemplate.html) functional interface, applied via [Attribute.as(AttributeTemplate)](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Attribute.html#as(is.codion.framework.domain.entity.attribute.AttributeTemplate)). The same production domain derives the latitude and longitude of a point column, the template taking the column it derives from:
 
 ``` java
 public static AttributeTemplate<Double> latitude(Attribute<Point> coordinates) {
@@ -1112,7 +1114,7 @@ Note that a column has both `as(ColumnTemplate)` and `as(AttributeTemplate)`, so
 
 ##### <a href="#_domain" class="anchor"></a>Domain
 
-Each entity is defined by creating a [EntityDefinition.Builder](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityDefinition.Builder.html) instance via [EntityType.as()](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityType.html#as()) and adding the resulting definition to the domain model, via the [add(EntityDefinition)](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/DomainModel.html#add(is.codion.framework.domain.entity.EntityDefinition…​)) method in the [DomainModel](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/DomainModel.html) class. The framework assumes the **entityType** name is the underlying table name, but the table name can be specified via the [EntityDefinition.Builder.table(String)](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityDefinition.Builder.html#table(java.lang.String)) method.
+Each entity is defined by creating a [EntityDefinition.Builder](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityDefinition.Builder.html) instance via [EntityType.as()](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityType.html#as()) and adding the resulting definition to the domain model, via the [add(EntityDefinition)](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/DomainModel.html#add(is.codion.framework.domain.entity.EntityDefinition…​)) method in the [DomainModel](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/DomainModel.html) class. The framework assumes the **entityType** name is the underlying table name, but the table name can be specified via the [EntityDefinition.Builder.table(String)](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityDefinition.Builder.html#table(java.lang.String)) method.
 
 ``` java
 EntityDefinition city() {
@@ -1160,17 +1162,17 @@ EntityDefinition city() {
 
 ###### <a href="#_examples_2" class="anchor"></a>Examples
 
-- [World domain model](https://codion.is/doc/0.18.88/tutorials/world/world.html#_domain_model)
+- [World domain model](https://codion.is/doc/0.18.89/tutorials/world/world.html#_domain_model)
 
-- [Employees domain model](https://codion.is/doc/0.18.88/tutorials/employees/employees.html#_domain_model)
+- [Employees domain model](https://codion.is/doc/0.18.89/tutorials/employees/employees.html#_domain_model)
 
-- [Chinook domain model](https://codion.is/doc/0.18.88/tutorials/chinook/chinook.html#_domain_model)
+- [Chinook domain model](https://codion.is/doc/0.18.89/tutorials/chinook/chinook.html#_domain_model)
 
-- [Petstore domain model](https://codion.is/doc/0.18.88/tutorials/petstore/petstore.html#_domain_model)
+- [Petstore domain model](https://codion.is/doc/0.18.89/tutorials/petstore/petstore.html#_domain_model)
 
 ##### <a href="#_generator" class="anchor"></a>Generator
 
-The framework provides implementations for most commonly used primary key generation strategies, identity column, sequence (with or without trigger) and auto-increment columns. The [Generator](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Column.Generator.html) class serves as a factory for [Generator](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Column.Generator.html) implementations. Static imports are assumed in the below examples.
+The framework provides implementations for most commonly used primary key generation strategies, identity column, sequence (with or without trigger) and auto-increment columns. The [Generator](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Column.Generator.html) class serves as a factory for [Generator](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Column.Generator.html) implementations. Static imports are assumed in the below examples.
 
 ###### <a href="#_identity" class="anchor"></a>Identity
 
@@ -1215,7 +1217,7 @@ The framework can select new primary key values from a query.
 
 ###### <a href="#_custom" class="anchor"></a>Custom
 
-You can provide a custom key generator strategy by implementing a [Generator](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Column.Generator.html).
+You can provide a custom key generator strategy by implementing a [Generator](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Column.Generator.html).
 
 ``` java
 private static final class UUIDGenerator implements Generator<String> {
@@ -1229,9 +1231,9 @@ private static final class UUIDGenerator implements Generator<String> {
 
 ##### <a href="#_entityformatter" class="anchor"></a>EntityFormatter
 
-The [EntityFormatter](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityFormatter.html) class provides a builder for a **Function\<Entity, String\>** instance, which is then used to provide the **toString()** implementations for entities. This value is used wherever entities are displayed, for example in a ComboBox or as foreign key values in table views.
+The [EntityFormatter](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityFormatter.html) class provides a builder for a **Function\<Entity, String\>** instance, which is then used to provide the **toString()** implementations for entities. This value is used wherever entities are displayed, for example in a ComboBox or as foreign key values in table views.
 
-**Entity.toString()** values are cached by default and invalidated each time an attribute value changes. This caching can be turned off via [EntityDefinition.Builder.cacheToString(boolean)](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityDefinition.Builder.html#cacheToString(boolean))
+**Entity.toString()** values are cached by default and invalidated each time an attribute value changes. This caching can be turned off via [EntityDefinition.Builder.cacheToString(boolean)](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityDefinition.Builder.html#cacheToString(boolean))
 
 ``` java
 return Address.TYPE.as()
@@ -1293,7 +1295,7 @@ private static final class CustomerFormatter implements Function<Entity, String>
 
 ##### <a href="#_validation" class="anchor"></a>Validation
 
-Custom validation of Entities is performed by implementing a [EntityValidator](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityValidator.html) or by adding a validator to an attribute via [ValueAttributeDefinition.Builder.validator(AttributeValidator)](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/ValueAttributeDefinition.Builder.html#validator(is.codion.framework.domain.entity.attribute.AttributeValidator)).
+Custom validation of Entities is performed by implementing a [EntityValidator](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityValidator.html) or by adding a validator to an attribute via [ValueAttributeDefinition.Builder.validator(AttributeValidator)](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/ValueAttributeDefinition.Builder.html#validator(is.codion.framework.domain.entity.attribute.AttributeValidator)).
 
 The **EntityValidator** interface provides range, string length and null validation and can be extended to provide further validations.
 
@@ -1362,11 +1364,11 @@ final class LocationValidator implements AttributeValidator<Location> {
 
 ##### <a href="#_examples_3" class="anchor"></a>Examples
 
-- [Employees domain model](https://codion.is/doc/0.18.88/tutorials/employees/employees.html#_domain)
+- [Employees domain model](https://codion.is/doc/0.18.89/tutorials/employees/employees.html#_domain)
 
-- [Chinook domain model](https://codion.is/doc/0.18.88/tutorials/chinook/chinook.html#_chinook_tutorial)
+- [Chinook domain model](https://codion.is/doc/0.18.89/tutorials/chinook/chinook.html#_chinook_tutorial)
 
-- [Petstore domain model](https://codion.is/doc/0.18.88/tutorials/petstore/petstore.html#_domain_model)
+- [Petstore domain model](https://codion.is/doc/0.18.89/tutorials/petstore/petstore.html#_domain_model)
 
 ##### <a href="#_custom_data_types" class="anchor"></a>Custom data types
 
@@ -1399,7 +1401,7 @@ Note
 </tbody>
 </table>
 
-When defining a column using a custom data type you must provide a [Converter](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Column.Converter.html) implementation while specifying the underlying column type.
+When defining a column using a custom data type you must provide a [Converter](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/Column.Converter.html) implementation while specifying the underlying column type.
 
 ``` java
                   City.LOCATION.as()
@@ -1453,7 +1455,7 @@ private static final class LocationConverter implements Converter<Location, Stri
 }
 ```
 
-When using the HTTP connection in an application using a custom data type, you must implement a [EntityObjectMapperFactory](https://codion.is/doc/0.18.88/api/is.codion.framework.json.domain/is/codion/framework/json/domain/EntityObjectMapperFactory.html), providing a [EntityObjectMapper](https://codion.is/doc/0.18.88/api/is.codion.framework.json.domain/is/codion/framework/json/domain/EntityObjectMapper.html) instance containing a serializer/deserializer for the custom types.
+When using the HTTP connection in an application using a custom data type, you must implement a [EntityObjectMapperFactory](https://codion.is/doc/0.18.89/api/is.codion.framework.json.domain/is/codion/framework/json/domain/EntityObjectMapperFactory.html), providing a [EntityObjectMapper](https://codion.is/doc/0.18.89/api/is.codion.framework.json.domain/is/codion/framework/json/domain/EntityObjectMapper.html) instance containing a serializer/deserializer for the custom types.
 
 ``` java
 public final class WorldObjectMapperFactory extends AbstractEntityObjectMapperFactory {
@@ -1516,11 +1518,11 @@ This **EntityObjectMapperFactory** must be exposed to the ServiceLoader.
           with is.codion.demos.world.domain.WorldObjectMapperFactory;
 ```
 
-See [World domain model](https://codion.is/doc/0.18.88/tutorials/world/world.html#_domain_model)
+See [World domain model](https://codion.is/doc/0.18.89/tutorials/world/world.html#_domain_model)
 
 ##### <a href="#_custom_select_queries" class="anchor"></a>Custom select queries
 
-When an entity’s data cannot be adequately represented by a single table, you may need to customize the SELECT query used to populate entities. The [EntitySelectQuery](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/query/EntitySelectQuery.html) class provides this capability through its builder API.
+When an entity’s data cannot be adequately represented by a single table, you may need to customize the SELECT query used to populate entities. The [EntitySelectQuery](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/query/EntitySelectQuery.html) class provides this capability through its builder API.
 
 <table>
 <colgroup>
@@ -2041,19 +2043,19 @@ cats.forEach(System.out::println);
 
 ###### <a href="#_introduction" class="anchor"></a>Introduction
 
-To unit test the CRUD operations on the domain model extend [DomainTest](https://codion.is/doc/0.18.88/api/is.codion.framework.domain.test/is/codion/framework/domain/test/DomainTest.html).
+To unit test the CRUD operations on the domain model extend [DomainTest](https://codion.is/doc/0.18.89/api/is.codion.framework.domain.test/is/codion/framework/domain/test/DomainTest.html).
 
 The unit tests are run within a single transaction which is rolled back after the test finishes, so these tests are pretty much guaranteed to leave no junk data behind.
 
 ###### <a href="#_domaintest" class="anchor"></a>DomainTest
 
-The DomainTest uses a default [EntityFactory](https://codion.is/doc/0.18.88/api/is.codion.framework.domain.test/is/codion/framework/domain/test/DefaultEntityFactory.html) implementation which provides test entities with randomly created values, based on the value constraints set in the domain model. Extend this class and pass to the super constructor, overriding the required methods.
+The DomainTest uses a default [EntityFactory](https://codion.is/doc/0.18.89/api/is.codion.framework.domain.test/is/codion/framework/domain/test/DefaultEntityFactory.html) implementation which provides test entities with randomly created values, based on the value constraints set in the domain model. Extend this class and pass to the super constructor, overriding the required methods.
 
-- [entity(ForeignKey)](https://codion.is/doc/0.18.88/api/is.codion.framework.domain.test/is/codion/framework/domain/test/DomainTest.EntityFactory.html#entity(is.codion.framework.domain.entity.attribute.ForeignKey)) should return an entity instance for the given foreign key to use for a foreign key reference required for inserting the entity being tested.
+- [entity(ForeignKey)](https://codion.is/doc/0.18.89/api/is.codion.framework.domain.test/is/codion/framework/domain/test/DomainTest.EntityFactory.html#entity(is.codion.framework.domain.entity.attribute.ForeignKey)) should return an entity instance for the given foreign key to use for a foreign key reference required for inserting the entity being tested.
 
-- [entity(EntityType)](https://codion.is/doc/0.18.88/api/is.codion.framework.domain.test/is/codion/framework/domain/test/DomainTest.EntityFactory.html#entity(is.codion.framework.domain.entity.EntityType)) should return an entity to use as basis for the unit test, that is, the entity that should be inserted, selected, updated and finally deleted.
+- [entity(EntityType)](https://codion.is/doc/0.18.89/api/is.codion.framework.domain.test/is/codion/framework/domain/test/DomainTest.EntityFactory.html#entity(is.codion.framework.domain.entity.EntityType)) should return an entity to use as basis for the unit test, that is, the entity that should be inserted, selected, updated and finally deleted.
 
-- [modify(Entity)](https://codion.is/doc/0.18.88/api/is.codion.framework.domain.test/is/codion/framework/domain/test/DomainTest.EntityFactory.html#modify(is.codion.framework.domain.entity.Entity)) should simply leave the entity in a modified state so that it can be used for update test, since the database layer throws an exception if an unmodified entity is updated. If **modify** returns an unmodified entity, the update test is skipped.
+- [modify(Entity)](https://codion.is/doc/0.18.89/api/is.codion.framework.domain.test/is/codion/framework/domain/test/DomainTest.EntityFactory.html#modify(is.codion.framework.domain.entity.Entity)) should simply leave the entity in a modified state so that it can be used for update test, since the database layer throws an exception if an unmodified entity is updated. If **modify** returns an unmodified entity, the update test is skipped.
 
 To run the full CRUD test for a domain entity you need to call the **test(EntityType entityType)** method with the entity type as parameter. You can either create a single **testDomain()** method and call the **test** method in turn for each entityType or create a **entityName** method for each domain entity, as we do in the example below.
 
@@ -2153,11 +2155,11 @@ public class StoreTest extends DomainTest {
 
 ###### <a href="#_examples_4" class="anchor"></a>Examples
 
-- [Employees domain model test](https://codion.is/doc/0.18.88/tutorials/employees/employees.html#_domain_unit_test)
+- [Employees domain model test](https://codion.is/doc/0.18.89/tutorials/employees/employees.html#_domain_unit_test)
 
-- [Chinook domain model test](https://codion.is/doc/0.18.88/tutorials/chinook/chinook.html#_domain_unit_test)
+- [Chinook domain model test](https://codion.is/doc/0.18.89/tutorials/chinook/chinook.html#_domain_unit_test)
 
-- [Petstore domain model test](https://codion.is/doc/0.18.88/tutorials/petstore/petstore.html#_domain_unit_test)
+- [Petstore domain model test](https://codion.is/doc/0.18.89/tutorials/petstore/petstore.html#_domain_unit_test)
 
 #### <a href="#_procedures_functions" class="anchor"></a>1.1.2. Procedures & Functions
 
@@ -2178,25 +2180,25 @@ Note
 
 ##### <a href="#_overview" class="anchor"></a>Overview
 
-Codion’s procedure and function support provides a type-safe abstraction for executing database operations that go beyond simple CRUD. While you can implement procedures and functions by directly calling database stored procedures, Codion encourages implementing business logic in Java using the [EntityConnection](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html) API.
+Codion’s procedure and function support provides a type-safe abstraction for executing database operations that go beyond simple CRUD. While you can implement procedures and functions by directly calling database stored procedures, Codion encourages implementing business logic in Java using the [EntityConnection](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html) API.
 
-**[ProcedureType](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/operation/ProcedureType.html)**  
+**[ProcedureType](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/operation/ProcedureType.html)**  
 A typed identifier for a procedure that performs an operation without returning a value.
 
-**[DatabaseProcedure](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/operation/DatabaseProcedure.html)**  
+**[DatabaseProcedure](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/operation/DatabaseProcedure.html)**  
 The implementation interface for procedures, taking a connection and optional argument.
 
-**[FunctionType](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/operation/FunctionType.html)**  
+**[FunctionType](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/operation/FunctionType.html)**  
 A typed identifier for a function that performs an operation and returns a result.
 
-**[DatabaseFunction](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/operation/DatabaseFunction.html)**  
+**[DatabaseFunction](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/operation/DatabaseFunction.html)**  
 The implementation interface for functions, taking a connection and optional argument, returning a result.
 
 Both procedures and functions are:
 
 - Registered with the domain model
 
-- Executed via [EntityConnection](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html)
+- Executed via [EntityConnection](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html)
 
 - Type-safe with compile-time checking
 
@@ -2393,7 +2395,7 @@ private static final class CreateRandomPlaylist implements DatabaseFunction<Enti
 
 ##### <a href="#_usage" class="anchor"></a>Usage
 
-Procedures and functions are executed via [EntityConnection.execute()](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#execute(is.codion.framework.domain.operation.FunctionType,P)). The connection is passed to the implementation, which can use it for database operations.
+Procedures and functions are executed via [EntityConnection.execute()](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#execute(is.codion.framework.domain.operation.FunctionType,P)). The connection is passed to the implementation, which can use it for database operations.
 
 ###### <a href="#_executing_a_function" class="anchor"></a>Executing a Function
 
@@ -2435,7 +2437,7 @@ private static Collection<Entity> updateTotals(Collection<Entity> invoiceLines, 
 
 ###### <a href="#_transactional_execution" class="anchor"></a>Transactional Execution
 
-Use [EntityConnection.transaction()](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#transaction(is.codion.framework.db.EntityConnection,is.codion.framework.db.EntityConnection.TransactionalResult)) to execute procedures or functions, when multiple operations must succeed or fail together:
+Use [EntityConnection.transaction()](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#transaction(is.codion.framework.db.EntityConnection,is.codion.framework.db.EntityConnection.TransactionalResult)) to execute procedures or functions, when multiple operations must succeed or fail together:
 
 ``` java
 public Entity createRandomPlaylist(RandomPlaylistParameters parameters) {
@@ -2447,7 +2449,7 @@ public Entity createRandomPlaylist(RandomPlaylistParameters parameters) {
 
 ##### <a href="#_httpjson_serialization" class="anchor"></a>HTTP/JSON Serialization
 
-When using HTTP-based connections with JSON serialization enabled (via [HttpEntityConnection](https://codion.is/doc/0.18.88/api/is.codion.framework.db.http/is/codion/framework/db/http/HttpEntityConnection.html)), procedures and functions are executed by serializing arguments and return values as JSON. This requires registering the argument and return types with the [EntityObjectMapper](https://codion.is/doc/0.18.88/api/is.codion.framework.json.domain/is/codion/framework/json/domain/EntityObjectMapper.html).
+When using HTTP-based connections with JSON serialization enabled (via [HttpEntityConnection](https://codion.is/doc/0.18.89/api/is.codion.framework.db.http/is/codion/framework/db/http/HttpEntityConnection.html)), procedures and functions are executed by serializing arguments and return values as JSON. This requires registering the argument and return types with the [EntityObjectMapper](https://codion.is/doc/0.18.89/api/is.codion.framework.json.domain/is/codion/framework/json/domain/EntityObjectMapper.html).
 
 ###### <a href="#_why_type_registration_is_needed" class="anchor"></a>Why Type Registration is Needed
 
@@ -2457,7 +2459,7 @@ A function called over a JSON connection therefore requires a registered return 
 
 ###### <a href="#_entityobjectmapperfactory" class="anchor"></a>EntityObjectMapperFactory
 
-Create an [EntityObjectMapperFactory](https://codion.is/doc/0.18.88/api/is.codion.framework.json.domain/is/codion/framework/json/domain/EntityObjectMapperFactory.html) implementation and define your procedure and function types:
+Create an [EntityObjectMapperFactory](https://codion.is/doc/0.18.89/api/is.codion.framework.json.domain/is/codion/framework/json/domain/EntityObjectMapperFactory.html) implementation and define your procedure and function types:
 
 ``` java
 public final class ChinookObjectMapperFactory extends AbstractEntityObjectMapperFactory {
@@ -2538,14 +2540,14 @@ Note
 
 Conditions in Codion are composable, strongly-typed query filters used to construct WHERE or HAVING clauses for select, update, and count operations. They are typically created via domain attributes (like Column or ForeignKey), and can be freely combined using logical operators like `AND` and `OR`.
 
-The [Chinook domain model](https://codion.is/doc/0.18.88/tutorials/chinook/chinook.html#_domain_model) is used in the examples below.
+The [Chinook domain model](https://codion.is/doc/0.18.89/tutorials/chinook/chinook.html#_domain_model) is used in the examples below.
 
 ##### <a href="#_condition" class="anchor"></a>Condition
 
-**[Condition](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/condition/Condition.html)**  
+**[Condition](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/condition/Condition.html)**  
 Represents a query condition and contains factory methods for creating `Condition` instances.
 
-**[ColumnCondition](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/condition/ColumnCondition.html)**  
+**[ColumnCondition](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/condition/ColumnCondition.html)**  
 Represents a column based `Condition`.
 
 <table>
@@ -2588,7 +2590,7 @@ Condition albums =
         Album.ARTIST_FK.equalTo(metallica);
 ```
 
-**[CustomCondition](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/condition/CustomCondition.html)**  
+**[CustomCondition](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/condition/CustomCondition.html)**  
 A CustomCondition can be used when your logic can’t be expressed through column-based or foreign-key-based conditions — for example, when writing native SQL fragments or using DB-specific syntax.
 
 ``` java
@@ -2603,7 +2605,7 @@ List<Entity> tracks =
         connection.select(noneClassical);
 ```
 
-**[Condition.Combination](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/condition/Condition.Combination.html)**  
+**[Condition.Combination](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/condition/Condition.Combination.html)**  
 Allows you to combine multiple conditions using logical `AND` / `OR` operators. Conditions can be nested to build expressive and complex query logic.
 
 ``` java
@@ -2618,15 +2620,15 @@ List<Entity> albums =
 
 The `EntityConnection.Select`, `EntityConnection.Update`, and `EntityConnection.Count` classes each provide a `.where(Condition)` factory method returning a builder object for further configuration.
 
-[Select.where](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Select.html#where(is.codion.framework.domain.entity.condition.Condition)) returns a [Select.Builder](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Select.Builder.html).
+[Select.where](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Select.html#where(is.codion.framework.domain.entity.condition.Condition)) returns a [Select.Builder](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Select.Builder.html).
 
-[Update.where](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Update.html#where(is.codion.framework.domain.entity.condition.Condition)) returns a [Update.Builder](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Update.Builder.html).
+[Update.where](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Update.html#where(is.codion.framework.domain.entity.condition.Condition)) returns a [Update.Builder](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Update.Builder.html).
 
-[Count.where](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Count.html#where(is.codion.framework.domain.entity.condition.Condition)) returns a [Count.Builder](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Count.Builder.html)
+[Count.where](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Count.html#where(is.codion.framework.domain.entity.condition.Condition)) returns a [Count.Builder](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Count.Builder.html)
 
 ###### <a href="#_select" class="anchor"></a>Select
 
-**[EntityConnection.Select](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Select.html)**  
+**[EntityConnection.Select](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Select.html)**  
 Represents a `WHERE` condition as well as extended configuration specifically for selecting, such as **orderBy**, **limit**, **offset** and **referenceDepth**.
 
 ``` java
@@ -2637,7 +2639,7 @@ List<Entity> albums =
 
 ###### <a href="#_update" class="anchor"></a>Update
 
-**[EntityConnection.Update](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Update.html)**  
+**[EntityConnection.Update](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Update.html)**  
 Represents a `WHERE` condition as well as the columns and values for updating one or more entities.
 
 ``` java
@@ -2648,7 +2650,7 @@ int updateCount =
 
 ###### <a href="#_count" class="anchor"></a>Count
 
-**[EntityConnection.Count](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Count.html)**  
+**[EntityConnection.Count](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.Count.html)**  
 Represents a `WHERE` condition specifically for counting records.
 
 ``` java
@@ -2660,17 +2662,17 @@ int count = connection.count(countAlbumsWithCover);
 
 #### <a href="#_entityconnection" class="anchor"></a>1.1.4. EntityConnection
 
-Codion’s [EntityConnection](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html) is the primary interface for executing database operations — including querying, modifying, transaction control, calling procedures and functions and filling reports. It exposes a small, explicit API for working with Entity instances and makes no assumptions about your database engine or schema design.
+Codion’s [EntityConnection](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html) is the primary interface for executing database operations — including querying, modifying, transaction control, calling procedures and functions and filling reports. It exposes a small, explicit API for working with Entity instances and makes no assumptions about your database engine or schema design.
 
 Codion’s database layer is intentionally minimal. It does not perform SQL joins, nor does it rely on DB-specific features — except where needed for primary key generation via [Generator](#_generator) strategies.
 
 Instead, it gives you predictable, queryable access to individual Entity objects and their associated foreign keys — controlled through a feature called reference depth.
 
-The [Chinook domain model](https://codion.is/doc/0.18.88/tutorials/chinook/chinook.html#_domain_model) is used in the examples below.
+The [Chinook domain model](https://codion.is/doc/0.18.89/tutorials/chinook/chinook.html#_domain_model) is used in the examples below.
 
 ##### <a href="#_entity_connection_selecting" class="anchor"></a>Selecting
 
-By default, when you select a row using [EntityConnection](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html) you receive an Entity instance along with a single level of foreign key references, that is a so-called reference depth of one. This means that selecting a track you get all the entities referenced via foreign keys as well.
+By default, when you select a row using [EntityConnection](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html) you receive an Entity instance along with a single level of foreign key references, that is a so-called reference depth of one. This means that selecting a track you get all the entities referenced via foreign keys as well.
 
 The reference depth can be configured on a foreign key basis when defining entities.
 
@@ -2684,13 +2686,13 @@ A negative reference depth means no limit with the whole dependency graph fetche
 codion.db.limitReferenceDepth=false
 ```
 
-or the [LocalEntityConnection.LIMIT_REFERENCE_DEPTH](https://codion.is/doc/0.18.88/api/is.codion.framework.db.local/is/codion/framework/db/local/LocalEntityConnection.html#LIMIT_REFERENCE_DEPTH) configuration value:
+or the [LocalEntityConnection.LIMIT_REFERENCE_DEPTH](https://codion.is/doc/0.18.89/api/is.codion.framework.db.local/is/codion/framework/db/local/LocalEntityConnection.html#LIMIT_REFERENCE_DEPTH) configuration value:
 
 ``` java
 LocalEntityConnection.LIMIT_REFERENCE_DEPTH.set(false);
 ```
 
-or on a connection instance via [limitReferenceDepth(boolean limitReferenceDepth)](https://codion.is/doc/0.18.88/api/is.codion.framework.db.local/is/codion/framework/db/local/LocalEntityConnection.html#limitReferenceDepth(boolean))
+or on a connection instance via [limitReferenceDepth(boolean limitReferenceDepth)](https://codion.is/doc/0.18.89/api/is.codion.framework.db.local/is/codion/framework/db/local/LocalEntityConnection.html#limitReferenceDepth(boolean))
 
 ``` java
 connection.limitReferenceDepth(false);
@@ -2784,13 +2786,13 @@ Selecting tracks performs four queries (track + album, mediatype and genre), but
 
 ###### <a href="#_selecting_entities" class="anchor"></a>Selecting entities
 
-[select(Condition condition)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#select(is.codion.framework.domain.entity.condition.Condition))
+[select(Condition condition)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#select(is.codion.framework.domain.entity.condition.Condition))
 
-[select(Select select)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#select(is.codion.framework.db.EntityConnection.Select))
+[select(Select select)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#select(is.codion.framework.db.EntityConnection.Select))
 
-[selectSingle(Condition condition)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#selectSingle(is.codion.framework.domain.entity.condition.Condition))
+[selectSingle(Condition condition)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#selectSingle(is.codion.framework.domain.entity.condition.Condition))
 
-[selectSingle(Select select)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#selectSingle(is.codion.framework.db.EntityConnection.Select))
+[selectSingle(Select select)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#selectSingle(is.codion.framework.db.EntityConnection.Select))
 
 ``` java
 List<Entity> artists = connection.select(
@@ -2824,7 +2826,7 @@ List<Entity> nonClassicalTracks = connection.select(
         Track.NOT_IN_PLAYLIST.get(Playlist.ID, classicalPlaylistId));
 ```
 
-[select(Key key)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#select(is.codion.framework.domain.entity.Entity.Key))
+[select(Key key)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#select(is.codion.framework.domain.entity.Entity.Key))
 
 ``` java
 Entities entities = connection.entities();
@@ -2834,7 +2836,7 @@ Entity.Key key = entities.primaryKey(Artist.TYPE, 42L);
 Entity artist = connection.select(key);
 ```
 
-[select(Collection\<Key\> keys)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#select(java.util.Collection))
+[select(Collection\<Key\> keys)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#select(java.util.Collection))
 
 ``` java
 Entities entities = connection.entities();
@@ -2849,11 +2851,11 @@ Collection<Entity> artists = connection.select(List.of(key42, key43));
 
 For selecting the values of a single column.
 
-[select(Column\<T\> column)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#select(is.codion.framework.domain.entity.attribute.Column))
+[select(Column\<T\> column)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#select(is.codion.framework.domain.entity.attribute.Column))
 
-[select(Column\<T\> column, Condition condition)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#select(is.codion.framework.domain.entity.attribute.Column,is.codion.framework.domain.entity.condition.Condition))
+[select(Column\<T\> column, Condition condition)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#select(is.codion.framework.domain.entity.attribute.Column,is.codion.framework.domain.entity.condition.Condition))
 
-[select(Column\<T\> column, Select select)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#select(is.codion.framework.domain.entity.attribute.Column,is.codion.framework.db.EntityConnection.Select))
+[select(Column\<T\> column, Select select)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#select(is.codion.framework.domain.entity.attribute.Column,is.codion.framework.db.EntityConnection.Select))
 
 ``` java
 List<String> customerUsStates =
@@ -2895,9 +2897,9 @@ Note
 </tbody>
 </table>
 
-[iterator(Condition condition)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#iterator(is.codion.framework.domain.entity.condition.Condition))
+[iterator(Condition condition)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#iterator(is.codion.framework.domain.entity.condition.Condition))
 
-[iterator(Select select)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#iterator(is.codion.framework.db.EntityConnection.Select))
+[iterator(Select select)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#iterator(is.codion.framework.db.EntityConnection.Select))
 
 ``` java
 try (EntityResultIterator iterator =
@@ -2912,7 +2914,7 @@ try (EntityResultIterator iterator =
 
 For selecting entities that depend on a set of entities via foreign keys.
 
-[dependencies(Collection\<Entity\> entities)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#dependencies(java.util.Collection))
+[dependencies(Collection\<Entity\> entities)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#dependencies(java.util.Collection))
 
 ``` java
 List<Entity> employees = connection.select(all(Employee.TYPE));
@@ -2926,7 +2928,7 @@ Collection<Entity> customersDependingOnEmployees = dependencies.get(Customer.TYP
 
 For selecting the row count given a count condition.
 
-[count(Count count)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#count(is.codion.framework.db.EntityConnection.Count))
+[count(Count count)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#count(is.codion.framework.db.EntityConnection.Count))
 
 ``` java
 int numberOfItStaff = connection.count(
@@ -2939,13 +2941,13 @@ int numberOfItStaff = connection.count(
 
 For inserting rows.
 
-- [insert(Entity entity)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#insert(is.codion.framework.domain.entity.Entity))
+- [insert(Entity entity)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#insert(is.codion.framework.domain.entity.Entity))
 
-- [insertSelect(Entity entity)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#insertSelect(is.codion.framework.domain.entity.Entity))
+- [insertSelect(Entity entity)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#insertSelect(is.codion.framework.domain.entity.Entity))
 
-- [insert(Collection\<Entity\> entities)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#insert(java.util.Collection))
+- [insert(Collection\<Entity\> entities)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#insert(java.util.Collection))
 
-- [insertSelect(Collection\<Entity\> entities)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#insertSelect(java.util.Collection))
+- [insertSelect(Collection\<Entity\> entities)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#insertSelect(java.util.Collection))
 
 ``` java
 Entities entities = connection.entities();
@@ -2988,13 +2990,13 @@ Important
 </tbody>
 </table>
 
-- [update(Entity entity)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#update(is.codion.framework.domain.entity.Entity))
+- [update(Entity entity)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#update(is.codion.framework.domain.entity.Entity))
 
-- [updateSelect(Entity entity)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#updateSelect(is.codion.framework.domain.entity.Entity))
+- [updateSelect(Entity entity)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#updateSelect(is.codion.framework.domain.entity.Entity))
 
-- [update(Collection\<Entity\> entities)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#update(java.util.Collection))
+- [update(Collection\<Entity\> entities)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#update(java.util.Collection))
 
-- [updateSelect(Collection\<Entity\> entities)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#updateSelect(java.util.Collection))
+- [updateSelect(Collection\<Entity\> entities)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#updateSelect(java.util.Collection))
 
 ``` java
 Entity myBand = connection.selectSingle(
@@ -3043,23 +3045,23 @@ Optimistic locking can be turned off system-wide using a system property:
 codion.db.optimisticLocking=false
 ```
 
-or by using the [LocalEntityConnection.OPTIMISTIC_LOCKING](https://codion.is/doc/0.18.88/api/is.codion.framework.db.local/is/codion/framework/db/local/LocalEntityConnection.html#OPTIMISTIC_LOCKING) configuration value:
+or by using the [LocalEntityConnection.OPTIMISTIC_LOCKING](https://codion.is/doc/0.18.89/api/is.codion.framework.db.local/is/codion/framework/db/local/LocalEntityConnection.html#OPTIMISTIC_LOCKING) configuration value:
 
 ``` java
 LocalEntityConnection.OPTIMISTIC_LOCKING.set(false);
 ```
 
-or on a connection instance via [optimisticLocking()](https://codion.is/doc/0.18.88/api/is.codion.framework.db.local/is/codion/framework/db/local/LocalEntityConnection.html#optimisticLocking(boolean)):
+or on a connection instance via [optimisticLocking()](https://codion.is/doc/0.18.89/api/is.codion.framework.db.local/is/codion/framework/db/local/LocalEntityConnection.html#optimisticLocking(boolean)):
 
 ``` java
 connection.optimisticLocking(false);
 ```
 
-or on a per-entity basis via [EntityDefinition.Builder.optimisticLocking(false)](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityDefinition.Builder.html#optimisticLocking(boolean)).
+or on a per-entity basis via [EntityDefinition.Builder.optimisticLocking(false)](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityDefinition.Builder.html#optimisticLocking(boolean)).
 
 For updating by condition.
 
-- [update(Update update)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#update(is.codion.framework.db.EntityConnection.Update))
+- [update(Update update)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#update(is.codion.framework.db.EntityConnection.Update))
 
 ``` java
 connection.update(
@@ -3075,7 +3077,7 @@ int updateCount = connection.update(
 
 For deleting existing rows.
 
-- [delete(Condition condition)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#delete(is.codion.framework.domain.entity.condition.Condition))
+- [delete(Condition condition)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#delete(is.codion.framework.domain.entity.condition.Condition))
 
 ``` java
 Entity aquaman = connection.selectSingle(
@@ -3097,9 +3099,9 @@ int albumsDeleted = connection.delete(
         Album.ARTIST_FK.equalTo(aquaman));
 ```
 
-- [delete(Key key)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#delete(is.codion.framework.domain.entity.Entity.Key))
+- [delete(Key key)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#delete(is.codion.framework.domain.entity.Entity.Key))
 
-- [delete(Collection\<Key\> keys)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#delete(java.util.Collection))
+- [delete(Collection\<Key\> keys)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#delete(java.util.Collection))
 
 ``` java
 Entity audioslave = connection.selectSingle(
@@ -3134,9 +3136,9 @@ connection.delete(Entity.primaryKeys(toDelete));
 
 ###### <a href="#_function" class="anchor"></a>Function
 
-- [execute(FunctionType functionType)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#execute(is.codion.framework.domain.operation.FunctionType))
+- [execute(FunctionType functionType)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#execute(is.codion.framework.domain.operation.FunctionType))
 
-- [execute(FunctionType functionType, P parameter)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#execute(is.codion.framework.domain.operation.FunctionType,P))
+- [execute(FunctionType functionType, P parameter)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#execute(is.codion.framework.domain.operation.FunctionType,P))
 
 ``` java
 List<Long> trackIds = List.of(123L, 1234L);
@@ -3157,9 +3159,9 @@ Entity playlist = connection.execute(Playlist.RANDOM_PLAYLIST,
 
 ###### <a href="#_procedure" class="anchor"></a>Procedure
 
-- [execute(ProcedureType procedureType)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#execute(is.codion.framework.domain.operation.ProcedureType))
+- [execute(ProcedureType procedureType)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#execute(is.codion.framework.domain.operation.ProcedureType))
 
-- [execute(ProcedureType procedureType, P parameter)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#execute(is.codion.framework.domain.operation.ProcedureType,P))
+- [execute(ProcedureType procedureType, P parameter)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#execute(is.codion.framework.domain.operation.ProcedureType,P))
 
 ``` java
 connection.execute(Invoice.UPDATE_TOTALS, List.of(1234L, 3412L));
@@ -3169,7 +3171,7 @@ connection.execute(Invoice.UPDATE_TOTALS, List.of(1234L, 3412L));
 
 ###### <a href="#_report" class="anchor"></a>report
 
-- [report(ReportType reportType, P reportParameters)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#report(is.codion.framework.domain.report.ReportType,P))
+- [report(ReportType reportType, P reportParameters)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#report(is.codion.framework.domain.report.ReportType,P))
 
 ``` java
 Map<String, Object> reportParameters = new HashMap<>();
@@ -3187,9 +3189,9 @@ Codion encourages declarative transaction boundaries using lambdas or anonymous 
 
 Most use cases are covered by:
 
-- [EntityConnection.transaction(EntityConnection, Transactional transactional)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#transaction(is.codion.framework.db.EntityConnection,is.codion.framework.db.EntityConnection.Transactional)) – no return value
+- [EntityConnection.transaction(EntityConnection, Transactional transactional)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#transaction(is.codion.framework.db.EntityConnection,is.codion.framework.db.EntityConnection.Transactional)) – no return value
 
-- [EntityConnection.transaction(EntityConnection, TransactionalResult transactional)](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#transaction(is.codion.framework.db.EntityConnection,is.codion.framework.db.EntityConnection.TransactionalResult)) – with return value
+- [EntityConnection.transaction(EntityConnection, TransactionalResult transactional)](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#transaction(is.codion.framework.db.EntityConnection,is.codion.framework.db.EntityConnection.TransactionalResult)) – with return value
 
 These methods perform a commit on success and rollback on failure.
 
@@ -3355,7 +3357,7 @@ catch (Throwable e) {
 
 ##### <a href="#_query_cache" class="anchor"></a>Query cache
 
-[cacheQueries()](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#cacheQueries()) enables query result caching on the connection until the returned QueryCache is closed. While active, identical selects return the cached result, which is intended for short-lived, read-only scopes, such as application or model initialization, where the same lookup entities would otherwise be selected repeatedly.
+[cacheQueries()](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#cacheQueries()) enables query result caching on the connection until the returned QueryCache is closed. While active, identical selects return the cached result, which is intended for short-lived, read-only scopes, such as application or model initialization, where the same lookup entities would otherwise be selected repeatedly.
 
 ``` java
 try (QueryCache cache = connection.cacheQueries()) {
@@ -3377,7 +3379,7 @@ Note that the cache is not invalidated by inserts, updates, deletes or transacti
 
 #### <a href="#_connection_builders" class="anchor"></a>1.1.5. Connection Builders
 
-An [EntityConnection](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html) built via one of the builders below manages itself, regardless of protocol (JDBC, RMI, HTTP): it connects on demand, validates the underlying connection before each operation and re-establishes it when it has gone bad.
+An [EntityConnection](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html) built via one of the builders below manages itself, regardless of protocol (JDBC, RMI, HTTP): it connects on demand, validates the underlying connection before each operation and re-establishes it when it has gone bad.
 
 A client therefore holds on to a single **EntityConnection** instance for its lifetime, handing it to the models requiring database access. The instance stays valid across a network failure or a server restart, only the connection underneath it being replaced. If no connection can be established the operation throws.
 
@@ -3398,9 +3400,9 @@ Tip
 
 ##### <a href="#_localentityconnection" class="anchor"></a>LocalEntityConnection
 
-[LocalEntityConnection](https://codion.is/doc/0.18.88/api/is.codion.framework.db.local/is/codion/framework/db/local/LocalEntityConnection.html)
+[LocalEntityConnection](https://codion.is/doc/0.18.89/api/is.codion.framework.db.local/is/codion/framework/db/local/LocalEntityConnection.html)
 
-A connection based on a local JDBC connection, available via [connection()](https://codion.is/doc/0.18.88/api/is.codion.framework.db.local/is/codion/framework/db/local/LocalEntityConnection.html#connection()).
+A connection based on a local JDBC connection, available via [connection()](https://codion.is/doc/0.18.89/api/is.codion.framework.db.local/is/codion/framework/db/local/LocalEntityConnection.html#connection()).
 
 ``` java
 Database.URL.set("jdbc:h2:mem:h2db");
@@ -3423,7 +3425,7 @@ entityConnection.close();
 
 ##### <a href="#_remoteentityconnection" class="anchor"></a>RemoteEntityConnection
 
-[RemoteEntityConnection](https://codion.is/doc/0.18.88/api/is.codion.framework.db.rmi/is/codion/framework/db/rmi/RemoteEntityConnection.html)
+[RemoteEntityConnection](https://codion.is/doc/0.18.89/api/is.codion.framework.db.rmi/is/codion/framework/db/rmi/RemoteEntityConnection.html)
 
 A connection based on a remote RMI connection. Requires a server.
 
@@ -3445,7 +3447,7 @@ entityConnection.close();
 
 ##### <a href="#_httpentityconnection" class="anchor"></a>HttpEntityConnection
 
-[HttpEntityConnection](https://codion.is/doc/0.18.88/api/is.codion.framework.db.http/is/codion/framework/db/http/HttpEntityConnection.html)
+[HttpEntityConnection](https://codion.is/doc/0.18.89/api/is.codion.framework.db.http/is/codion/framework/db/http/HttpEntityConnection.html)
 
 A connection based on a remote HTTP connection. Requires a server.
 
@@ -3466,7 +3468,7 @@ entityConnection.select(entities.primaryKey(Track.TYPE, 42L));
 entityConnection.close();
 ```
 
-For more information see [HTTP Connections](https://codion.is/doc/0.18.88/technical/technical.html#_http_connections) in the technical docs.
+For more information see [HTTP Connections](https://codion.is/doc/0.18.89/technical/technical.html#_http_connections) in the technical docs.
 
 ##### <a href="#_customizing_the_description" class="anchor"></a>Customizing the Description
 
@@ -3484,7 +3486,7 @@ Each connection type has its own default description:
 
 ###### <a href="#_overriding_the_description" class="anchor"></a>Overriding the Description
 
-You can override the default description using the configuration property [EntityConnection.DESCRIPTION](https://codion.is/doc/0.18.88/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#DESCRIPTION)
+You can override the default description using the configuration property [EntityConnection.DESCRIPTION](https://codion.is/doc/0.18.89/api/is.codion.framework.db/is/codion/framework/db/EntityConnection.html#DESCRIPTION)
 
 ``` java
 EntityConnection.DESCRIPTION.set("MyDescription");
@@ -3527,7 +3529,7 @@ HttpEntityConnection.builder()
 
 ##### <a href="#_supplying_the_domain" class="anchor"></a>Supplying the domain
 
-A client provides its domain model to the connection builder via [HttpEntityConnection.Builder.domain(Domain)](https://codion.is/doc/0.18.88/api/is.codion.framework.db.http/is/codion/framework/db/http/HttpEntityConnection.Builder.html#domain(is.codion.framework.domain.Domain)). Without it, the client fetches the entity definitions from the server on connect — that reply is the one JSON-mode response carrying a Java-serialized object. A client with an injected domain skips the round trip and, if it avoids Java-serialized report results (see below), performs **no Java deserialization at all**.
+A client provides its domain model to the connection builder via [HttpEntityConnection.Builder.domain(Domain)](https://codion.is/doc/0.18.89/api/is.codion.framework.db.http/is/codion/framework/db/http/HttpEntityConnection.Builder.html#domain(is.codion.framework.domain.Domain)). Without it, the client fetches the entity definitions from the server on connect — that reply is the one JSON-mode response carrying a Java-serialized object. A client with an injected domain skips the round trip and, if it avoids Java-serialized report results (see below), performs **no Java deserialization at all**.
 
 The choice carries a trade-off in the other direction as well. The domain **implementation** contains the database-level details — physical table and column names (the domain API constants may well be aliases), column expressions, custom select and subquery SQL — and injecting it packages all of that inside the client, where it can be read out of the distributed application. The entity definitions served by the **entities route** deliberately omit these: the database-level fields are transient, so a client that fetches its definitions sees only the domain API surface.
 
@@ -3537,7 +3539,7 @@ The choice carries a trade-off in the other direction as well. The domain **impl
 
 ##### <a href="#_registering_operation_types" class="anchor"></a>Registering operation types
 
-Entities, keys and conditions serialize out of the box. The parameter and return values of database [procedures, functions](#_procedures_functions) and reports are domain-specific types, so the domain registers how they travel, in an [EntityObjectMapperFactory](https://codion.is/doc/0.18.88/api/is.codion.framework.json.domain/is/codion/framework/json/domain/EntityObjectMapperFactory.html):
+Entities, keys and conditions serialize out of the box. The parameter and return values of database [procedures, functions](#_procedures_functions) and reports are domain-specific types, so the domain registers how they travel, in an [EntityObjectMapperFactory](https://codion.is/doc/0.18.89/api/is.codion.framework.json.domain/is/codion/framework/json/domain/EntityObjectMapperFactory.html):
 
 ``` java
 public final class ChinookObjectMapperFactory extends AbstractEntityObjectMapperFactory {
@@ -3591,7 +3593,7 @@ A report result travels as JSON like a function result, using a registered retur
 
 ##### <a href="#_deployment" class="anchor"></a>Deployment
 
-Exposing the HTTP service outside a trusted network is a deployment decision with security consequences — authentication, authorization, rate limiting, TLS. See [Internet deployment](https://codion.is/doc/0.18.88/technical/technical.html#_internet_deployment) before opening the port.
+Exposing the HTTP service outside a trusted network is a deployment decision with security consequences — authentication, authorization, rate limiting, TLS. See [Internet deployment](https://codion.is/doc/0.18.89/technical/technical.html#_internet_deployment) before opening the port.
 
 ### <a href="#_framework_model" class="anchor"></a>1.2. Framework Model
 
@@ -3601,7 +3603,7 @@ The model layer is a complete, UI-independent application: data retrieval, editi
 
 ##### <a href="#_the_pieces" class="anchor"></a>The pieces
 
-An [EntityModel](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityModel.html) is the composition root for a single entity type: an [edit model](#_entityeditmodel) (wrapping the [editor](#_entityeditor) — the write path), usually a [table model](#_entitytablemodel) (with its [query model](#_entityquerymodel) — the read path), and any detail models.
+An [EntityModel](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityModel.html) is the composition root for a single entity type: an [edit model](#_entityeditmodel) (wrapping the [editor](#_entityeditor) — the write path), usually a [table model](#_entitytablemodel) (with its [query model](#_entityquerymodel) — the read path), and any detail models.
 
 ``` java
     SwingEntityModel customerModel = new SwingEntityModel(Customer.TYPE, connection);
@@ -3697,11 +3699,11 @@ Note
 
 #### <a href="#_entitymodel" class="anchor"></a>1.2.2. EntityModel
 
-The application model layer consists of the [EntityModel](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityModel.html) class and its associates; the [EntityTableModel](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityTableModel.html), which provides a table representation of entities and the [EntityEditModel](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditModel.html) which provides the CRUD operations.
+The application model layer consists of the [EntityModel](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityModel.html) class and its associates; the [EntityTableModel](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityTableModel.html), which provides a table representation of entities and the [EntityEditModel](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditModel.html) which provides the CRUD operations.
 
 An **EntityModel** always contains an **EntityEditModel** instance and usually contains a **EntityTableModel** as well. A default edit model implementation is created automatically by the **EntityTableModel** if one is not supplied via a constructor argument.
 
-<img src="https://codion.is/doc/0.18.88/manual/entity-model-diagram.svg" width="245" height="335" alt="entity model diagram" />
+<img src="https://codion.is/doc/0.18.89/manual/entity-model-diagram.svg" width="245" height="335" alt="entity model diagram" />
 
 ``` java
 public class AddressModel extends SwingEntityModel {
@@ -3725,7 +3727,7 @@ public class CustomerAddressModel extends SwingEntityModel {
 
 An **EntityModel** can contain one or more detail models, usually based on foreign key relationships.
 
-<img src="https://codion.is/doc/0.18.88/manual/entity-detail-model-diagram.svg" width="213" height="81" alt="entity detail model diagram" />
+<img src="https://codion.is/doc/0.18.89/manual/entity-detail-model-diagram.svg" width="213" height="81" alt="entity detail model diagram" />
 
 ``` java
 public class StoreApplicationModel extends SwingEntityApplicationModel {
@@ -3779,13 +3781,13 @@ private void bindEvents() {
 
 ##### <a href="#_examples_5" class="anchor"></a>Examples
 
-- [Employees entity models](https://codion.is/doc/0.18.88/tutorials/employees/employees.html#_model)
+- [Employees entity models](https://codion.is/doc/0.18.89/tutorials/employees/employees.html#_model)
 
 #### <a href="#_entityeditmodel" class="anchor"></a>1.2.3. EntityEditModel
 
-<img src="https://codion.is/doc/0.18.88/manual/entity-edit-model-diagram.svg" width="240" height="208" alt="entity edit model diagram" />
+<img src="https://codion.is/doc/0.18.89/manual/entity-edit-model-diagram.svg" width="240" height="208" alt="entity edit model diagram" />
 
-The [EntityEditModel](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditModel.html) binds an [EntityEditor](#_entityeditor) to a connection, and is the model an [EntityEditPanel](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityEditPanel.html) is based on. The editing itself — values, validation, dirty state, insert, update and delete — is the [EntityEditor](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html)'s job, accessed via [editor()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditModel.html#editor()).
+The [EntityEditModel](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditModel.html) binds an [EntityEditor](#_entityeditor) to a connection, and is the model an [EntityEditPanel](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityEditPanel.html) is based on. The editing itself — values, validation, dirty state, insert, update and delete — is the [EntityEditor](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html)'s job, accessed via [editor()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditModel.html#editor()).
 
 The simplest edit model requires nothing but a constructor:
 
@@ -3828,7 +3830,7 @@ See [EntityEditor](#_entityeditor) for the editor API this builds on: editing va
 
 ##### <a href="#_combo_box_models" class="anchor"></a>Combo box models
 
-The Swing implementation, [SwingEntityEditModel](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.model/is/codion/swing/framework/model/SwingEntityEditModel.html), provides combo box models for foreign keys and column values, shared by the input components bound to them. A combo box model can be initialized eagerly in the constructor — otherwise it is created and refreshed on first use, by the component requesting it.
+The Swing implementation, [SwingEntityEditModel](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.model/is/codion/swing/framework/model/SwingEntityEditModel.html), provides combo box models for foreign keys and column values, shared by the input components bound to them. A combo box model can be initialized eagerly in the constructor — otherwise it is created and refreshed on first use, by the component requesting it.
 
 ``` java
 public final class TrackEditModel extends SwingEntityEditModel {
@@ -3846,13 +3848,13 @@ Combo box models based on entities stay consistent automatically: entities inser
 
 #### <a href="#_entityeditor" class="anchor"></a>1.2.4. EntityEditor
 
-The [EntityEditor](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html) is the framework’s write path: it manages a single entity instance being edited — its values, their validity, dirty state and default values — and performs the insert, update and delete operations. An editor is available from every edit model via [editor()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditModel.html#editor()), and everything an [EntityEditPanel](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityEditPanel.html) does — component enabling, validation indicators, dirty warnings — it does by observing the editor.
+The [EntityEditor](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html) is the framework’s write path: it manages a single entity instance being edited — its values, their validity, dirty state and default values — and performs the insert, update and delete operations. An editor is available from every edit model via [editor()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditModel.html#editor()), and everything an [EntityEditPanel](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityEditPanel.html) does — component enabling, validation indicators, dirty warnings — it does by observing the editor.
 
-The editor exposes two things: the **entity** being edited, via [entity()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#entity()), and an observable **value** for each attribute, via [value(attribute)](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#value(is.codion.framework.domain.entity.attribute.Attribute)).
+The editor exposes two things: the **entity** being edited, via [entity()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#entity()), and an observable **value** for each attribute, via [value(attribute)](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#value(is.codion.framework.domain.entity.attribute.Attribute)).
 
 ##### <a href="#_the_entity" class="anchor"></a>The entity
 
-[EditorEntity](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.EditorEntity.html) represents the entity being edited: **set()** populates the editor, **defaults()** initializes a new entity with default values, **clear()** empties it, **revert()** reverts all modifications. Its [exists()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.Exists.html), [modified()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.Modified.html) and **valid()** observable states drive the UI — an update control is enabled while the entity exists and is modified.
+[EditorEntity](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.EditorEntity.html) represents the entity being edited: **set()** populates the editor, **defaults()** initializes a new entity with default values, **clear()** empties it, **revert()** reverts all modifications. Its [exists()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.Exists.html), [modified()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.Modified.html) and **valid()** observable states drive the UI — an update control is enabled while the entity exists and is modified.
 
 The example below shows the full life cycle: defaults, setting values, insert, modify, update and delete.
 
@@ -3893,13 +3895,13 @@ editor.delete();
 
 ##### <a href="#_editing_values" class="anchor"></a>Editing values
 
-[EditorValue](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.EditorValue.html) is a full [Value](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/value/Value.html) implementation for a single attribute, so anything that can be linked to a **Value** — an input component, another value — can be linked to an attribute of the entity being edited. Each editor value also exposes the state the UI needs: **valid()** and **modified()** observable states, the validation **error()**, the soft **warned()** / **warning()** pair, the **original()** value and **revert()**.
+[EditorValue](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.EditorValue.html) is a full [Value](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/value/Value.html) implementation for a single attribute, so anything that can be linked to a **Value** — an input component, another value — can be linked to an attribute of the entity being edited. Each editor value also exposes the state the UI needs: **valid()** and **modified()** observable states, the validation **error()**, the soft **warned()** / **warning()** pair, the **original()** value and **revert()**.
 
 Two observers notify of changes, with an important distinction:
 
 - **Value.observer()** — notified whenever the value changes, whether by the user or by the framework populating the editor.
 
-- [edited()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.EditorValue.html#edited()) — notified only when the value is changed **through this EditorValue**, that is, by an actual edit, not when the entity is set or cleared.
+- [edited()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.EditorValue.html#edited()) — notified only when the value is changed **through this EditorValue**, that is, by an actual edit, not when the entity is set or cleared.
 
 Use **edited()** to react to user edits without also reacting every time an entity is selected into the editor:
 
@@ -3914,13 +3916,13 @@ trackEdited.when(Objects::isNull)
 
 ##### <a href="#_default_values_and_persistent_values" class="anchor"></a>Default values and persistent values
 
-Each editor value has a [defaultValue()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.EditorValue.html#defaultValue()) supplier, used by **entity().defaults()** when initializing a new entity. A default value can be configured in the domain model, via the attribute definition, or set on the editor value directly, as in the **UUID** example in the previous section.
+Each editor value has a [defaultValue()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.EditorValue.html#defaultValue()) supplier, used by **entity().defaults()** when initializing a new entity. A default value can be configured in the domain model, via the attribute definition, or set on the editor value directly, as in the **UUID** example in the previous section.
 
-The [persist()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.EditorValue.html#persist()) state controls whether a value survives **defaults()** — whether it carries over from one entity to the next. Foreign key values persist by default, since when entering a batch of records the reference typically stays the same, while the other values change.
+The [persist()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.EditorValue.html#persist()) state controls whether a value survives **defaults()** — whether it carries over from one entity to the next. Foreign key values persist by default, since when entering a batch of records the reference typically stays the same, while the other values change.
 
 ##### <a href="#_foreign_key_values_persist_and_propagate" class="anchor"></a>Foreign key values: persist and propagate
 
-The example below disables persistence for a foreign key and uses [propagate()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.EditorValue.html#propagate(is.codion.framework.domain.entity.attribute.Attribute,java.util.function.Function)) to populate the invoice billing address from the customer, each time the customer is edited. A propagated value is applied only when the source value actually changes and remains editable by the user afterwards.
+The example below disables persistence for a foreign key and uses [propagate()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.EditorValue.html#propagate(is.codion.framework.domain.entity.attribute.Attribute,java.util.function.Function)) to populate the invoice billing address from the customer, each time the customer is edited. A propagated value is applied only when the source value actually changes and remains editable by the user afterwards.
 
 ``` java
 public final class InvoiceEditModel extends SwingEntityEditModel {
@@ -3948,7 +3950,7 @@ public final class InvoiceEditModel extends SwingEntityEditModel {
 
 ##### <a href="#_inserting_updating_and_deleting" class="anchor"></a>Inserting, updating and deleting
 
-[insert()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#insert()), [update()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#update()) and [delete()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#delete()) operate on the entity being edited and return the resulting entity (or entities, for the collection variants). The entity is validated before insert and update, using the [validator()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#validator()), and an invalid entity fails with an **EntityValidationException** — the same validation continuously reflected by the **valid()** states and **error()** of each editor value.
+[insert()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#insert()), [update()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#update()) and [delete()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#delete()) operate on the entity being edited and return the resulting entity (or entities, for the collection variants). The entity is validated before insert and update, using the [validator()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#validator()), and an invalid entity fails with an **EntityValidationException** — the same validation continuously reflected by the **valid()** states and **error()** of each editor value.
 
 Validation has a second, softer severity. **EntityValidator.warning()** reports a value the entity may carry but probably should not — implausible, out of the ordinary, worth a second look — and blocks nothing: insert and update proceed and **valid()** stays true. It is the tier for a value that is frequently odd *and* correct, where rejecting outright either blocks a true record or teaches the user to enter a plausible lie. Each editor value reflects it through **warned()** and **warning()**, and components indicate it separately from invalidity (**EntityEditPanel.Config.warningIndicator**).
 
@@ -3969,7 +3971,7 @@ Note
 
 ##### <a href="#_custom_persistence" class="anchor"></a>Custom persistence
 
-[EntityPersistence](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityPersistence.html), set via [persistence()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#persistence()), replaces how the editor performs its insert, update and delete — without changing anything else about it. Here invoice line operations run in a transaction which also updates the totals of the affected invoices, via a database procedure:
+[EntityPersistence](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityPersistence.html), set via [persistence()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#persistence()), replaces how the editor performs its insert, update and delete — without changing anything else about it. Here invoice line operations run in a transaction which also updates the totals of the affected invoices, via a database procedure:
 
 ``` java
 private static final class InvoiceLinePersistence implements EntityPersistence {
@@ -4008,7 +4010,7 @@ private static final class InvoiceLinePersistence implements EntityPersistence {
 
 ##### <a href="#_detail_editors" class="anchor"></a>Detail editors
 
-An editor can edit related entities alongside its own, via [detail()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#detail()) and [EditorLink](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EditorLink.html). A detail editor is populated when the master entity is set, and its entity is inserted, updated or deleted along with the master, in the same transaction. The link’s **present** predicate decides whether the detail entity should exist at all — a detail entity failing the predicate is deleted rather than saved.
+An editor can edit related entities alongside its own, via [detail()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#detail()) and [EditorLink](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EditorLink.html). A detail editor is populated when the master entity is set, and its entity is inserted, updated or deleted along with the master, in the same transaction. The link’s **present** predicate decides whether the detail entity should exist at all — a detail entity failing the predicate is deleted rather than saved.
 
 Here customer preferences are edited alongside the customer:
 
@@ -4098,7 +4100,7 @@ public final class ArtistEditModel extends SwingEntityEditModel {
 
 ##### <a href="#_editor_events" class="anchor"></a>Editor Events
 
-[EntityEditor.PersistEvents](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.PersistEvents.html) available via [EntityEditor.events()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#events()) provides before and after notifications for insert, update and delete, as well as a general post-persistence notification.
+[EntityEditor.PersistEvents](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.PersistEvents.html) available via [EntityEditor.events()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#events()) provides before and after notifications for insert, update and delete, as well as a general post-persistence notification.
 
 ``` java
     SwingEntityModel invoiceLineModel = new SwingEntityModel(InvoiceLine.TYPE, connection);
@@ -4112,15 +4114,15 @@ public final class ArtistEditModel extends SwingEntityEditModel {
 
 ##### <a href="#_application_events" class="anchor"></a>Application Events
 
-[PersistenceEvents](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/PersistenceEvents.html) provides application-wide insert, update and delete notifications for all available entity types. These are what keep the rest of a running application consistent without any wiring: combo box models refresh or reconcile, search model selections receive updated instances, table models react to insert and delete, and foreign key values in other editors are replaced when the entity they reference is updated or deleted elsewhere. Reach for these events when application logic must react to persistence outcomes regardless of **which** editor performed the operation.
+[PersistenceEvents](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/PersistenceEvents.html) provides application-wide insert, update and delete notifications for all available entity types. These are what keep the rest of a running application consistent without any wiring: combo box models refresh or reconcile, search model selections receive updated instances, table models react to insert and delete, and foreign key values in other editors are replaced when the entity they reference is updated or deleted elsewhere. Reach for these events when application logic must react to persistence outcomes regardless of **which** editor performed the operation.
 
-By default, an EntityEditor posts its persist events to the global **PersistenceEvents** instance, but that can be configured either globally via the [EntityEditor.PUBLISH_PERSISTENCE_EVENTS](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#PUBLISH_PERSISTENCE_EVENTS) configuration value or per instance using [EntityEditor.settings()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#settings()).
+By default, an EntityEditor posts its persist events to the global **PersistenceEvents** instance, but that can be configured either globally via the [EntityEditor.PUBLISH_PERSISTENCE_EVENTS](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#PUBLISH_PERSISTENCE_EVENTS) configuration value or per instance using [EntityEditor.settings()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditor.html#settings()).
 
 #### <a href="#_entitytablemodel" class="anchor"></a>1.2.5. EntityTableModel
 
-<img src="https://codion.is/doc/0.18.88/manual/entity-table-model-diagram.svg" width="226" height="246" alt="entity table model diagram" />
+<img src="https://codion.is/doc/0.18.89/manual/entity-table-model-diagram.svg" width="226" height="246" alt="entity table model diagram" />
 
-The [EntityTableModel](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityTableModel.html) provides a table representation of entities: the **items** fetched by its [EntityQueryModel](#_entityquerymodel), a **selection** and an **editModel** for editing them.
+The [EntityTableModel](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityTableModel.html) provides a table representation of entities: the **items** fetched by its [EntityQueryModel](#_entityquerymodel), a **selection** and an **editModel** for editing them.
 
 Every **EntityTableModel** contains an **EntityEditModel** instance — a default one is created automatically unless one is supplied via a constructor argument.
 
@@ -4146,7 +4148,7 @@ public class CustomerAddressTableModel extends SwingEntityTableModel {
 
 **items().refresh()** populates the table by running the [query model](#_entityquerymodel)'s query — the condition, attributes, order by and limit it is configured with. **selection()** provides the selected items and indexes as observable values, which is what selection-scoped controls bind their enabled state to, and what master models propagate to their detail models.
 
-When entities of the table’s type are inserted, updated or deleted anywhere in the application, the table model reacts: updated rows are replaced in place, deleted rows removed, and inserted entities added according to the [onInsert()](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityTableModel.html#onInsert()) strategy — prepended by default, appended, or ignored.
+When entities of the table’s type are inserted, updated or deleted anywhere in the application, the table model reacts: updated rows are replaced in place, deleted rows removed, and inserted entities added according to the [onInsert()](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityTableModel.html#onInsert()) strategy — prepended by default, appended, or ignored.
 
 ##### <a href="#_application_logic" class="anchor"></a>Application logic
 
@@ -4179,7 +4181,7 @@ The task above is a **ResultTaskHandler**, prepared by the model and executed by
 
 #### <a href="#_entityquerymodel" class="anchor"></a>1.2.6. EntityQueryModel
 
-The [EntityQueryModel](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityQueryModel.html) manages how entities are fetched from the database for table models. It provides fine-grained control over query conditions, result limits, ordering, and custom data sources.
+The [EntityQueryModel](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityQueryModel.html) manages how entities are fetched from the database for table models. It provides fine-grained control over query conditions, result limits, ordering, and custom data sources.
 
 ##### <a href="#_overview_2" class="anchor"></a>Overview
 
@@ -4208,17 +4210,17 @@ The [EntityQueryModel](https://codion.is/doc/0.18.88/api/is.codion.framework.mod
 
 ##### <a href="#_condition_management" class="anchor"></a>Condition Management
 
-###### <a href="#_entity_condition_model" class="anchor"></a>Entity Condition Model
+###### <a href="#_entity_conditions" class="anchor"></a>Entity Conditions
 
-The primary condition mechanism is the [EntityConditionModel](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityConditionModel.html), which provides a flexible way to build complex queries:
+The primary condition mechanism is the [EntityConditions](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityConditions.html), which provides a flexible way to build complex queries:
 
 ``` java
     SwingEntityModel customerModel = new SwingEntityModel(Customer.TYPE, connection);
-    EntityConditionModel condition = customerModel.tableModel().query().condition();
+    EntityConditions conditions = customerModel.tableModel().query().conditions();
 
     // Set condition values
-    condition.get(Customer.EMAIL).set().isNotNull();
-    condition.get(Customer.COUNTRY).set().equalTo("Iceland");
+    conditions.get(Customer.EMAIL).set().isNotNull();
+    conditions.get(Customer.COUNTRY).set().equalTo("Iceland");
 
     // The resulting query will include:
     // WHERE email is not null AND country = 'Iceland'
@@ -4228,7 +4230,7 @@ The primary condition mechanism is the [EntityConditionModel](https://codion.is/
 
 In SQL no comparison to null holds, so `commission <> 0` and `state NOT IN ('KA', 'MH')` both exclude the rows without a value, which is rarely what the user typing *not in* into a condition panel expects. The condition model therefore treats a negation as the complement of its positive counterpart: for a nullable column or foreign key, `NOT_EQUAL`, `NOT_IN`, `NOT_BETWEEN` and `NOT_BETWEEN_EXCLUSIVE` also match the rows without a value, `(state NOT IN (?, ?) OR state IS NULL)`, which is also how the same condition behaves when used as a table filter. `NOT_EQUAL` and `NOT_IN` without an operand still mean *is not null*, and the positive operators never match a row without a value.
 
-This only applies to the conditions created by the condition model, conditions created via the domain API, `Customer.STATE.notIn("KA", "MH")`, are plain SQL. Set `EntityConditionModel.NEGATION_INCLUDES_NULL` to `false` for SQL semantics, or configure a single condition when building the model, `condition(Customer.STATE, condition → condition.negationIncludesNull(false))`.
+This only applies to the conditions created by the condition model, conditions created via the domain API, `Customer.STATE.notIn("KA", "MH")`, are plain SQL. Set `EntityConditions.NEGATION_INCLUDES_NULL` to `false` for SQL semantics, or configure a single condition when building the model, `condition(Customer.STATE, condition → condition.negationIncludesNull(false))`.
 
 ###### <a href="#_additional_conditions" class="anchor"></a>Additional Conditions
 
@@ -4236,7 +4238,7 @@ Beyond the table condition model, you can add custom WHERE and/or HAVING conditi
 
 ``` java
     SwingEntityModel customerModel = new SwingEntityModel(Customer.TYPE, connection);
-    AdditionalConditions additional = customerModel.tableModel().query().condition().additional();
+    AdditionalConditions additional = customerModel.tableModel().query().conditions().additional();
 
     // Single additional condition
     additional.where().set(() -> Customer.COUNTRY.equalTo("Iceland"));
@@ -4322,7 +4324,7 @@ Prevent accidental full table scans:
     query.conditionRequired().set(true);
 
     // Specify that a certain condition must be enabled
-    query.conditionEnabled().set(query.condition().get(Customer.SUPPORTREP_FK).enabled());
+    query.conditionEnabled().set(query.conditions().get(Customer.SUPPORTREP_FK).enabled());
 ```
 
 ##### <a href="#_attribute_management" class="anchor"></a>Attribute Management
@@ -4350,7 +4352,7 @@ Optimize queries by selecting only needed attributes:
 
 #### <a href="#_entitysearchmodel" class="anchor"></a>1.2.7. EntitySearchModel
 
-The [EntitySearchModel](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntitySearchModel.html) is the model component underlying the [EntitySearchField](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/component/EntitySearchField.html) UI component. It provides entity search functionality with support for multi-column text searching and entity selection.
+The [EntitySearchModel](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntitySearchModel.html) is the model component underlying the [EntitySearchField](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/component/EntitySearchField.html) UI component. It provides entity search functionality with support for multi-column text searching and entity selection.
 
 ##### <a href="#_overview_3" class="anchor"></a>Overview
 
@@ -4456,12 +4458,12 @@ Search model selection
 
 | Configuration value                                                                                                                        | Default | Description                                                                                                                       |
 |--------------------------------------------------------------------------------------------------------------------------------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------|
-| [EntitySearchModel.PERSISTENCE_AWARE](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntitySearchModel.html#PERSISTENCE_AWARE) | true    | Whether search models react to entity persistence events, replacing the selected entity when updated and clearing it when deleted |
-| [EntitySearchModel.DEFAULT_LIMIT](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntitySearchModel.html#DEFAULT_LIMIT)         | none    | The default search result limit                                                                                                   |
-| [EntitySearchModel.WILDCARD_PREFIX](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntitySearchModel.html#WILDCARD_PREFIX)     | true    | Whether a wildcard is prepended to the search string by default                                                                   |
-| [EntitySearchModel.WILDCARD_POSTFIX](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntitySearchModel.html#WILDCARD_POSTFIX)   | true    | Whether a wildcard is appended to the search string by default                                                                    |
-| [EntitySearchModel.SPACE_AS_WILDCARD](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntitySearchModel.html#SPACE_AS_WILDCARD) | true    | Whether spaces in the search string are replaced with wildcards by default                                                        |
-| [EntitySearchModel.CASE_SENSITIVE](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntitySearchModel.html#CASE_SENSITIVE)       | false   | Whether searching is case-sensitive by default                                                                                    |
+| [EntitySearchModel.PERSISTENCE_AWARE](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntitySearchModel.html#PERSISTENCE_AWARE) | true    | Whether search models react to entity persistence events, replacing the selected entity when updated and clearing it when deleted |
+| [EntitySearchModel.DEFAULT_LIMIT](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntitySearchModel.html#DEFAULT_LIMIT)         | none    | The default search result limit                                                                                                   |
+| [EntitySearchModel.WILDCARD_PREFIX](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntitySearchModel.html#WILDCARD_PREFIX)     | true    | Whether a wildcard is prepended to the search string by default                                                                   |
+| [EntitySearchModel.WILDCARD_POSTFIX](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntitySearchModel.html#WILDCARD_POSTFIX)   | true    | Whether a wildcard is appended to the search string by default                                                                    |
+| [EntitySearchModel.SPACE_AS_WILDCARD](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntitySearchModel.html#SPACE_AS_WILDCARD) | true    | Whether spaces in the search string are replaced with wildcards by default                                                        |
+| [EntitySearchModel.CASE_SENSITIVE](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntitySearchModel.html#CASE_SENSITIVE)       | false   | Whether searching is case-sensitive by default                                                                                    |
 
 Table 1. EntitySearchModel Configuration
 
@@ -4471,7 +4473,7 @@ Model linking provides the mechanism for establishing master-detail relationship
 
 ##### <a href="#_overview_4" class="anchor"></a>Overview
 
-The [ModelLink](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/ModelLink.html) API enables automatic detail model filtering based on master selection and propagation of data changes.
+The [ModelLink](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/ModelLink.html) API enables automatic detail model filtering based on master selection and propagation of data changes.
 
 ``` java
     // Invoice -> InvoiceLines
@@ -4502,8 +4504,8 @@ Create links with specific behavior:
                       // Custom selection logic
                       if (selectedCustomers.size() > 1) {
                         // Handle multi-selection differently
-                        invoiceModel.tableModel().query().condition().clear();
-                        invoiceModel.tableModel().query().condition().additional().where().set(() ->
+                        invoiceModel.tableModel().query().conditions().clear();
+                        invoiceModel.tableModel().query().conditions().additional().where().set(() ->
                                 Invoice.CUSTOMER_FK.in(selectedCustomers)
                         );
                       }
@@ -4515,7 +4517,7 @@ Create links with specific behavior:
 
 ##### <a href="#_automatic_foreign_key_management" class="anchor"></a>Automatic Foreign Key Management
 
-The [ForeignKeyModelLink](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/ForeignKeyModelLink.html) specializes `ModelLink` for foreign key relationships:
+The [ForeignKeyModelLink](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/ForeignKeyModelLink.html) specializes `ModelLink` for foreign key relationships:
 
 ``` java
     SwingEntityModel customerModel = new SwingEntityModel(Customer.TYPE, connection);
@@ -4583,7 +4585,7 @@ Deep master-detail chains:
 
 #### <a href="#_entityapplicationmodel" class="anchor"></a>1.2.9. EntityApplicationModel
 
-<img src="https://codion.is/doc/0.18.88/manual/entity-application-model-diagram.svg" width="192" height="189" alt="entity application model diagram" />
+<img src="https://codion.is/doc/0.18.89/manual/entity-application-model-diagram.svg" width="192" height="189" alt="entity application model diagram" />
 
 The **EntityApplicationModel** class serves as the base for the application. Its main purpose is to hold references to the root EntityModel instances used by the application.
 
@@ -4616,7 +4618,7 @@ public class StoreApplicationModel extends SwingEntityApplicationModel {
 
 The application load testing harness is used to see how your application, server and database handle multiple concurrent users.
 
-This is done by using the [LoadTestModel](https://codion.is/doc/0.18.88/api/is.codion.tools.loadtest.model/is/codion/tools/loadtest/model/LoadTestModel.html) and [LoadTestPanel](https://codion.is/doc/0.18.88/api/is.codion.tools.loadtest.ui/is/codion/tools/loadtest/ui/LoadTestPanel.html) classes as shown below.
+This is done by using the [LoadTestModel](https://codion.is/doc/0.18.89/api/is.codion.tools.loadtest.model/is/codion/tools/loadtest/model/LoadTestModel.html) and [LoadTestPanel](https://codion.is/doc/0.18.89/api/is.codion.tools.loadtest.ui/is/codion/tools/loadtest/ui/LoadTestPanel.html) classes as shown below.
 
 ``` java
 public class StoreLoadTest {
@@ -4671,19 +4673,19 @@ public class StoreLoadTest {
 
 ##### <a href="#_examples_6" class="anchor"></a>Examples
 
-- [Employees application load test](https://codion.is/doc/0.18.88/tutorials/employees/employees.html#_load_test)
+- [Employees application load test](https://codion.is/doc/0.18.89/tutorials/employees/employees.html#_load_test)
 
-- [Chinook application load test](https://codion.is/doc/0.18.88/tutorials/chinook/chinook.html#_load_test)
+- [Chinook application load test](https://codion.is/doc/0.18.89/tutorials/chinook/chinook.html#_load_test)
 
-- [Petstore application load test](https://codion.is/doc/0.18.88/tutorials/petstore/petstore.html#_load_test)
+- [Petstore application load test](https://codion.is/doc/0.18.89/tutorials/petstore/petstore.html#_load_test)
 
 ### <a href="#_framework_ui" class="anchor"></a>1.3. Framework UI
 
 #### <a href="#_entitypanel" class="anchor"></a>1.3.1. EntityPanel
 
-<img src="https://codion.is/doc/0.18.88/manual/entity-panel-diagram.svg" width="326" height="227" alt="entity panel diagram" />
+<img src="https://codion.is/doc/0.18.89/manual/entity-panel-diagram.svg" width="326" height="227" alt="entity panel diagram" />
 
-The [EntityPanel](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityPanel.html) is the base UI class for working with entity instances. It usually consists of an [EntityTablePanel](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.html), an [EntityEditPanel](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityEditPanel.html), and a set of detail panels representing the entities having a master/detail relationship with the underlying entity.
+The [EntityPanel](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityPanel.html) is the base UI class for working with entity instances. It usually consists of an [EntityTablePanel](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.html), an [EntityEditPanel](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityEditPanel.html), and a set of detail panels representing the entities having a master/detail relationship with the underlying entity.
 
 ##### <a href="#_basics" class="anchor"></a>Basics
 
@@ -4745,7 +4747,7 @@ public final class AlbumPanel extends EntityPanel {
 
 ###### <a href="#_detail_panel_layout" class="anchor"></a>Detail panel layout
 
-By default, detail panels are laid out by a [TabbedDetailLayout](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/TabbedDetailLayout.html): the master panel and its detail panels share a split pane, with the detail panels in a tabbed pane on the right. A detail panel can be expanded, collapsed or torn out into a separate window, with both the mouse and the keyboard (see [navigation](#_entity_panel_navigation) below).
+By default, detail panels are laid out by a [TabbedDetailLayout](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/TabbedDetailLayout.html): the master panel and its detail panels share a split pane, with the detail panels in a tabbed pane on the right. A detail panel can be expanded, collapsed or torn out into a separate window, with both the mouse and the keyboard (see [navigation](#_entity_panel_navigation) below).
 
 The layout is configurable per panel — the invoice panel below opts out entirely, since its invoice line panel is embedded in the edit panel itself, while still registering the panel for keyboard navigation:
 
@@ -4779,9 +4781,9 @@ The complete, current shortcut reference is available in any running application
 
 #### <a href="#_entityeditpanel" class="anchor"></a>1.3.2. EntityEditPanel
 
-The [EntityEditPanel](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityEditPanel.html) manages the input components (text fields, combo boxes and such) for editing an entity instance.
+The [EntityEditPanel](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityEditPanel.html) manages the input components (text fields, combo boxes and such) for editing an entity instance.
 
-When extending an **EntityEditPanel** you must implement the **initializeUI()** method, which initializes the edit panel UI. The **EntityEditPanel** class exposes methods for creating input components and linking them to the underlying [EntityEditModel](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityEditModel.html) instance.
+When extending an **EntityEditPanel** you must implement the **initializeUI()** method, which initializes the edit panel UI. The **EntityEditPanel** class exposes methods for creating input components and linking them to the underlying [EntityEditModel](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityEditModel.html) instance.
 
 ``` java
 public class CustomerEditPanel extends EntityEditPanel {
@@ -4919,9 +4921,9 @@ add(firstNamePanel);
 
 ###### <a href="#_boolean_2" class="anchor"></a>Boolean
 
-[booleanComboBox(attribute)](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#booleanComboBox(is.codion.framework.domain.entity.attribute.Attribute))
+[booleanComboBox(attribute)](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#booleanComboBox(is.codion.framework.domain.entity.attribute.Attribute))
 
-[checkBox(attribute)](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#checkBox(is.codion.framework.domain.entity.attribute.Attribute))
+[checkBox(attribute)](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#checkBox(is.codion.framework.domain.entity.attribute.Attribute))
 
 ``` java
 JCheckBox checkBox = create()
@@ -4939,13 +4941,13 @@ JComboBox<Item<Boolean>> comboBox = create()
 
 ###### <a href="#_foreign_key" class="anchor"></a>Foreign key
 
-[comboBox(foreignKey)](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#comboBox(is.codion.framework.domain.entity.attribute.ForeignKey))
+[comboBox(foreignKey)](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#comboBox(is.codion.framework.domain.entity.attribute.ForeignKey))
 
-[searchField(foreignKey)](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#searchField(is.codion.framework.domain.entity.attribute.ForeignKey))
+[searchField(foreignKey)](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#searchField(is.codion.framework.domain.entity.attribute.ForeignKey))
 
-[textField(foreignKey)](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#textField(is.codion.framework.domain.entity.attribute.ForeignKey))
+[textField(foreignKey)](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#textField(is.codion.framework.domain.entity.attribute.ForeignKey))
 
-[label(foreignKey)](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#label(is.codion.framework.domain.entity.attribute.Attribute))
+[label(foreignKey)](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#label(is.codion.framework.domain.entity.attribute.Attribute))
 
 ``` java
 EntityComboBox comboBox = create()
@@ -4978,9 +4980,9 @@ JTextField textField = create()
 
 ###### <a href="#_temporal" class="anchor"></a>Temporal
 
-[temporalFieldInput(attribute)](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#temporalFieldInput(is.codion.framework.domain.entity.attribute.Attribute))
+[temporalFieldInput(attribute)](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#temporalFieldInput(is.codion.framework.domain.entity.attribute.Attribute))
 
-[temporalField(attribute)](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#temporalField(is.codion.framework.domain.entity.attribute.Attribute))
+[temporalField(attribute)](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#temporalField(is.codion.framework.domain.entity.attribute.Attribute))
 
 ``` java
 TemporalField<LocalDateTime> textField =
@@ -5049,15 +5051,15 @@ bigIntegerField = create()
 
 ###### <a href="#_text" class="anchor"></a>Text
 
-[textField(attribute)](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#textField(is.codion.framework.domain.entity.attribute.Attribute))
+[textField(attribute)](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#textField(is.codion.framework.domain.entity.attribute.Attribute))
 
-[maskedTextField(attribute)](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#maskedTextField(is.codion.framework.domain.entity.attribute.Attribute))
+[maskedTextField(attribute)](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#maskedTextField(is.codion.framework.domain.entity.attribute.Attribute))
 
-[textArea(attribute)](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#textArea(is.codion.framework.domain.entity.attribute.Attribute))
+[textArea(attribute)](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#textArea(is.codion.framework.domain.entity.attribute.Attribute))
 
-[textInput(attribute)](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#textInput(is.codion.framework.domain.entity.attribute.Attribute))
+[textInput(attribute)](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#textInput(is.codion.framework.domain.entity.attribute.Attribute))
 
-Text fields, search fields, text inputs and temporal inputs are created with a default number of columns, 12 unless configured, so that an empty field has a reasonable width instead of growing with its contents and distorting the form it occupies. The columns do not restrict the field from stretching when the layout calls for it. The default is specified for the application via [EditorComponents.TEXT_FIELD_COLUMNS](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.html#TEXT_FIELD_COLUMNS), for a panel via [components().defaults().textFieldColumns()](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentDefaults.html#textFieldColumns()), and for a single field via **columns(int)** on the builder. Masked text fields are excluded, since the mask determines their width. Setting the default to 0 disables it, for the application or for a panel, in case the fields should size to their contents.
+Text fields, search fields, text inputs and temporal inputs are created with a default number of columns, 12 unless configured, so that an empty field has a reasonable width instead of growing with its contents and distorting the form it occupies. The columns do not restrict the field from stretching when the layout calls for it. The default is specified for the application via [EditorComponents.TEXT_FIELD_COLUMNS](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.html#TEXT_FIELD_COLUMNS), for a panel via [components().defaults().textFieldColumns()](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentDefaults.html#textFieldColumns()), and for a single field via **columns(int)** on the builder. Masked text fields are excluded, since the mask determines their width. Setting the default to 0 disables it, for the application or for a panel, in case the fields should size to their contents.
 
 ``` java
 JTextField textField = create()
@@ -5082,7 +5084,7 @@ TextInput textInput = create()
 
 ###### <a href="#_selection" class="anchor"></a>Selection
 
-[comboBox(attribute)](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#comboBox(is.codion.framework.domain.entity.attribute.Attribute,javax.swing.ComboBoxModel))
+[comboBox(attribute)](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#comboBox(is.codion.framework.domain.entity.attribute.Attribute,javax.swing.ComboBoxModel))
 
 ``` java
 DefaultComboBoxModel<String> comboBoxModel =
@@ -5096,7 +5098,7 @@ JComboBox<String> comboBox = create()
 
 ###### <a href="#_items" class="anchor"></a>Items
 
-[itemComboBox(attribute)](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#itemComboBox(is.codion.framework.domain.entity.attribute.Attribute))
+[itemComboBox(attribute)](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#itemComboBox(is.codion.framework.domain.entity.attribute.Attribute))
 
 ``` java
 JComboBox<Item<String>> comboBox = create()
@@ -5106,9 +5108,9 @@ JComboBox<Item<String>> comboBox = create()
 
 ##### <a href="#_panels_labels" class="anchor"></a>Panels & labels
 
-[label(attribute)](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#label(is.codion.framework.domain.entity.attribute.Attribute))
+[label(attribute)](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#label(is.codion.framework.domain.entity.attribute.Attribute))
 
-[inputPanel(attribute)](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#inputPanel(is.codion.framework.domain.entity.attribute.Attribute))
+[inputPanel(attribute)](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#inputPanel(is.codion.framework.domain.entity.attribute.Attribute))
 
 ``` java
 JLabel label = create()
@@ -5121,7 +5123,7 @@ JPanel inputPanel = create()
         .build();
 ```
 
-[form(attributes)](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#form(is.codion.framework.domain.entity.attribute.Attribute…​))
+[form(attributes)](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EditorComponents.ComponentFactory.html#form(is.codion.framework.domain.entity.attribute.Attribute…​))
 
 A form lays out the components in the horizontal style, the label beside its input, with **columns(int)** label/input pairs per row and a component added via **span(component)** occupying a row of its own. The label column of each pair column is as wide as its widest label, the input columns absorb the horizontal slack and a label aligns with the baseline of its input, or with its top in case the input has none.
 
@@ -5286,11 +5288,11 @@ EntityEditPanel can include detail panels for master-detail relationships:
 
 ##### <a href="#_custom_actions" class="anchor"></a>Custom actions
 
-The action mechanism used throughout the Codion framework is based on the [Control](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/control/Control.html) class and its subclasses and the [Controls](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/control/Controls.html) class which represents a collection of controls.
+The action mechanism used throughout the Codion framework is based on the [Control](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/control/Control.html) class and its subclasses and the [Controls](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/control/Controls.html) class which represents a collection of controls.
 
 ##### <a href="#_edit_query_inspector" class="anchor"></a>Query Inspector
 
-An **Editor Inspector** can be enabled globally via the [EntityEditPanel.Config.INCLUDE_INSPECTOR](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityEditPanel.Config.html#INCLUDE_INSPECTOR) configuration value or for a single panel via the panel configuration.
+An **Editor Inspector** can be enabled globally via the [EntityEditPanel.Config.INCLUDE_INSPECTOR](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityEditPanel.Config.html#INCLUDE_INSPECTOR) configuration value or for a single panel via the panel configuration.
 
 The inspector displays the editor state — values, modified/valid flags, validation messages — along with the INSERT and UPDATE queries the current state would produce, dynamically updated. See [Development tools](#_development_tools).
 
@@ -5302,11 +5304,11 @@ The inspector can be opened using the CTRL-ALT-R keyboard shortcut, when the edi
 
 #### <a href="#_entitytablepanel" class="anchor"></a>1.3.3. EntityTablePanel
 
-The [EntityTablePanel](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.html) provides a table view of entities: a searchable, filterable, sortable grid with a toolbar, a popup menu, in-table editing, a summary panel and a status bar — all driven by an underlying [EntityTableModel](#_entitytablemodel).
+The [EntityTablePanel](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.html) provides a table view of entities: a searchable, filterable, sortable grid with a toolbar, a popup menu, in-table editing, a summary panel and a status bar — all driven by an underlying [EntityTableModel](#_entitytablemodel).
 
 ##### <a href="#_configuration" class="anchor"></a>Configuration
 
-Each panel is configured via a [Config](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.Config.html) instance, supplied to the constructor. Most configuration values also exist as system properties, configuring the default for all table panels in an application — **Config.INCLUDE_FILTERS**, **Config.INCLUDE_EXPORT** and company — with the per-panel configuration overriding the default.
+Each panel is configured via a [Config](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.Config.html) instance, supplied to the constructor. Most configuration values also exist as system properties, configuring the default for all table panels in an application — **Config.INCLUDE_FILTERS**, **Config.INCLUDE_EXPORT** and company — with the per-panel configuration overriding the default.
 
 ``` java
 public InvoiceTablePanel(SwingEntityTableModel tableModel) {
@@ -5315,7 +5317,7 @@ public InvoiceTablePanel(SwingEntityTableModel tableModel) {
           // see InvoiceLineEditModel, so we don't want it to be editable via the popup menu.
           .editable(attributes -> attributes.remove(Invoice.TOTAL))
           // The factory providing our custom condition panel.
-          .conditionPanel(new InvoiceConditionPanelFactory(tableModel))
+          .conditions(new InvoiceConditions(tableModel))
           // Start with the SIMPLE condition panel view.
           .conditionView(SIMPLE));
 }
@@ -5361,7 +5363,7 @@ A custom edit component for a foreign key, here a track selector used when editi
 
 ##### <a href="#_custom_controls" class="anchor"></a>Custom controls
 
-The panel’s controls — refresh, add, edit, delete, print and the rest — are identified by [ControlKeys](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.ControlKeys.html). Overriding **setupControls()** is the idiomatic place to assign custom controls to standard keys; a control assigned to a standard key appears wherever that key is used — popup menu, toolbar, keyboard shortcut.
+The panel’s controls — refresh, add, edit, delete, print and the rest — are identified by [ControlKeys](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.ControlKeys.html). Overriding **setupControls()** is the idiomatic place to assign custom controls to standard keys; a control assigned to a standard key appears wherever that key is used — popup menu, toolbar, keyboard shortcut.
 
 ``` java
 @Override
@@ -5443,11 +5445,11 @@ Filter panels are excluded by default and included via **Config.INCLUDE_FILTERS*
 
 ##### <a href="#_exporting_data" class="anchor"></a>Exporting data
 
-A configurable denormalized data export tool — including attributes of referenced entities via foreign key traversal — can be included in the EntityTablePanel **Copy** table popup submenu, via the [EntityTablePanel.Config.INCLUDE_EXPORT](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.Config.html#INCLUDE_EXPORT) configuration value or the panel configuration. See [Exporting data](#_table_export).
+A configurable denormalized data export tool — including attributes of referenced entities via foreign key traversal — can be included in the EntityTablePanel **Copy** table popup submenu, via the [EntityTablePanel.Config.INCLUDE_EXPORT](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.Config.html#INCLUDE_EXPORT) configuration value or the panel configuration. See [Exporting data](#_table_export).
 
 ##### <a href="#_table_query_inspector" class="anchor"></a>Query Inspector
 
-A **Query Inspector** can be enabled globally via the [EntityTablePanel.Config.INCLUDE_INSPECTOR](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.Config.html#INCLUDE_INSPECTOR) configuration value or for a single panel via the panel configuration.
+A **Query Inspector** can be enabled globally via the [EntityTablePanel.Config.INCLUDE_INSPECTOR](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.Config.html#INCLUDE_INSPECTOR) configuration value or for a single panel via the panel configuration.
 
 The **Query Inspector** displays the SELECT query, dynamically updated according to the underlying query conditions.
 
@@ -5459,7 +5461,7 @@ The **Query Inspector** can be opened using the CTRL-ALT-Q keyboard shortcut, wh
 
 ##### <a href="#_keyboard_shortcuts" class="anchor"></a>Keyboard shortcuts
 
-Each [ControlKey](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.ControlKeys.html) carries its default keystroke — INSERT adds a new row, CTRL-INSERT edits the selected row, SHIFT-INSERT edits a single value for the selection, DELETE deletes the selection. A default keystroke can be modified before the panels are created, typically during application startup — here a CTRL modifier is added to the DELETE shortcut, application-wide:
+Each [ControlKey](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.ControlKeys.html) carries its default keystroke — INSERT adds a new row, CTRL-INSERT edits the selected row, SHIFT-INSERT edits a single value for the selection, DELETE deletes the selection. A default keystroke can be modified before the panels are created, typically during application startup — here a CTRL modifier is added to the DELETE shortcut, application-wide:
 
 ``` java
 // Add a CTRL modifier to the DELETE key shortcut for table panels
@@ -5469,7 +5471,7 @@ EntityTablePanel.ControlKeys.DELETE.defaultKeystroke().update(keyStroke ->
 
 #### <a href="#_table_export" class="anchor"></a>1.3.4. Exporting data
 
-The table export tool produces denormalized, tab-separated output from the rows of an [EntityTablePanel](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.html) — to the clipboard or to a file — and is available in the table popup menu’s **Export…​** submenu.
+The table export tool produces denormalized, tab-separated output from the rows of an [EntityTablePanel](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.html) — to the clipboard or to a file — and is available in the table popup menu’s **Export…​** submenu.
 
 What sets it apart from a plain copy is **foreign key traversal**: the export dialog presents the entity’s attributes as a tree, where each foreign key expands into the attributes of the referenced entity, recursively. Including **Track → Album → Artist → Name** exports the artist name as a column alongside the track’s own attributes — denormalized flat output from normalized data, without writing a query.
 
@@ -5489,17 +5491,17 @@ An export configuration — the included attributes, their order and the target 
 
 ##### <a href="#_enabling" class="anchor"></a>Enabling
 
-The export tool is excluded by default, and enabled globally via the [EntityTablePanel.Config.INCLUDE_EXPORT](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.Config.html#INCLUDE_EXPORT) configuration value or per panel:
+The export tool is excluded by default, and enabled globally via the [EntityTablePanel.Config.INCLUDE_EXPORT](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.Config.html#INCLUDE_EXPORT) configuration value or per panel:
 
 ``` java
 EntityTablePanel.Config.INCLUDE_EXPORT.set(true);
 ```
 
-The underlying model, [EntityExport](https://codion.is/doc/0.18.88/api/is.codion.framework.model/is/codion/framework/model/EntityExport.html), is UI-independent and can be used to produce the same output programmatically.
+The underlying model, [EntityExport](https://codion.is/doc/0.18.89/api/is.codion.framework.model/is/codion/framework/model/EntityExport.html), is UI-independent and can be used to produce the same output programmatically.
 
 #### <a href="#_entitypanel_builder" class="anchor"></a>1.3.5. EntityPanel.Builder
 
-Use the [EntityPanel.Builder](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityPanel.Builder.html) class to specify a EntityPanel class configuration, for panels that should not be initialized until used, such the lookup table panels.
+Use the [EntityPanel.Builder](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityPanel.Builder.html) class to specify a EntityPanel class configuration, for panels that should not be initialized until used, such the lookup table panels.
 
 ``` java
   private static List<EntityPanel.Builder> createLookupPanelBuilders() {
@@ -5519,7 +5521,7 @@ Use the [EntityPanel.Builder](https://codion.is/doc/0.18.88/api/is.codion.swing.
 
 #### <a href="#_entityapplicationpanel" class="anchor"></a>1.3.6. EntityApplicationPanel
 
-The [EntityApplicationPanel](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityApplicationPanel.html) class serves as the main application UI. When extending this class you must provide a constructor with a single application model parameter, as seen below.
+The [EntityApplicationPanel](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityApplicationPanel.html) class serves as the main application UI. When extending this class you must provide a constructor with a single application model parameter, as seen below.
 
 The constructor takes the application’s root entity panels, and optionally a set of **lookup panel** builders: panels for supporting entities — lookup and reference data — which appear in the application’s **View** menu and open on demand, in their own windows, rather than occupying a tab.
 
@@ -5576,7 +5578,7 @@ public class StoreApplicationPanel extends EntityApplicationPanel<StoreApplicati
 
 ##### <a href="#_starting_the_application" class="anchor"></a>Starting the application
 
-An application is assembled and started with the [EntityApplication](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityApplication.html) builder, which handles the startup sequence: look and feel, login (unless a user is provided), connection, application model and panel construction, and the main frame. The **main** method is also the natural place to configure framework defaults — configuration values apply to every panel created after them. The Chinook demo exercises a good portion of the configuration surface:
+An application is assembled and started with the [EntityApplication](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityApplication.html) builder, which handles the startup sequence: look and feel, login (unless a user is provided), connection, application model and panel construction, and the main frame. The **main** method is also the natural place to configure framework defaults — configuration values apply to every panel created after them. The Chinook demo exercises a good portion of the configuration surface:
 
 ``` java
 public static void main(String[] args) throws CancelException {
@@ -5627,7 +5629,7 @@ public static void main(String[] args) throws CancelException {
 
 ##### <a href="#_layout" class="anchor"></a>Layout
 
-The root entity panels are laid out by an [ApplicationLayout](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityApplicationPanel.ApplicationLayout.html) — by default a [TabbedApplicationLayout](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/TabbedApplicationLayout.html), one tab per root panel, initialized lazily as they are first displayed. Supply a custom layout via the **EntityApplicationPanel** constructor to arrange the root panels differently.
+The root entity panels are laid out by an [ApplicationLayout](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityApplicationPanel.ApplicationLayout.html) — by default a [TabbedApplicationLayout](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/TabbedApplicationLayout.html), one tab per root panel, initialized lazily as they are first displayed. Supply a custom layout via the **EntityApplicationPanel** constructor to arrange the root panels differently.
 
 ##### <a href="#_sql_tracing" class="anchor"></a>SQL Tracing
 
@@ -5646,7 +5648,7 @@ Note
 </tbody>
 </table>
 
-Application **SQL Tracing** can be enabled via the [EntityApplicationPanel.SQL_TRACING](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityApplicationPanel.html#SQL_TRACING) configuration value.
+Application **SQL Tracing** can be enabled via the [EntityApplicationPanel.SQL_TRACING](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityApplicationPanel.html#SQL_TRACING) configuration value.
 
 This configures the underlying EntityConnection to trace its queries and adds a **SQL Trace** item under **Help** → **Log** main menu, with actions to enable tracing and view the trace log.
 
@@ -5658,15 +5660,15 @@ EntityApplicationPanel.SQL_TRACING.set(true);
 
 ##### <a href="#_examples_7" class="anchor"></a>Examples
 
-- [Employees application panel](https://codion.is/doc/0.18.88/tutorials/employees/employees.html#_main_application_panel)
+- [Employees application panel](https://codion.is/doc/0.18.89/tutorials/employees/employees.html#_main_application_panel)
 
-- [Chinook application panel](https://codion.is/doc/0.18.88/tutorials/chinook/chinook.html#_chinookapppanel)
+- [Chinook application panel](https://codion.is/doc/0.18.89/tutorials/chinook/chinook.html#_chinookapppanel)
 
-- [Petstore application panel](https://codion.is/doc/0.18.88/tutorials/petstore/petstore.html#_main_application_panel)
+- [Petstore application panel](https://codion.is/doc/0.18.89/tutorials/petstore/petstore.html#_main_application_panel)
 
 #### <a href="#_entitysearchfield" class="anchor"></a>1.3.7. EntitySearchField
 
-The [EntitySearchField](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/component/EntitySearchField.html) is a powerful UI component for entity selection through text-based searching. It extends `HintTextField` and provides a search interface that triggers on ENTER key, displaying results based on the configured search criteria.
+The [EntitySearchField](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/component/EntitySearchField.html) is a powerful UI component for entity selection through text-based searching. It extends `HintTextField` and provides a search interface that triggers on ENTER key, displaying results based on the configured search criteria.
 
 ##### <a href="#_overview_5" class="anchor"></a>Overview
 
@@ -5723,7 +5725,7 @@ The search field operates as follows:
 
 ###### <a href="#_collecting_entities" class="anchor"></a>Collecting Entities
 
-To collect entities over several searches, wrap the search field in a [MultiInput](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/multi/MultiInput.html), as the table condition panel does for the IN operator of a foreign key condition. The entity found is shown in the field and added with ENTER or INSERT, clearing the field for the next search. The button beside the field shows how many entities have been collected, and opens a list of them, where DELETE removes the selected ones.
+To collect entities over several searches, wrap the search field in a [MultiInput](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/multi/MultiInput.html), as the table condition panel does for the IN operator of a foreign key condition. The entity found is shown in the field and added with ENTER or INSERT, clearing the field for the next search. The button beside the field shows how many entities have been collected, and opens a list of them, where DELETE removes the selected ones.
 
 Collecting customers for a condition
 
@@ -5899,7 +5901,7 @@ Table 2. EntitySearchField Configuration
 
 Codion uses a plugin oriented approach to report viewing and provides an implementation for [JasperReports](https://github.com/TIBCOSoftware/jasperreports).
 
-With the Codion JasperReports plugin you can either design your report based on an SQL query in which case you use the JRReport class, which facilitates the report being filled using the active database connection, or you can design your report around the JRDataSource implementation provided by the [JasperReportsDataSource](https://codion.is/doc/0.18.88/api/is.codion.plugin.jasperreports/is/codion/plugin/jasperreports/JasperReportsDataSource.html) class, which is constructed around an iterator.
+With the Codion JasperReports plugin you can either design your report based on an SQL query in which case you use the JRReport class, which facilitates the report being filled using the active database connection, or you can design your report around the JRDataSource implementation provided by the [JasperReportsDataSource](https://codion.is/doc/0.18.89/api/is.codion.plugin.jasperreports/is/codion/plugin/jasperreports/JasperReportsDataSource.html) class, which is constructed around an iterator.
 
 ##### <a href="#_jdbc_reports" class="anchor"></a>JDBC Reports
 
@@ -5943,7 +5945,7 @@ public class CustomerTablePanel extends EntityTablePanel {
 
 ##### <a href="#_export" class="anchor"></a>Export
 
-A report fills to a **JasperPrint** by default, which the receiver needs JasperReports on its classpath to read. Wrapping the report in an export via [JasperReports.export()](https://codion.is/doc/0.18.88/api/is.codion.plugin.jasperreports/is/codion/plugin/jasperreports/JasperReports.html) changes what filling it produces, a **PDF** for example, in which case nothing of JasperReports reaches the receiver.
+A report fills to a **JasperPrint** by default, which the receiver needs JasperReports on its classpath to read. Wrapping the report in an export via [JasperReports.export()](https://codion.is/doc/0.18.89/api/is.codion.plugin.jasperreports/is/codion/plugin/jasperreports/JasperReports.html) changes what filling it produces, a **PDF** for example, in which case nothing of JasperReports reaches the receiver.
 
 The export runs wherever the report is filled, which for a remote connection is on the server, so only the exported document crosses the wire. This is what makes reports available to a client which can not host the reporting engine, an Android or a web client for example.
 
@@ -5976,7 +5978,7 @@ JasperPrint print = connection.report(Customer.REPORT, reportParameters);
 byte[] pdf = connection.report(Customer.PDF_REPORT, reportParameters);
 ```
 
-[JRExport](https://codion.is/doc/0.18.88/api/is.codion.plugin.jasperreports/is/codion/plugin/jasperreports/JRExport.html) provides **PRINT**, **PDF** and **XML**, any other JasperReports exporter being a lambda.
+[JRExport](https://codion.is/doc/0.18.89/api/is.codion.plugin.jasperreports/is/codion/plugin/jasperreports/JRExport.html) provides **PRINT**, **PDF** and **XML**, any other JasperReports exporter being a lambda.
 
 <table>
 <colgroup>
@@ -6016,11 +6018,11 @@ JasperPrint jasperPrint = JasperReports.fillReport(customerReport, dataSource);
 
 ##### <a href="#_examples_8" class="anchor"></a>Examples
 
-- [Employees UI layer](https://codion.is/doc/0.18.88/tutorials/employees/employees.html#_ui)
+- [Employees UI layer](https://codion.is/doc/0.18.89/tutorials/employees/employees.html#_ui)
 
-- [Chinook UI layer](https://codion.is/doc/0.18.88/tutorials/chinook/chinook.html#_chinook_tutorial)
+- [Chinook UI layer](https://codion.is/doc/0.18.89/tutorials/chinook/chinook.html#_chinook_tutorial)
 
-- [World UI layer](https://codion.is/doc/0.18.88/tutorials/world/world.html#_ui)
+- [World UI layer](https://codion.is/doc/0.18.89/tutorials/world/world.html#_ui)
 
 #### <a href="#_client_keyboard_shortcuts" class="anchor"></a>1.3.9. Keyboard shortcuts
 
@@ -6028,7 +6030,7 @@ Codion applications are keyboard-first: every panel, control and navigation acti
 
 ##### <a href="#_controlkeys" class="anchor"></a>ControlKeys
 
-Each UI class declares its controls in a **ControlKeys** class — [EntityTablePanel.ControlKeys](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.ControlKeys.html), [EntityEditPanel.ControlKeys](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityEditPanel.ControlKeys.html), [EntityPanel.ControlKeys](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityPanel.ControlKeys.html) — where each key identifies a control and carries its default keystroke. The javadoc of each **ControlKeys** class is the authoritative shortcut listing for that component.
+Each UI class declares its controls in a **ControlKeys** class — [EntityTablePanel.ControlKeys](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.ControlKeys.html), [EntityEditPanel.ControlKeys](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityEditPanel.ControlKeys.html), [EntityPanel.ControlKeys](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityPanel.ControlKeys.html) — where each key identifies a control and carries its default keystroke. The javadoc of each **ControlKeys** class is the authoritative shortcut listing for that component.
 
 Keystrokes are configurable at two levels:
 
@@ -6050,7 +6052,7 @@ new EntityTablePanel(tableModel, config ->
 
 ##### <a href="#_custom_key_bindings" class="anchor"></a>Custom key bindings
 
-For key bindings beyond the built-in controls, the [KeyEvents](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/key/KeyEvents.html) builder associates keystrokes with actions on any component — see the [KeyBinding tutorial](https://codion.is/doc/0.18.88/tutorials/keybinding.html#_keybinding_tutorial) for a complete example.
+For key bindings beyond the built-in controls, the [KeyEvents](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/key/KeyEvents.html) builder associates keystrokes with actions on any component — see the [KeyBinding tutorial](https://codion.is/doc/0.18.89/tutorials/keybinding.html#_keybinding_tutorial) for a complete example.
 
 ##### <a href="#_the_essentials" class="anchor"></a>The essentials
 
@@ -6087,7 +6089,7 @@ The framework ships a set of inspection tools for looking **into** a running app
 
 Displays the selected entity as a navigable tree: every attribute with its type and value, original values for modified attributes, and foreign key references expandable into the referenced entity’s tree — the fastest way to answer "what is **actually** in this row".
 
-Included by default in every table panel, on CTRL-ALT-V; excluded via [EntityTablePanel.Config.INCLUDE_ENTITY_VIEWER](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.Config.html#INCLUDE_ENTITY_VIEWER).
+Included by default in every table panel, on CTRL-ALT-V; excluded via [EntityTablePanel.Config.INCLUDE_ENTITY_VIEWER](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/EntityTablePanel.Config.html#INCLUDE_ENTITY_VIEWER).
 
 ##### <a href="#_query_inspector" class="anchor"></a>Query inspector
 
@@ -6121,7 +6123,7 @@ EntityEditPanel.Config.INCLUDE_INSPECTOR.set(true);
 
 ##### <a href="#_dependencies_viewer" class="anchor"></a>Dependencies viewer
 
-Displays the entities **depending on** the selected rows — the incoming foreign key references — as a tabbed pane of table panels, one per dependent entity type, navigable with CTRL-ALT-LEFT/RIGHT. Available from the table popup menu, and shown automatically when a delete fails on a referential integrity constraint, if [ReferentialIntegrityErrorHandling](https://codion.is/doc/0.18.88/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/ReferentialIntegrityErrorHandling.html) is set to **DISPLAY_DEPENDENCIES**.
+Displays the entities **depending on** the selected rows — the incoming foreign key references — as a tabbed pane of table panels, one per dependent entity type, navigable with CTRL-ALT-LEFT/RIGHT. Available from the table popup menu, and shown automatically when a delete fails on a referential integrity constraint, if [ReferentialIntegrityErrorHandling](https://codion.is/doc/0.18.89/api/is.codion.swing.framework.ui/is/codion/swing/framework/ui/ReferentialIntegrityErrorHandling.html) is set to **DISPLAY_DEPENDENCIES**.
 
 ##### <a href="#_sql_tracing_2" class="anchor"></a>SQL tracing
 
@@ -6159,16 +6161,16 @@ The generated code uses the same patterns as hand-written Codion domain models, 
 
 The generator consists of three layered modules:
 
-[codion-tools-generator-domain](https://codion.is/doc/0.18.88/technical/technical.html#_codion_tools_generator_domain)  
-Code generation engine that uses [Palantir JavaPoet](https://github.com/palantir/javapoet) to produce syntactically correct Java source code, coordinates generation of API interfaces, implementation classes, DTO records, and i18n properties. Uses [codion-framework-domain-db](https://codion.is/doc/0.18.88/technical/technical.html#_codion_framework_domain_db) for schema instrospection
+[codion-tools-generator-domain](https://codion.is/doc/0.18.89/technical/technical.html#_codion_tools_generator_domain)  
+Code generation engine that uses [Palantir JavaPoet](https://github.com/palantir/javapoet) to produce syntactically correct Java source code, coordinates generation of API interfaces, implementation classes, DTO records, and i18n properties. Uses [codion-framework-domain-db](https://codion.is/doc/0.18.89/technical/technical.html#_codion_framework_domain_db) for schema instrospection
 
-[codion-tools-generator-model](https://codion.is/doc/0.18.88/technical/technical.html#_codion_tools_generator_model)  
+[codion-tools-generator-model](https://codion.is/doc/0.18.89/technical/technical.html#_codion_tools_generator_model)  
 MVC model layer providing which coordinates schema discovery, entity selection, and real-time code preview. Contains FilterTableModels for schema and entity selection with observable state management.
 
-[codion-tools-generator-ui](https://codion.is/doc/0.18.88/technical/technical.html#_codion_tools_generator_ui)  
+[codion-tools-generator-ui](https://codion.is/doc/0.18.89/technical/technical.html#_codion_tools_generator_ui)  
 Swing desktop interface providing schema browser, entity selection, configuration dialogs, and code preview with search.
 
-[codion-tools-generator-cli](https://codion.is/doc/0.18.88/technical/technical.html#_codion_tools_generator_cli)  
+[codion-tools-generator-cli](https://codion.is/doc/0.18.89/technical/technical.html#_codion_tools_generator_cli)  
 Command line interface generating the domain source code for a whole schema, for scripted use, see [Command Line Interface](#_command_line_interface).
 
 ##### <a href="#_project_setup" class="anchor"></a>Project Setup
@@ -6423,13 +6425,18 @@ Note
 
 Many schemas include audit columns like `INSERT_USER`, `INSERT_TIME`, `UPDATE_USER`, `UPDATE_TIME`. Specifying these column names (comma-separated, case-insensitive) marks them as read-only in generated definitions.
 
+An audit column occurring in more than one entity is defined via a [column template](#_column_templates) shared by those entities. Any configuration a column does not share with the others, such as a description, follows the template. In case an audit column has different types in different entities, only the most common type is templated.
+
 Example: Audit columns "insert_user,insert_time,update_user,update_time"
 
 ``` java
-Customer.INSERT_USER.as()
+private static final ColumnTemplate<String> INSERT_USER = column -> column.as()
     .column()
+    .caption("Insert user")
     .readOnly(true)
-    .hidden(true)  // If "Hide Audit Columns" enabled
+    .hidden(true); // If "Hide Audit Columns" enabled
+
+Customer.INSERT_USER.as(INSERT_USER)
 ```
 
 ##### <a href="#_user_workflow" class="anchor"></a>User Workflow
@@ -6579,7 +6586,7 @@ Tip
 
 ##### <a href="#_command_line_interface" class="anchor"></a>Command Line Interface
 
-The [codion-tools-generator-cli](https://codion.is/doc/0.18.88/technical/technical.html#_codion_tools_generator_cli) module generates the domain source code for a whole schema without the UI, for scripted use, such as regenerating the domain model after a schema migration.
+The [codion-tools-generator-cli](https://codion.is/doc/0.18.89/technical/technical.html#_codion_tools_generator_cli) module generates the domain source code for a whole schema without the UI, for scripted use, such as regenerating the domain model after a schema migration.
 
 Without an output directory the combined source is printed to standard output, with diagnostics on standard error, so it can be piped or redirected.
 
@@ -6629,22 +6636,24 @@ application {
     --split-api-impl --i18n --test --overwrite
 ```
 
-| Option                   | Description                                                                                                                                                   |
-|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `--url <url>`            | The database url, falls back to `codion.db.url`                                                                                                               |
-| `--init-scripts <paths>` | Database init scripts, comma separated, falls back to `codion.db.initScripts`                                                                                 |
-| `--user <user>`          | The database user, on the form `username` or `username:password`                                                                                              |
-| `--schema <schema>`      | The schema to generate a domain model for (required)                                                                                                          |
-| `--package <package>`    | The domain package (required)                                                                                                                                 |
-| `--output-dir <dir>`     | The source directory to write the domain source to, the package directories are created below it, when not specified the source is printed to standard output |
-| `--resource-dir <dir>`   | The resource directory to write the i18n properties to, required by `--i18n`                                                                                  |
-| `--test-dir <dir>`       | The test source directory to write the domain unit test to, required by `--test`                                                                              |
-| `--split-api-impl`       | Write the domain api and implementation to separate source files                                                                                              |
-| `--i18n`                 | Generate i18n resource bundles for the entity and attribute captions                                                                                          |
-| `--test`                 | Generate a domain unit test                                                                                                                                   |
-| `--dtos`                 | Generate a record based dto for each entity                                                                                                                   |
-| `--overwrite`            | Overwrite existing source files                                                                                                                               |
-| `--help`                 | Print the available options                                                                                                                                   |
+| Option                    | Description                                                                                                                                                   |
+|---------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `--url <url>`             | The database url, falls back to `codion.db.url`                                                                                                               |
+| `--init-scripts <paths>`  | Database init scripts, comma separated, falls back to `codion.db.initScripts`                                                                                 |
+| `--user <user>`           | The database user, on the form `username` or `username:password`                                                                                              |
+| `--schema <schema>`       | The schema to generate a domain model for (required)                                                                                                          |
+| `--package <package>`     | The domain package (required)                                                                                                                                 |
+| `--output-dir <dir>`      | The source directory to write the domain source to, the package directories are created below it, when not specified the source is printed to standard output |
+| `--resource-dir <dir>`    | The resource directory to write the i18n properties to, required by `--i18n`                                                                                  |
+| `--test-dir <dir>`        | The test source directory to write the domain unit test to, required by `--test`                                                                              |
+| `--split-api-impl`        | Write the domain api and implementation to separate source files                                                                                              |
+| `--i18n`                  | Generate i18n resource bundles for the entity and attribute captions                                                                                          |
+| `--test`                  | Generate a domain unit test                                                                                                                                   |
+| `--dtos`                  | Generate a record based dto for each entity                                                                                                                   |
+| `--audit-columns <names>` | The audit column names, comma separated, read-only and defined via column templates shared by the entities having them, see [Audit Columns](#_audit_columns)  |
+| `--hide-audit-columns`    | Hide the audit columns, requires `--audit-columns`                                                                                                            |
+| `--overwrite`             | Overwrite existing source files                                                                                                                               |
+| `--help`                  | Print the available options                                                                                                                                   |
 
 Exit codes: 0 success, 1 failure, 2 usage error.
 
@@ -6658,7 +6667,7 @@ Exit codes: 0 success, 1 failure, 2 usage error.
 <td class="icon"><div class="title">
 Note
 </div></td>
-<td class="content">The CLI generates the domain model for the whole schema, using the default schema settings, entity selection and schema settings require the UI.</td>
+<td class="content">The CLI generates the domain model for the whole schema, the audit columns being the only schema settings it offers, entity selection and the other schema settings require the UI.</td>
 </tr>
 </tbody>
 </table>
@@ -6743,6 +6752,7 @@ package is.codion.manual.tools.generator.apiimpl;
 
 import is.codion.framework.domain.DomainModel;
 import is.codion.framework.domain.entity.EntityDefinition;
+import is.codion.framework.domain.entity.attribute.ColumnTemplate;
 import is.codion.manual.tools.generator.apiimpl.api.Store.Customer;
 import is.codion.manual.tools.generator.apiimpl.api.Store.Order;
 
@@ -6750,6 +6760,10 @@ import static is.codion.framework.domain.entity.attribute.Column.Generator.ident
 import static is.codion.manual.tools.generator.apiimpl.api.Store.DOMAIN;
 
 public final class StoreImpl extends DomainModel {
+  private static final ColumnTemplate<Integer> IDENTITY_KEY = column -> column.as()
+          .primaryKey()
+          .generator(identity());
+
   public StoreImpl() {
     super(DOMAIN);
     add(customer(), order());
@@ -6758,9 +6772,7 @@ public final class StoreImpl extends DomainModel {
   EntityDefinition customer() {
     return Customer.TYPE.as()
             .attributes(
-                    Customer.ID.as()
-                            .primaryKey()
-                            .generator(identity()),
+                    Customer.ID.as(IDENTITY_KEY),
                     Customer.NAME.as()
                             .column()
                             .caption("Name")
@@ -6777,9 +6789,7 @@ public final class StoreImpl extends DomainModel {
   EntityDefinition order() {
     return Order.TYPE.as()
             .attributes(
-                    Order.ID.as()
-                            .primaryKey()
-                            .generator(identity()),
+                    Order.ID.as(IDENTITY_KEY),
                     Order.CUSTOMER_ID.as()
                             .column(),
                     Order.CUSTOMER_FK.as()
@@ -6871,7 +6881,7 @@ public final class Store extends DomainModel {
 
 ##### <a href="#_schema_introspection" class="anchor"></a>Schema Introspection
 
-The [codion-framework-domain-db](https://codion.is/doc/0.18.88/technical/technical.html#_codion_framework_domain_db) module deals with introspecting database metadata using JDBC `DatabaseMetaData` and applies schema settings to generate appropriate domain model configurations.
+The [codion-framework-domain-db](https://codion.is/doc/0.18.89/technical/technical.html#_codion_framework_domain_db) module deals with introspecting database metadata using JDBC `DatabaseMetaData` and applies schema settings to generate appropriate domain model configurations.
 
 ###### <a href="#_column_mapping" class="anchor"></a>Column Mapping
 
@@ -6886,6 +6896,8 @@ Database column metadata is transformed into Codion column definitions:
 | DECIMAL(p,s) scale    | `.fractionDigits(s)`                                                  |
 | Column default value  | `.withDefault(true)`                                                  |
 | Column comment        | `.description("comment")`                                             |
+
+Single column auto-increment primary keys occurring in more than one entity are defined via a shared [column template](#_column_templates), `IDENTITY_KEY`, or one per type, such as `LONG_IDENTITY_KEY`, in case the keys differ in type.
 
 ###### <a href="#_foreign_key_detection" class="anchor"></a>Foreign Key Detection
 
@@ -6952,7 +6964,7 @@ Enable DTO generation for entities that:
 
 - Are frequently transferred between application layers
 
-See [Chinook demo](https://codion.is/doc/0.18.88/tutorials/chinook/chinook.html#_chinook_tutorial)
+See [Chinook demo](https://codion.is/doc/0.18.89/tutorials/chinook/chinook.html#_chinook_tutorial)
 
 ###### <a href="#_dto_structure" class="anchor"></a>DTO Structure
 
@@ -7109,9 +7121,9 @@ Note
 
 ##### <a href="#_test_generation" class="anchor"></a>Test Generation
 
-When test generation is enabled, the generator creates a JUnit test class that extends [DomainTest](https://codion.is/doc/0.18.88/api/is.codion.framework.domain.test/is/codion/framework/domain/test/DomainTest.html) to verify domain model integrity. The test class includes a test method per entity that exercises full CRUD operations and validates constraints. The test may need further configuration to run successfully.
+When test generation is enabled, the generator creates a JUnit test class that extends [DomainTest](https://codion.is/doc/0.18.89/api/is.codion.framework.domain.test/is/codion/framework/domain/test/DomainTest.html) to verify domain model integrity. The test class includes a test method per entity that exercises full CRUD operations and validates constraints. The test may need further configuration to run successfully.
 
-For further information see [Domain model testing](https://codion.is/doc/0.18.88/manual/manual.html#_domain_unit_testing).
+For further information see [Domain model testing](https://codion.is/doc/0.18.89/manual/manual.html#_domain_unit_testing).
 
 ##### <a href="#_best_practices_3" class="anchor"></a>Best Practices
 
@@ -7200,17 +7212,17 @@ Tip
 
 The generator produces standard Codion domain models. After generation, customize as needed:
 
-- Add [EntityValidator](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityValidator.html) implementations for business rules
+- Add [EntityValidator](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityValidator.html) implementations for business rules
 
-- Define [derived attributes](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/DerivedValue.html) for calculated values
+- Define [derived attributes](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/attribute/DerivedValue.html) for calculated values
 
 - Add denormalized attributes for performance optimization
 
 - Configure foreign key fetch depth with `referenceDepth()`
 
-- Implement custom [toString()](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityFormatter.html) formatters
+- Implement custom [toString()](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/EntityFormatter.html) formatters
 
-- Add [custom condition types](https://codion.is/doc/0.18.88/api/is.codion.framework.domain/is/codion/framework/domain/entity/condition/ConditionType.html) for complex queries
+- Add [custom condition types](https://codion.is/doc/0.18.89/api/is.codion.framework.domain/is/codion/framework/domain/entity/condition/ConditionType.html) for complex queries
 
 <table>
 <colgroup>
@@ -7231,7 +7243,7 @@ Tip
 
 The generator works with any JDBC-compliant database.
 
-Each database requires its appropriate JDBC driver on the runtime classpath. See [Chinook demo](https://codion.is/doc/0.18.88/tutorials/chinook/chinook.html#_chinook_tutorial).
+Each database requires its appropriate JDBC driver on the runtime classpath. See [Chinook demo](https://codion.is/doc/0.18.89/tutorials/chinook/chinook.html#_chinook_tutorial).
 
 <table>
 <colgroup>
@@ -7278,7 +7290,7 @@ Tip
 
 For complete working examples:
 
-- **Configuration**: [Chinook demo](https://codion.is/doc/0.18.88/tutorials/chinook/chinook.html#_chinook_tutorial)
+- **Configuration**: [Chinook demo](https://codion.is/doc/0.18.89/tutorials/chinook/chinook.html#_chinook_tutorial)
 
 - **Generated Code**: `tools/generator/domain/src/test/resources/` (Chinook, World, Petstore)
 
@@ -7286,11 +7298,11 @@ For complete working examples:
 
   <div class="ulist">
 
-  - [Chinook domain model](https://codion.is/doc/0.18.88/tutorials/chinook/chinook.html#_chinook_tutorial)
+  - [Chinook domain model](https://codion.is/doc/0.18.89/tutorials/chinook/chinook.html#_chinook_tutorial)
 
-  - [World domain model](https://codion.is/doc/0.18.88/tutorials/world/world.html#_domain_model)
+  - [World domain model](https://codion.is/doc/0.18.89/tutorials/world/world.html#_domain_model)
 
-  - [Petstore domain model](https://codion.is/doc/0.18.88/tutorials/petstore/petstore.html#_domain_model)
+  - [Petstore domain model](https://codion.is/doc/0.18.89/tutorials/petstore/petstore.html#_domain_model)
 
   </div>
 
@@ -7302,7 +7314,7 @@ The generator produces code that follows the same patterns as these hand-crafted
 
 #### <a href="#_reactive_classes" class="anchor"></a>2.1.1. Reactive classes
 
-Three common classes used throughout the framework are [Event](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/event/Event.html), [State](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/state/State.html) and [Value](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/value/Value.html) and their respective observers [Observer](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/observer/Observer.html) and [ObservableState](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/state/ObservableState.html).
+Three common classes used throughout the framework are [Event](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/event/Event.html), [State](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/state/State.html) and [Value](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/value/Value.html) and their respective observers [Observer](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/observer/Observer.html) and [ObservableState](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/state/ObservableState.html).
 
 <table>
 <colgroup>
@@ -7321,11 +7333,11 @@ Note
 
 ##### <a href="#_event" class="anchor"></a>Event
 
-<img src="https://codion.is/doc/0.18.88/manual/event-diagram.svg" width="672" height="303" alt="event diagram" />
+<img src="https://codion.is/doc/0.18.89/manual/event-diagram.svg" width="672" height="303" alt="event diagram" />
 
-The [Event](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/event/Event.html) class is a synchronous event implementation used throughout the framework. Classes typically expose observers for their events via public accessors. Events are triggered by calling the **run** method in case no data is associated with the event or **accept** in case data should be propogated to consumers.
+The [Event](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/event/Event.html) class is a synchronous event implementation used throughout the framework. Classes typically expose observers for their events via public accessors. Events are triggered by calling the **run** method in case no data is associated with the event or **accept** in case data should be propogated to consumers.
 
-The associated [Observer](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/observer/Observer.html) instance can not trigger the event and can be safely passed around.
+The associated [Observer](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/observer/Observer.html) instance can not trigger the event and can be safely passed around.
 
 Event listeners must implement either [Runnable](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runnable.html) or [Consumer](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html), depending on whether they are interested in the data associated with the event.
 
@@ -7344,7 +7356,7 @@ Note
 </tbody>
 </table>
 
-Events are instantiated via factory methods in the [Event](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/event/Event.html) class.
+Events are instantiated via factory methods in the [Event](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/event/Event.html) class.
 
 ``` java
 // specify an event propagating
@@ -7375,7 +7387,7 @@ event.addConsumer(System.out::println);
 
 ##### <a href="#_observer" class="anchor"></a>Observer
 
-The **Observer** class provides a way to add conditional listeners via [Observer.when()](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/observer/Observer.html#when(java.lang.Object)).
+The **Observer** class provides a way to add conditional listeners via [Observer.when()](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/observer/Observer.html#when(java.lang.Object)).
 
 ``` java
 private void observer() {
@@ -7408,11 +7420,11 @@ private void observer() {
 
 ##### <a href="#_value" class="anchor"></a>Value
 
-<img src="https://codion.is/doc/0.18.88/manual/value-diagram.svg" width="392" height="468" alt="value diagram" />
+<img src="https://codion.is/doc/0.18.89/manual/value-diagram.svg" width="392" height="468" alt="value diagram" />
 
-A [Value](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/value/Value.html) wraps a value and provides a change observer.
+A [Value](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/value/Value.html) wraps a value and provides a change observer.
 
-Values are instantiated via factory methods in the [Value](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/value/Value.html) class.
+Values are instantiated via factory methods in the [Value](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/value/Value.html) class.
 
 Values can be linked so that changes in one are reflected in the other.
 
@@ -7497,7 +7509,7 @@ System.out.println(value.get());// output: 3
 
 ###### <a href="#_notification_strategies" class="anchor"></a>Notification strategies
 
-By default, listeners are notified only when a value actually changes ([Notify.CHANGED](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/value/Value.Notify.html)) — setting a value equal to the current one is a no-op. **Notify.SET** notifies on every set, whether the value changed or not.
+By default, listeners are notified only when a value actually changes ([Notify.CHANGED](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/value/Value.Notify.html)) — setting a value equal to the current one is a no-op. **Notify.SET** notifies on every set, whether the value changed or not.
 
 ``` java
 // CHANGED, the default: listeners are notified
@@ -7561,11 +7573,11 @@ valueList.clear();
 
 ##### <a href="#_state" class="anchor"></a>State
 
-<img src="https://codion.is/doc/0.18.88/manual/state-diagram.svg" width="443" height="138" alt="state diagram" />
+<img src="https://codion.is/doc/0.18.89/manual/state-diagram.svg" width="443" height="138" alt="state diagram" />
 
-The [State](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/state/State.html) class encapsulates a boolean state and provides read only access and a change observer via [ObservableState](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/state/ObservableState.html).
+The [State](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/state/State.html) class encapsulates a boolean state and provides read only access and a change observer via [ObservableState](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/state/ObservableState.html).
 
-States are instantiated via factory methods in the [State](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/state/State.html) class.
+States are instantiated via factory methods in the [State](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/state/State.html) class.
 
 ``` java
 // a boolean state, false by default
@@ -7703,7 +7715,7 @@ Note
 
 ###### <a href="#_state_group" class="anchor"></a>State groups
 
-A [State.Group](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/state/State.Group.html) ensures that at most a single member state is active at a time — radio button semantics:
+A [State.Group](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/state/State.Group.html) ensures that at most a single member state is active at a time — radio button semantics:
 
 ``` java
 // a state group ensures that only a single
@@ -7757,7 +7769,7 @@ Core JDBC related classes.
 
 #### <a href="#_database" class="anchor"></a>2.2.1. Database
 
-The [Database](https://codion.is/doc/0.18.88/api/is.codion.common.db/is/codion/common/db/database/Database.html) class represents a DBMS instance and provides connections to that instance.
+The [Database](https://codion.is/doc/0.18.89/api/is.codion.common.db/is/codion/common/db/database/Database.html) class represents a DBMS instance and provides connections to that instance.
 
 There are multiple ways to aquire a Database instance.
 
@@ -7811,7 +7823,7 @@ java.sql.Connection connection = database.createConnection(user);
 
 #### <a href="#_exceptions" class="anchor"></a>2.2.2. Exceptions
 
-A **java.sql.SQLException** is turned into a [DatabaseException](https://codion.is/doc/0.18.88/api/is.codion.common.db/is/codion/common/db/exception/DatabaseException.html) by **Database.exception()**. The DBMS modules recognize the most common errors, each represented by an [ErrorType](https://codion.is/doc/0.18.88/api/is.codion.common.db/is/codion/common/db/exception/ErrorType.html), a unique constraint violation, a missing value or a locked row for example. Some error types have their own exception class, **UniqueConstraintException**, **ReferentialIntegrityException**, **QueryTimeoutException** and **AuthenticationException**, the others result in a plain **DatabaseException**.
+A **java.sql.SQLException** is turned into a [DatabaseException](https://codion.is/doc/0.18.89/api/is.codion.common.db/is/codion/common/db/exception/DatabaseException.html) by **Database.exception()**. The DBMS modules recognize the most common errors, each represented by an [ErrorType](https://codion.is/doc/0.18.89/api/is.codion.common.db/is/codion/common/db/exception/ErrorType.html), a unique constraint violation, a missing value or a locked row for example. Some error types have their own exception class, **UniqueConstraintException**, **ReferentialIntegrityException**, **QueryTimeoutException** and **AuthenticationException**, the others result in a plain **DatabaseException**.
 
 An exception based on an error type does not carry a message, it carries the error type along with the detail provided by the database, if any, usually the name of the constraint, column or table involved, see **errorType()** and **detail()**. The message, a user-friendly description of the error type followed by the detail, is put together each time it is read. An exception travelling from a server to a client thereby presents its message in the language of the client, regardless of the language of the server.
 
@@ -7823,7 +7835,7 @@ An error the DBMS module does not recognize results in a **DatabaseException** w
 
 #### <a href="#_file_preferences" class="anchor"></a>2.3.1. File Preferences
 
-[FilePreferences.filePreferences(String)](https://codion.is/doc/0.18.88/api/is.codion.common.model/is/codion/common/model/preferences/FilePreferences.html#filePreferences(java.lang.String)) provides a file-based implementation of the Java Preferences API that removes the restrictive length limitations of the default implementation.
+[FilePreferences.filePreferences(String)](https://codion.is/doc/0.18.89/api/is.codion.common.model/is/codion/common/model/preferences/FilePreferences.html#filePreferences(java.lang.String)) provides a file-based implementation of the Java Preferences API that removes the restrictive length limitations of the default implementation.
 
 ##### <a href="#_motivation" class="anchor"></a>Motivation
 
@@ -7990,7 +8002,7 @@ The implementation uses a 5-second timeout for acquiring file locks to prevent d
 
 ### <a href="#_progressworker" class="anchor"></a>2.4. ProgressWorker
 
-[ProgressWorker](https://codion.is/doc/0.18.88/api/is.codion.common.model/is/codion/common/model/worker/ProgressWorker.html) provides a fluent API for constructing background task workers for a variety of task types.
+[ProgressWorker](https://codion.is/doc/0.18.89/api/is.codion.common.model/is/codion/common/model/worker/ProgressWorker.html) provides a fluent API for constructing background task workers for a variety of task types.
 
 <table>
 <colgroup>
@@ -8007,7 +8019,7 @@ Note
 </tbody>
 </table>
 
-#### <a href="#_task" class="anchor"></a>2.4.1. [Task](https://codion.is/doc/0.18.88/api/is.codion.common.model/is/codion/common/model/worker/ProgressWorker.Task.html)
+#### <a href="#_task" class="anchor"></a>2.4.1. [Task](https://codion.is/doc/0.18.89/api/is.codion.common.model/is/codion/common/model/worker/ProgressWorker.Task.html)
 
 ``` java
 // A non-progress aware task, producing no result
@@ -8024,7 +8036,7 @@ ProgressWorker.builder()
         .execute();
 ```
 
-#### <a href="#_taskhandler" class="anchor"></a>2.4.2. [TaskHandler](https://codion.is/doc/0.18.88/api/is.codion.common.model/is/codion/common/model/worker/ProgressWorker.TaskHandler.html)
+#### <a href="#_taskhandler" class="anchor"></a>2.4.2. [TaskHandler](https://codion.is/doc/0.18.89/api/is.codion.common.model/is/codion/common/model/worker/ProgressWorker.TaskHandler.html)
 
 ``` java
 // TaskHandler encapsulates the task and its handlers in a single class.
@@ -8056,7 +8068,7 @@ ProgressWorker.builder()
         .execute();
 ```
 
-#### <a href="#_resulttask" class="anchor"></a>2.4.3. [ResultTask](https://codion.is/doc/0.18.88/api/is.codion.common.model/is/codion/common/model/worker/ProgressWorker.ResultTask.html)
+#### <a href="#_resulttask" class="anchor"></a>2.4.3. [ResultTask](https://codion.is/doc/0.18.89/api/is.codion.common.model/is/codion/common/model/worker/ProgressWorker.ResultTask.html)
 
 ``` java
 // A non-progress aware task, producing a result
@@ -8076,7 +8088,7 @@ ProgressWorker.builder()
         .execute();
 ```
 
-#### <a href="#_resulttaskhandler" class="anchor"></a>2.4.4. [ResultTaskHandler](https://codion.is/doc/0.18.88/api/is.codion.common.model/is/codion/common/model/worker/ProgressWorker.ResultTaskHandler.html)
+#### <a href="#_resulttaskhandler" class="anchor"></a>2.4.4. [ResultTaskHandler](https://codion.is/doc/0.18.89/api/is.codion.common.model/is/codion/common/model/worker/ProgressWorker.ResultTaskHandler.html)
 
 ``` java
 // ResultTaskHandler encapsulates a result-producing task and its handlers.
@@ -8114,7 +8126,7 @@ ProgressWorker.builder()
         .execute();
 ```
 
-#### <a href="#_progresstask" class="anchor"></a>2.4.5. [ProgressTask](https://codion.is/doc/0.18.88/api/is.codion.common.model/is/codion/common/model/worker/ProgressWorker.ProgressTask.html)
+#### <a href="#_progresstask" class="anchor"></a>2.4.5. [ProgressTask](https://codion.is/doc/0.18.89/api/is.codion.common.model/is/codion/common/model/worker/ProgressWorker.ProgressTask.html)
 
 ``` java
 // A progress aware task, producing no result
@@ -8137,7 +8149,7 @@ ProgressWorker.builder()
         .execute();
 ```
 
-#### <a href="#_progresstaskhandler" class="anchor"></a>2.4.6. [ProgressTaskHandler](https://codion.is/doc/0.18.88/api/is.codion.common.model/is/codion/common/model/worker/ProgressWorker.ProgressTaskHandler.html)
+#### <a href="#_progresstaskhandler" class="anchor"></a>2.4.6. [ProgressTaskHandler](https://codion.is/doc/0.18.89/api/is.codion.common.model/is/codion/common/model/worker/ProgressWorker.ProgressTaskHandler.html)
 
 ``` java
 // ProgressTaskHandler encapsulates a progress-aware task and its handlers.
@@ -8180,7 +8192,7 @@ ProgressWorker.builder()
         .execute();
 ```
 
-#### <a href="#_progressresulttask" class="anchor"></a>2.4.7. [ProgressResultTask](https://codion.is/doc/0.18.88/api/is.codion.common.model/is/codion/common/model/worker/ProgressWorker.ProgressResultTask.html)
+#### <a href="#_progressresulttask" class="anchor"></a>2.4.7. [ProgressResultTask](https://codion.is/doc/0.18.89/api/is.codion.common.model/is/codion/common/model/worker/ProgressWorker.ProgressResultTask.html)
 
 ``` java
 // A reusable, cancellable task, producing a result.
@@ -8317,9 +8329,9 @@ static final class DemoProgressResultTask implements ProgressResultTaskHandler<I
 
 ##### <a href="#_filtertablemodel" class="anchor"></a>FilterTableModel
 
-<img src="https://codion.is/doc/0.18.88/manual/filter-table-model-diagram.svg" width="637" height="227" alt="filter table model diagram" />
+<img src="https://codion.is/doc/0.18.89/manual/filter-table-model-diagram.svg" width="463" height="227" alt="filter table model diagram" />
 
-The [SwingFilterTableModel](https://codion.is/doc/0.18.88/api/is.codion.swing.common.model/is/codion/swing/common/model/component/table/SwingFilterTableModel.html) is a table model central to the framework.
+The [SwingFilterTableModel](https://codion.is/doc/0.18.89/api/is.codion.swing.common.model/is/codion/swing/common/model/component/table/SwingFilterTableModel.html) is a table model central to the framework.
 
 ``` java
 // Define a record representing the table rows
@@ -8455,7 +8467,7 @@ selection.clear();
 ###### <a href="#_filters" class="anchor"></a>Filters
 
 ``` java
-TableConditionModel<String> filters = tableModel.filters();
+TableConditions<String> filters = tableModel.filters();
 
 // Filter out people under 40 years old
 ConditionModel<Integer> ageFilter = filters.get(Person.AGE);
@@ -8528,11 +8540,11 @@ What it adds:
 
 - [ProgressWorker](#_progressworker), for performing a task in a background thread, handling the result on the Event Dispatch Thread.
 
-- [FilterTable](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/table/FilterTable.html), a table with sorting, filtering, searching and selection, based on a typed row and column model.
+- [FilterTable](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/table/FilterTable.html), a table with sorting, filtering, searching and selection, based on a typed row and column model.
 
 - [Dialogs](#_dialogs), for input, selection, progress, exceptions and more.
 
-- Keyboard navigation throughout, with configurable [key bindings](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/key/KeyEvents.html).
+- Keyboard navigation throughout, with configurable [key bindings](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/key/KeyEvents.html).
 
 #### <a href="#_swing_common_ui_standalone" class="anchor"></a>2.6.1. Using it by itself
 
@@ -8540,7 +8552,7 @@ A single dependency, with the versions managed by the common BOM.
 
 ``` java
 dependencies {
-    implementation(platform("is.codion:codion-common-bom:0.18.88"))
+    implementation(platform("is.codion:codion-common-bom:0.18.89"))
 
     implementation("is.codion:codion-swing-common-ui")
 }
@@ -8581,7 +8593,7 @@ static final class GreeterModel {
 }
 ```
 
-The view builds plain Swing components linked to the model, the factory methods of [Components](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/Components.html) being statically imported. No listeners are added by hand: typing a name enables the button, the button is disabled while the task is running, and the label displays the result when it arrives.
+The view builds plain Swing components linked to the model, the factory methods of [Components](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/Components.html) being statically imported. No listeners are added by hand: typing a name enables the button, the button is disabled while the task is running, and the label displays the result when it arrives.
 
 ``` java
 // The view, plain Swing components, built and bound to the model
@@ -8648,15 +8660,15 @@ private static void start() {
 }
 ```
 
-For a full application built this way, see the [SDKBOY tutorial](https://codion.is/doc/0.18.88/tutorials/sdkboy/sdkboy.html) ([Github](https://github.com/codion-is/sdkboy)), a [SDKMAN](https://sdkman.io) desktop client.
+For a full application built this way, see the [SDKBOY tutorial](https://codion.is/doc/0.18.89/tutorials/sdkboy/sdkboy.html) ([Github](https://github.com/codion-is/sdkboy)), a [SDKMAN](https://sdkman.io) desktop client.
 
 #### <a href="#_table_ui" class="anchor"></a>2.6.2. Table UI
 
 ##### <a href="#_filtertable" class="anchor"></a>FilterTable
 
-<img src="https://codion.is/doc/0.18.88/manual/filter-table-diagram.svg" width="930" height="265" alt="filter table diagram" />
+<img src="https://codion.is/doc/0.18.89/manual/filter-table-diagram.svg" width="930" height="265" alt="filter table diagram" />
 
-The [FilterTable](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/table/FilterTable.html) is a **JTable** subclass central to the framework.
+The [FilterTable](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/table/FilterTable.html) is a **JTable** subclass central to the framework.
 
 ``` java
 // See FilterTableModel example
@@ -8697,9 +8709,9 @@ columns.reset();
 
 ###### <a href="#_filtering" class="anchor"></a>Filtering
 
-A **FilterTable** comes with a filter panel, available via [filters()](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/table/FilterTable.html#filters()), containing a filter component for each column, based on the filters of the underlying table model, see [Filters](#_filters). The filter components keep to the width and position of their columns.
+A **FilterTable** comes with a filter panel, available via [filters()](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/table/FilterTable.html#filters()), containing a filter component for each column, based on the filters of the underlying table model, see [Filters](#_filters). The filter components keep to the width and position of their columns.
 
-The table displays the filter panel itself when asked to, via [filters(Filters)](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/table/FilterTable.Builder.html#filters(is.codion.swing.common.ui.component.table.FilterTable.Filters)), above or below the table header. The default is specified via the [FilterTable.FILTERS](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/table/FilterTable.html#FILTERS) configuration value, **Filters.NONE** unless configured.
+The table displays the filter panel itself when asked to, via [filters(Filters)](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/table/FilterTable.Builder.html#filters(is.codion.swing.common.ui.component.table.FilterTable.Filters)), above or below the table header. The default is specified via the [FilterTable.FILTERS](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/table/FilterTable.html#FILTERS) configuration value, **Filters.NONE** unless configured.
 
 ``` java
 SwingFilterTableModel<Person, String> tableModel = createFilterTableModel();
@@ -8735,7 +8747,7 @@ Note
 
 <a href="#_filter_view" class="anchor"></a>Filter view
 
-Whether the filter panel is visible, and in which form, is controlled separately, via the [view()](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/table/TableConditionPanel.html#view()) value of the filter panel: **HIDDEN**, **SIMPLE**, a single field per column, or **ADVANCED**, adding the operator selection. The initial view is specified via [filterView(ConditionView)](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/table/FilterTable.Builder.html#filterView(is.codion.swing.common.ui.component.table.ConditionPanel.ConditionView)), **HIDDEN** by default, so a table displaying its filters shows nothing until the view is changed.
+Whether the filter panel is visible, and in which form, is controlled separately, via the [view()](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/table/TableConditionPanel.html#view()) value of the filter panel: **HIDDEN**, **SIMPLE**, a single field per column, or **ADVANCED**, adding the operator selection. The initial view is specified via [filterView(ConditionView)](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/table/FilterTable.Builder.html#filterView(is.codion.swing.common.ui.component.table.ConditionPanel.ConditionView)), **HIDDEN** by default, so a table displaying its filters shows nothing until the view is changed.
 
 ``` java
 TableConditionPanel<String> filters = table.filters();
@@ -8757,12 +8769,12 @@ JCheckBox advancedCheckBox = Components.checkBox()
         .build();
 
 // The filter panel of a single column
-ConditionPanel<?> ageFilterPanel = filters.panel(Person.AGE);
+ConditionPanel<?> ageFilterPanel = filters.get(Person.AGE);
 ```
 
 <a href="#_filter_controls" class="anchor"></a>Filter controls
 
-The filter panel provides ready-made controls for selecting the view and for clearing the filters, via [controls()](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/table/TableConditionPanel.html#controls()), suitable for a popup menu or a toolbar. Note that these controls have no caption, copy them in order to add one. You are not limited to these controls, the view being a **Value** you can base your own on, as in the check box example above.
+The filter panel provides ready-made controls for selecting the view and for clearing the filters, via [controls()](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/table/TableConditionPanel.html#controls()), suitable for a popup menu or a toolbar. Note that these controls have no caption, copy them in order to add one. You are not limited to these controls, the view being a **Value** you can base your own on, as in the check box example above.
 
 ``` java
 // Controls for selecting the filter view and clearing the filters.
@@ -8785,7 +8797,7 @@ JPopupMenu popupMenu = Components.menu()
 
 <a href="#_laying_out_the_filter_panel_manually" class="anchor"></a>Laying out the filter panel manually
 
-A position below the table is not available to the table itself, a scroll pane having a column header but no column footer. For that, or any other position, leave the table at **Filters.NONE** and lay out the filter panel yourself, in a scroll pane following the horizontal scrolling of the one containing the table, see [followHorizontal(JScrollPane)](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/scrollpane/ScrollPaneBuilder.html#followHorizontal(javax.swing.JScrollPane)). The following is one way, the table scroll pane leads, the filter panel scrolling the table to the column of a filter component gaining focus.
+A position below the table is not available to the table itself, a scroll pane having a column header but no column footer. For that, or any other position, leave the table at **Filters.NONE** and lay out the filter panel yourself, in a scroll pane following the horizontal scrolling of the one containing the table, see [followHorizontal(JScrollPane)](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/scrollpane/ScrollPaneBuilder.html#followHorizontal(javax.swing.JScrollPane)). The following is one way, the table scroll pane leads, the filter panel scrolling the table to the column of a filter component gaining focus.
 
 ``` java
 FilterTable<Person, String> table =
@@ -8830,11 +8842,113 @@ System.out.println(searchResult); // row: 1, column: 1
 search.results().next().ifPresent(System.out::println);
 ```
 
-#### <a href="#_input_controls_2" class="anchor"></a>2.6.3. Input Controls
+#### <a href="#_tree_ui" class="anchor"></a>2.6.3. Tree UI
+
+##### <a href="#_filtertree" class="anchor"></a>FilterTree
+
+<img src="https://codion.is/doc/0.18.89/manual/filter-tree-diagram.svg" width="367" height="392" alt="filter tree diagram" />
+
+The [FilterTree](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/tree/FilterTree.html) is a **JTree** based on a [SwingFilterTreeModel](https://codion.is/doc/0.18.89/api/is.codion.swing.common.model/is/codion/swing/common/model/component/tree/SwingFilterTreeModel.html), the Swing coat of the UI-agnostic [FilterTreeModel](https://codion.is/doc/0.18.89/api/is.codion.common.model/is/codion/common/model/component/tree/FilterTreeModel.html).
+
+###### <a href="#_the_model" class="anchor"></a>The model
+
+A node is identified by its [NodePath](https://codion.is/doc/0.18.89/api/is.codion.common.model/is/codion/common/model/component/tree/NodePath.html), the items from the top level down to it, so the same item may appear in several places in a tree. Siblings must be distinct.
+
+The structure is loaded lazily, the roots supplier providing the top level, and the children function the children of a node, the first time it is expanded. Loading is asynchronous by default, as refreshing a table model is.
+
+``` java
+File home = new File(System.getProperty("user.home"));
+
+SwingFilterTreeModel<File> model =
+        SwingFilterTreeModel.builder()
+                // The top level, the children of the invisible root
+                .roots(() -> files(home))
+                // Called when a node is first expanded, off the UI thread,
+                // given the path of the node, the items from the top level down
+                .children(path -> files(path.item()))
+                // A file has no children, so no expand handle. Called on the
+                // UI thread each time the tree asks, so it must be fast
+                .leaf(path -> path.item().isFile())
+                // Sorts siblings
+                .comparator(comparing(File::getName, String.CASE_INSENSITIVE_ORDER))
+                .refresh(true)
+                .build();
+```
+
+``` java
+private static List<File> files(File directory) {
+  File[] files = directory.listFiles(file -> !file.isHidden());
+
+  return files == null ? emptyList() : asList(files);
+}
+```
+
+###### <a href="#_the_tree" class="anchor"></a>The tree
+
+``` java
+FilterTree<File> tree =
+        FilterTree.builder()
+                .model(model)
+                .formatter(File::getName)
+                .doubleClick(Control.command(() ->
+                        model.selection().item().optional()
+                                .map(NodePath::item)
+                                .ifPresent(System.out::println)))
+                .build();
+```
+
+###### <a href="#_expansion" class="anchor"></a>Expansion
+
+Expansion is model state rather than view state, so it survives refreshes, and the tree follows the model, whether a node is expanded via the model, by the mouse or by the keyboard. Expanding a node not yet loaded loads it.
+
+``` java
+List<NodePath<File>> topLevel = model.nodes().children(nodePath());
+
+// Expanding a node loads its children, the tree follows
+model.expansion().expand(topLevel.get(0));
+
+// A refresh reloads the loaded nodes, keeping
+// the expansion and selection of the ones remaining
+model.nodes().refresh();
+
+// The expanded paths, for restoring the expansion later,
+// loading the nodes as needed
+Collection<NodePath<File>> expanded = model.expansion().get();
+model.expansion().set(expanded);
+```
+
+###### <a href="#_selection_3" class="anchor"></a>Selection
+
+The selection is a **MultiSelection** over the visible nodes, its items the paths of the selected nodes, and the selection model of the tree. A selected node hidden by collapsing an ancestor is replaced by the collapsed ancestor, as a **JTree** does.
+
+``` java
+// The selection is over the visible nodes, kept by path
+model.selection().items().addConsumer(selected ->
+        selected.forEach(path -> System.out.println(path.item())));
+
+List<NodePath<File>> topLevel = model.nodes().children(nodePath());
+model.selection().items().set(topLevel);
+```
+
+###### <a href="#_filtering_2" class="anchor"></a>Filtering
+
+A node is included when it passes the predicate, or when one of its loaded descendants does, so a match keeps its ancestors. Filtering applies to the loaded nodes only. To hide whole subtrees, have the children function return fewer children and refresh, which keeps the expansion and selection of the remaining nodes.
+
+``` java
+// Includes the matching nodes along with their ancestors,
+// filtering the nodes loaded so far
+model.nodes().predicate().set(path ->
+        path.item().getName().endsWith(".java"));
+
+// Includes all nodes again, without reloading
+model.nodes().predicate().clear();
+```
+
+#### <a href="#_input_controls_2" class="anchor"></a>2.6.4. Input Controls
 
 ##### <a href="#_control" class="anchor"></a>Control
 
-<img src="https://codion.is/doc/0.18.88/manual/control-diagram.svg" width="201" height="62" alt="control diagram" />
+<img src="https://codion.is/doc/0.18.89/manual/control-diagram.svg" width="201" height="62" alt="control diagram" />
 
 ``` java
 State somethingEnabledState = State.state(true);
@@ -8948,9 +9062,9 @@ JPanel buttonPanel = Components.buttonPanel()
         .build();
 ```
 
-#### <a href="#_input_components" class="anchor"></a>2.6.4. Input Components
+#### <a href="#_input_components" class="anchor"></a>2.6.5. Input Components
 
-Binding model data to UI components is accomplished by linking a [Value](https://codion.is/doc/0.18.88/api/is.codion.common.reactive/is/codion/common/reactive/value/Value.html) instance to an instance of its subclass [ComponentValue](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/value/ComponentValue.html), which represents a value based on an input component.
+Binding model data to UI components is accomplished by linking a [Value](https://codion.is/doc/0.18.89/api/is.codion.common.reactive/is/codion/common/reactive/value/Value.html) instance to an instance of its subclass [ComponentValue](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/value/ComponentValue.html), which represents a value based on an input component.
 
 ``` java
 //a nullable integer value, initialized to 42
@@ -9167,7 +9281,7 @@ JComboBox<Item<Boolean>> comboBox =
                 .build();
 ```
 
-##### <a href="#_selection_3" class="anchor"></a>Selection
+##### <a href="#_selection_4" class="anchor"></a>Selection
 
 ###### <a href="#_combobox_2" class="anchor"></a>ComboBox
 
@@ -9217,21 +9331,21 @@ model.items().refresh();
 
 <a href="#_completion" class="anchor"></a>Completion
 
-[Completion](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/combobox/Completion.html) provides a way to enable completion for combo boxes.
+[Completion](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/combobox/Completion.html) provides a way to enable completion for combo boxes.
 
 The available completion modes are:
 
-[Completion.Mode#AUTOCOMPLETE](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/combobox/Completion.Mode.html)
+[Completion.Mode#AUTOCOMPLETE](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/combobox/Completion.Mode.html)
 
-[Completion.Mode#MAXIMUM_MATCH](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/combobox/Completion.Mode.html)
+[Completion.Mode#MAXIMUM_MATCH](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/combobox/Completion.Mode.html)
 
-Combo boxes created via [Components](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/Components.html) have completion enabled by default, with [MAXIMUM_MATCH](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/combobox/Completion.Mode.html) being the default completion mode.
+Combo boxes created via [Components](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/Components.html) have completion enabled by default, with [MAXIMUM_MATCH](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/combobox/Completion.Mode.html) being the default completion mode.
 
-The default completion mode is controlled via the [Completion.MODE](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/combobox/Completion.html#MODE) configuration value.
+The default completion mode is controlled via the [Completion.MODE](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/combobox/Completion.html#MODE) configuration value.
 
 <a href="#_normalization" class="anchor"></a>Normalization
 
-Strings are normalized by default during completion, that is, accents are removed, i.e. **á**, **í** and **ú** become **a**, **i** and **u**. To enable accented character sensitivity, normalization can be turned off, either globally via the [Completion.NORMALIZE](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/combobox/Completion.html#NORMALIZE) configuration value or individually via the combo box builder.
+Strings are normalized by default during completion, that is, accents are removed, i.e. **á**, **í** and **ú** become **a**, **i** and **u**. To enable accented character sensitivity, normalization can be turned off, either globally via the [Completion.NORMALIZE](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/combobox/Completion.html#NORMALIZE) configuration value or individually via the combo box builder.
 
 ``` java
 SwingFilterComboBoxModel<String> model =
@@ -9320,9 +9434,9 @@ personPanelValue.link(personValue);
 
 ##### <a href="#_examples_10" class="anchor"></a>Examples
 
-[Input components](https://codion.is/doc/0.18.88/tutorials/input-components.html#_input_components)
+[Input components](https://codion.is/doc/0.18.89/tutorials/input-components.html#_input_components)
 
-#### <a href="#_dialogs" class="anchor"></a>2.6.5. Dialogs
+#### <a href="#_dialogs" class="anchor"></a>2.6.6. Dialogs
 
 ##### <a href="#_component" class="anchor"></a>Component
 
@@ -9344,7 +9458,7 @@ Dialogs.builder()
         .show();
 ```
 
-##### <a href="#_selection_4" class="anchor"></a>Selection
+##### <a href="#_selection_5" class="anchor"></a>Selection
 
 ###### <a href="#_items_2" class="anchor"></a>Items
 
@@ -9507,7 +9621,7 @@ The `.delay()` method accepts two parameters: the delay before showing the dialo
 
   <div class="paragraph">
 
-  [ProgressWorkerDialogBuilder.SHOW_DELAY](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/dialog/ProgressWorkerDialogBuilder.html#SHOW_DELAY)
+  [ProgressWorkerDialogBuilder.SHOW_DELAY](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/dialog/ProgressWorkerDialogBuilder.html#SHOW_DELAY)
 
   </div>
 
@@ -9515,7 +9629,7 @@ The `.delay()` method accepts two parameters: the delay before showing the dialo
 
   <div class="paragraph">
 
-  [ProgressWorkerDialogBuilder.HIDE_DELAY](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/dialog/ProgressWorkerDialogBuilder.html#HIDE_DELAY)
+  [ProgressWorkerDialogBuilder.HIDE_DELAY](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/dialog/ProgressWorkerDialogBuilder.html#HIDE_DELAY)
 
   </div>
 
@@ -9536,7 +9650,7 @@ Codion provides a few classes with miscellanous utility functions.
 
 #### <a href="#_taskscheduler" class="anchor"></a>2.7.1. TaskScheduler
 
-[TaskScheduler](https://codion.is/doc/0.18.88/api/is.codion.common.utilities/is/codion/common/utilities/scheduler/TaskScheduler.html) provides a simple, lightweight way to execute tasks periodically on a background thread.
+[TaskScheduler](https://codion.is/doc/0.18.89/api/is.codion.common.utilities/is/codion/common/utilities/scheduler/TaskScheduler.html) provides a simple, lightweight way to execute tasks periodically on a background thread.
 
 ##### <a href="#_basic_usage_2" class="anchor"></a>Basic Usage
 
@@ -9657,19 +9771,19 @@ All scheduler threads are daemon threads by default, so they won’t prevent JVM
 
 #### <a href="#_ui" class="anchor"></a>2.7.2. UI
 
-[Components](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/Components.html)
+[Components](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/Components.html)
 
-[TextComponents](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/text/TextComponents.html)
+[TextComponents](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/component/text/TextComponents.html)
 
-[Dialogs](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/dialog/Dialogs.html)
+[Dialogs](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/dialog/Dialogs.html)
 
-[KeyEvents](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/key/KeyEvents.html)
+[KeyEvents](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/key/KeyEvents.html)
 
-[Layouts](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/layout/Layouts.html)
+[Layouts](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/layout/Layouts.html)
 
-[Utilities](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/Utilities.html)
+[Utilities](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/Utilities.html)
 
-[Windows](https://codion.is/doc/0.18.88/api/is.codion.swing.common.ui/is/codion/swing/common/ui/window/Windows.html)
+[Windows](https://codion.is/doc/0.18.89/api/is.codion.swing.common.ui/is/codion/swing/common/ui/window/Windows.html)
 
-Version 0.18.88  
+Version 0.18.89  
 

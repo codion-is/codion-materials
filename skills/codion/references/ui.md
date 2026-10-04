@@ -81,8 +81,10 @@ public final class CustomerTablePanel extends EntityTablePanel {
 ```
 `PRINT` is from `EntityTablePanel.ControlKeys` (static import). Config options
 worth knowing: `.editable(attributes -> attributes.remove(...))` (popup-menu
-editing), `.conditionView(SIMPLE)`, `.conditionPanel(factory)` (custom
+editing), `.conditionView(SIMPLE)`, `.conditions(factory)` (custom
 condition panel — see chinook's `InvoiceConditionPanel`),
+`.conditions(panels -> ...)` / `.filters(panels -> ...)` (exclude or
+configure the per-column condition and filter panels),
 `.table(t -> ...)` for table tweaks. Grep `EntityTablePanel.Config` for all.
 
 ## EntityPanel — wiring the hierarchy

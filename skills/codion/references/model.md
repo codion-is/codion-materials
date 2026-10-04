@@ -123,7 +123,7 @@ tableModel().selection().items().addConsumer(this::selectionChanged);
 The query behind the table is `tableModel().query()` (an `EntityQueryModel`):
 ```java
 query().limit().set(500);                                // max rows fetched
-query().condition().get(Invoice.CUSTOMER_FK)             // a ForeignKeyConditionModel
+query().conditions().get(Invoice.CUSTOMER_FK)            // a ForeignKeyConditionModel
         .operands().equal().set(customer);               // set its operand
 query().conditionRequired().set(true);                   // refuse unfiltered refresh (automatically enabled for detail models)
 ```
