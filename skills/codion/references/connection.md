@@ -54,7 +54,8 @@ List<Entity> tracks = connection.select(
                 .build());
 ```
 Select builder options: `.orderBy(...)`, `.limit(n)`, `.offset(n)`,
-`.forUpdate()`, `.attributes(...)` (fetch only these columns),
+`.forUpdate(Lock.WAIT)` or `.forUpdate(Lock.NOWAIT)` (failing at once on a row
+another transaction holds), `.attributes(...)` (fetch only these columns),
 `.include(...)`/`.exclude(...)`, `.referenceDepth(n)` (also per-FK),
 `.having(condition)`, `.timeout(seconds)`.
 
@@ -135,5 +136,4 @@ byte[] pdf = connection.report(Invoice.REPORT, reportParameters);             //
 
 `LocalEntityConnection` supports result iteration without materializing the
 full list — grep `iterator` in
-`codion/framework/db-local/.../LocalEntityConnection.java`. For batch loads,
-`EntityConnection.batchInsert(...)` / `batchCopy(...)`.
+`codion/framework/db-local/.../LocalEntityConnection.java`.
